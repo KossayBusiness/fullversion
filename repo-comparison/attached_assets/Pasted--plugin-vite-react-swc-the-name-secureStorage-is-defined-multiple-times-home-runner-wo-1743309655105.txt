@@ -1,0 +1,339 @@
+[plugin:vite:react-swc] × the name `secureStorage` is defined multiple times
+     ╭─[/home/runner/workspace/src/components/QuizResults.tsx:12:1]
+   9 │ import { ChevronRight, Download, Share2, Heart, Award, Star } from 'lucide-react';
+  10 │ import { QuizResponse } from '@/components/quiz/types';
+  11 │ //import { getRecommendations } from '@/utils/recommenderSystem';  //Removed because it's not defined
+  12 │ import secureStorage from '@/utils/secureStorage';
+     ·        ──────┬──────
+     ·              ╰── previous definition of `secureStorage` here
+  13 │ 
+  14 │ 
+  15 │ interface Recommendation {
+  16 │   id: string;
+  17 │   name: string;
+  18 │   description: string;
+  19 │   dosage: string;
+  20 │   priority: number;
+  21 │   compatibility: number;
+  22 │   benefits: string[];
+  23 │   scientificRating: number;
+  24 │   imageUrl?: string;
+  25 │ }
+  26 │ 
+  27 │ interface QuizResultsProps {
+  28 │   responses: QuizResponse;
+  29 │   userName: string;
+  30 │ }
+  31 │ 
+  32 │ const QuizResults: React.FC<QuizResultsProps> = ({ responses, userName }) => {
+  33 │   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+  34 │   const [isLoading, setIsLoading] = useState(true);
+  35 │   const [activeSection, setActiveSection] = useState('supplements');
+  36 │   const [savedResults, setSavedResults] = useState(false);
+  37 │ 
+  38 │   useEffect(() => {
+  39 │     // Ajout d'un délai artificiel pour simuler l'analyse AI
+  40 │     const timer = setTimeout(() => {
+  41 │       //const userRecommendations = getRecommendations(responses); //Commented out because getRecommendations is not defined
+  42 │       const mockRecommendations: Recommendation[] = [
+  43 │         {
+  44 │           id: '1',
+  45 │           name: 'Omega-3',
+  46 │           description: 'High-quality fish oil supplement for brain and heart health.',
+  47 │           dosage: '1000mg daily',
+  48 │           priority: 1,
+  49 │           compatibility: 95,
+  50 │           benefits: ['Improved brain function', 'Reduced inflammation', 'Heart health support'],
+  51 │           scientificRating: 4.5,
+  52 │           imageUrl: 'https://via.placeholder.com/60'
+  53 │         },
+  54 │         {
+  55 │           id: '2',
+  56 │           name: 'Magnesium',
+  57 │           description: 'Essential mineral for stress management and muscle function.',
+  58 │           dosage: '400mg daily',
+  59 │           priority: 2,
+  60 │           compatibility: 88,
+  61 │           benefits: ['Stress reduction', 'Improved sleep', 'Muscle relaxation'],
+  62 │           scientificRating: 4.2,
+  63 │           imageUrl: 'https://via.placeholder.com/60'
+  64 │         },
+  65 │         // Add more mock recommendations as needed...
+  66 │       ];
+  67 │       setRecommendations(mockRecommendations);
+  68 │       setIsLoading(false);
+  69 │ 
+  70 │       // Save results to secure storage
+  71 │       secureStorage.setItem('lastQuizResult', {
+  72 │         date: new Date().toISOString(),
+  73 │         responses,
+  74 │         recommendations: mockRecommendations
+  75 │       });
+  76 │     }, 2000);
+  77 │ 
+  78 │     return () => clearTimeout(timer);
+  79 │   }, [responses]);
+  80 │ 
+  81 │   const handleSaveResults = () => {
+  82 │     // In a real app, this would store results to backend
+  83 │     setSavedResults(true);
+  84 │   };
+  85 │ 
+  86 │   const handleShare = () => {
+  87 │     // In a real app, this would open a share dialog
+  88 │     alert('Fonctionnalité de partage à venir !');
+  89 │   };
+  90 │ 
+  91 │   if (isLoading) {
+  92 │     return (
+  93 │       <div className="h-96 flex flex-col items-center justify-center space-y-6 px-4 text-center">
+  94 │         <motion.div
+  95 │           initial={{ opacity: 0 }}
+  96 │           animate={{ opacity: 1 }}
+  97 │           className="max-w-md w-full"
+  98 │         >
+  99 │           <h3 className="text-xl font-semibold mb-2">Analyse avancée en cours...</h3>
+ 100 │           <p className="text-gray-600 mb-6">
+ 101 │             Notre système examine vos réponses pour formuler des recommandations personnalisées optimales.
+ 102 │           </p>
+ 103 │           <Progress value={65} className="h-2 w-full" />
+ 104 │           <p className="text-sm text-gray-500 mt-2">Création de votre profil nutritionnel</p>
+ 105 │         </motion.div>
+ 106 │       </div>
+ 107 │     );
+ 108 │   }
+ 109 │ 
+ 110 │   return (
+ 111 │     <motion.div
+ 112 │       initial={{ opacity: 0, y: 20 }}
+ 113 │       animate={{ opacity: 1, y: 0 }}
+ 114 │       transition={{ duration: 0.5 }}
+ 115 │       className="max-w-4xl mx-auto mb-12 px-4"
+ 116 │     >
+ 117 │       {/* Entête des résultats */}
+ 118 │       <div className="text-center mb-8">
+ 119 │         <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 mb-2">
+ 120 │           Analyse complète
+ 121 │         </Badge>
+ 122 │         <h2 className="text-2xl md:text-3xl font-bold mb-3">
+ 123 │           Vos résultats personnalisés, {userName}
+ 124 │         </h2>
+ 125 │         <p className="text-gray-600 max-w-2xl mx-auto">
+ 126 │           Basé sur votre profil, nous avons identifié les compléments nutritionnels 
+ 127 │           les plus adaptés à vos besoins spécifiques.
+ 128 │         </p>
+ 129 │       </div>
+ 130 │ 
+ 131 │       {/* Actions principales */}
+ 132 │       <div className="flex flex-wrap justify-center gap-3 mb-8">
+ 133 │         <Button variant="outline" onClick={handleSaveResults} disabled={savedResults}>
+ 134 │           {savedResults ? "Résultats sauvegardés" : "Sauvegarder les résultats"}
+ 135 │         </Button>
+ 136 │         <Button variant="outline" onClick={handleShare}>
+ 137 │           <Share2 className="w-4 h-4 mr-2" /> Partager
+ 138 │         </Button>
+ 139 │         <Button>
+ 140 │           <Download className="w-4 h-4 mr-2" /> Télécharger en PDF
+ 141 │         </Button>
+ 142 │       </div>
+ 143 │ 
+ 144 │       {/* Onglets de résultats */}
+ 145 │       <Tabs defaultValue="supplements" className="w-full">
+ 146 │         <TabsList className="grid grid-cols-3 mb-8">
+ 147 │           <TabsTrigger 
+ 148 │             value="supplements" 
+ 149 │             onClick={() => setActiveSection('supplements')}
+ 150 │             className={activeSection === 'supplements' ? 'bg-primary text-primary-foreground' : ''}
+ 151 │           >
+ 152 │             Compléments
+ 153 │           </TabsTrigger>
+ 154 │           <TabsTrigger 
+ 155 │             value="health-score" 
+ 156 │             onClick={() => setActiveSection('health-score')}
+ 157 │             className={activeSection === 'health-score' ? 'bg-primary text-primary-foreground' : ''}
+ 158 │           >
+ 159 │             Profil de santé
+ 160 │           </TabsTrigger>
+ 161 │           <TabsTrigger 
+ 162 │             value="plan" 
+ 163 │             onClick={() => setActiveSection('plan')}
+ 164 │             className={activeSection === 'plan' ? 'bg-primary text-primary-foreground' : ''}
+ 165 │           >
+ 166 │             Plan d'action
+ 167 │           </TabsTrigger>
+ 168 │         </TabsList>
+ 169 │ 
+ 170 │         {/* Contenu de l'onglet Compléments */}
+ 171 │         <TabsContent value="supplements" className="space-y-6">
+ 172 │           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+ 173 │             {recommendations.map((item, index) => (
+ 174 │               <motion.div
+ 175 │                 key={item.id}
+ 176 │                 initial={{ opacity: 0, y: 20 }}
+ 177 │                 animate={{ opacity: 1, y: 0 }}
+ 178 │                 transition={{ duration: 0.4, delay: index * 0.1 }}
+ 179 │               >
+ 180 │                 <Card className="h-full transition-all hover:shadow-md">
+ 181 │                   <CardHeader className="pb-2">
+ 182 │                     <div className="flex justify-between items-start">
+ 183 │                       <div>
+ 184 │                         <Badge variant="outline" className="mb-2 bg-blue-50 text-blue-700 border-blue-200">
+ 185 │                           Compatibilité {item.compatibility}%
+ 186 │                         </Badge>
+ 187 │                         <CardTitle className="text-xl">{item.name}</CardTitle>
+ 188 │                       </div>
+ 189 │                       <div className="flex">
+ 190 │                         {[...Array(5)].map((_, i) => (
+ 191 │                           <Star
+ 192 │                             key={i}
+ 193 │                             className={`w-4 h-4 ${
+ 194 │                               i < Math.round(item.scientificRating)
+ 195 │                                 ? 'text-yellow-400 fill-yellow-400'
+ 196 │                                 : 'text-gray-300'
+ 197 │                             }`}
+ 198 │                           />
+ 199 │                         ))}
+ 200 │                       </div>
+ 201 │                     </div>
+ 202 │                     <CardDescription className="line-clamp-2">
+ 203 │                       {item.description}
+ 204 │                     </CardDescription>
+ 205 │                   </CardHeader>
+ 206 │                   <CardContent>
+ 207 │                     <div className="text-sm mb-3">
+ 208 │                       <span className="font-semibold">Dosage recommandé:</span> {item.dosage}
+ 209 │                     </div>
+ 210 │                     <div className="space-y-2">
+ 211 │                       <p className="text-sm font-medium">Bénéfices principaux:</p>
+ 212 │                       <ul className="text-sm space-y-1">
+ 213 │                         {item.benefits.map((benefit, idx) => (
+ 214 │                           <li key={idx} className="flex items-start">
+ 215 │                             <ChevronRight className="w-4 h-4 text-green-500 mt-0.5 mr-1 flex-shrink-0" />
+ 216 │                             <span>{benefit}</span>
+ 217 │                           </li>
+ 218 │                         ))}
+ 219 │                       </ul>
+ 220 │                     </div>
+ 221 │                     <div className="mt-4 pt-3 border-t border-gray-100">
+ 222 │                       <Button variant="default" className="w-full">
+ 223 │                         Voir le produit
+ 224 │                       </Button>
+ 225 │                     </div>
+ 226 │                   </CardContent>
+ 227 │                 </Card>
+ 228 │               </motion.div>
+ 229 │             ))}
+ 230 │           </div>
+ 231 │         </TabsContent>
+ 232 │ 
+ 233 │         {/* Contenu de l'onglet Profil de santé */}
+ 234 │         <TabsContent value="health-score">
+ 235 │           <Card>
+ 236 │             <CardHeader>
+ 237 │               <CardTitle>Votre profil de santé</CardTitle>
+ 238 │               <CardDescription>
+ 239 │                 Basé sur vos réponses, voici une évaluation de vos différents marqueurs de santé
+ 240 │               </CardDescription>
+ 241 │             </CardHeader>
+ 242 │             <CardContent className="space-y-6">
+ 243 │               <div className="space-y-3">
+ 244 │                 <div className="flex justify-between">
+ 245 │                   <span className="font-medium">Équilibre nutritionnel</span>
+ 246 │                   <span>{67}%</span>
+ 247 │                 </div>
+ 248 │                 <Progress value={67} className="h-2" />
+ 249 │               </div>
+ 250 │               <div className="space-y-3">
+ 251 │                 <div className="flex justify-between">
+ 252 │                   <span className="font-medium">Gestion du stress</span>
+ 253 │                   <span>{responses.stressLevel === "high" ? 40 : 75}%</span>
+ 254 │                 </div>
+ 255 │                 <Progress value={responses.stressLevel === "high" ? 40 : 75} className="h-2" />
+ 256 │               </div>
+ 257 │               <div className="space-y-3">
+ 258 │                 <div className="flex justify-between">
+ 259 │                   <span className="font-medium">Qualité du sommeil</span>
+ 260 │                   <span>{responses.sleepQuality === "poor" ? 35 : 80}%</span>
+ 261 │                 </div>
+ 262 │                 <Progress value={responses.sleepQuality === "poor" ? 35 : 80} className="h-2" />
+ 263 │               </div>
+ 264 │               <div className="space-y-3">
+ 265 │                 <div className="flex justify-between">
+ 266 │                   <span className="font-medium">Activité physique</span>
+ 267 │                   <span>{responses.exerciseFrequency === "never" ? 20 : 70}%</span>
+ 268 │                 </div>
+ 269 │                 <Progress value={responses.exerciseFrequency === "never" ? 20 : 70} className="h-2" />
+ 270 │               </div>
+ 271 │             </CardContent>
+ 272 │           </Card>
+ 273 │         </TabsContent>
+ 274 │ 
+ 275 │         {/* Contenu de l'onglet Plan d'action */}
+ 276 │         <TabsContent value="plan">
+ 277 │           <Card>
+ 278 │             <CardHeader>
+ 279 │               <CardTitle>Plan d'action personnalisé</CardTitle>
+ 280 │               <CardDescription>
+ 281 │                 Un programme sur 60 jours pour améliorer votre bien-être général
+ 282 │               </CardDescription>
+ 283 │             </CardHeader>
+ 284 │             <CardContent className="space-y-6">
+ 285 │               <div className="space-y-4">
+ 286 │                 <h4 className="font-semibold flex items-center">
+ 287 │                   <span className="bg-blue-100 text-blue-800 p-1 rounded-full w-6 h-6 inline-flex items-center justify-center text-xs mr-2">1</span>
+ 288 │                   Semaines 1-2: Fondation
+ 289 │                 </h4>
+ 290 │                 <ul className="pl-8 space-y-2 text-sm">
+ 291 │                   <li className="list-disc">Commencer les compléments recommandés selon la posologie indiquée</li>
+ 292 │                   <li className="list-disc">Intégrer 2 portions supplémentaires de légumes verts par jour</li>
+ 293 │                   <li className="list-disc">Pratiquer 10 minutes de respiration profonde chaque matin</li>
+ 294 │                 </ul>
+ 295 │               </div>
+ 296 │ 
+ 297 │               <div className="space-y-4">
+ 298 │                 <h4 className="font-semibold flex items-center">
+ 299 │                   <span className="bg-green-100 text-green-800 p-1 rounded-full w-6 h-6 inline-flex items-center justify-center text-xs mr-2">2</span>
+ 300 │                   Semaines 3-4: Renforcement
+ 301 │                 </h4>
+ 302 │                 <ul className="pl-8 space-y-2 text-sm">
+ 303 │                   <li className="list-disc">Maintenir la prise des compléments</li>
+ 304 │                   <li className="list-disc">Ajouter 20 minutes d'activité physique modérée 3x par semaine</li>
+ 305 │                   <li className="list-disc">Améliorer la qualité du sommeil en limitant les écrans 1h avant le coucher</li>
+ 306 │                 </ul>
+ 307 │               </div>
+ 308 │ 
+ 309 │               <div className="space-y-4">
+ 310 │                 <h4 className="font-semibold flex items-center">
+ 311 │                   <span className="bg-purple-100 text-purple-800 p-1 rounded-full w-6 h-6 inline-flex items-center justify-center text-xs mr-2">3</span>
+ 312 │                   Semaines 5-8: Optimisation
+ 313 │                 </h4>
+ 314 │                 <ul className="pl-8 space-y-2 text-sm">
+ 315 │                   <li className="list-disc">Ajuster la posologie des compléments si nécessaire</li>
+ 316 │                   <li className="list-disc">Intégrer des techniques de gestion du stress plus avancées</li>
+ 317 │                   <li className="list-disc">Évaluer les progrès et ajuster le plan selon les résultats</li>
+ 318 │                 </ul>
+ 319 │               </div>
+ 320 │ 
+ 321 │               <div className="mt-6 pt-4 border-t border-gray-100">
+ 322 │                 <Button className="w-full">
+ 323 │                   <Award className="w-4 h-4 mr-2" /> Obtenir votre plan complet
+ 324 │                 </Button>
+ 325 │               </div>
+ 326 │             </CardContent>
+ 327 │           </Card>
+ 328 │         </TabsContent>
+ 329 │       </Tabs>
+ 330 │     </motion.div>
+ 331 │   );
+ 332 │ };
+ 333 │ 
+ 334 │ export default QuizResults;
+ 335 │ 
+ 336 │ //Dummy secureStorage implementation
+ 337 │ const secureStorage = {
+     ·       ──────┬──────
+     ·             ╰── `secureStorage` redefined here
+ 338 │   setItem: (key: string, value: any) => {
+ 339 │     localStorage.setItem(key, JSON.stringify(value));
+ 340 │   },
+     ╰────

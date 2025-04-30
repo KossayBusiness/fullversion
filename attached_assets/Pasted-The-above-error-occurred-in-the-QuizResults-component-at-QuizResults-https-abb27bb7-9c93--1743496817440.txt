@@ -1,0 +1,24 @@
+The above error occurred in the <QuizResults> component:
+
+    at QuizResults (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/components/QuizResults.tsx:20:41)
+    at div
+    at div
+    at div
+    at Quiz (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/pages/Quiz.tsx:40:43)
+    at RenderedRoute (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a75adacc:4069:5)
+    at Routes (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a75adacc:4508:5)
+    at Router (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a75adacc:4451:15)
+    at BrowserRouter (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a75adacc:5196:5)
+    at Provider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/chunk-SH2BLAPC.js?v=a75adacc:38:15)
+    at TooltipProvider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=a75adacc:61:5)
+    at QueryClientProvider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/@tanstack_react-query.js?v=a75adacc:2794:3)
+    at App (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/App.tsx:99:5)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+Cannot access 'identifyConcernPriorities' before initialization
+Données du quiz insuffisantes pour générer des recommandations
+at t.value (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400

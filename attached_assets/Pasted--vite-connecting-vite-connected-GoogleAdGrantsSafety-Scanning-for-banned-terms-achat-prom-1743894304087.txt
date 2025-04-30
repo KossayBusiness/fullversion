@@ -1,0 +1,45 @@
+[vite] connecting...
+[vite] connected.
+[GoogleAdGrantsSafety] Scanning for banned terms: achat, promo, commander, prix, offre, rabais, boutique, vente, acheter, soldes, discount, bon marché, économies, réduction, promotion, meilleur prix, tarif, €
+[GoogleAdGrantsSafety] No banned terms detected on this page
+[GoogleAdGrantsSafety] First scan completed in 59.60ms
+Cannot read properties of undefined (reading 'length')
+Cannot read properties of undefined (reading 'length')
+The above error occurred in the <ArticleView> component:
+
+    at ArticleView (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/src/components/ArticleView.tsx:20:24)
+    at div
+    at div
+    at Article (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/src/pages/Article.tsx:196:20)
+    at RenderedRoute (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=2a17aac7:4084:5)
+    at Routes (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=2a17aac7:4524:5)
+    at Router (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=2a17aac7:4467:15)
+    at BrowserRouter (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=2a17aac7:5215:5)
+    at Provider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/node_modules/.vite/deps/chunk-O6F56T3P.js?v=2a17aac7:40:15)
+    at TooltipProvider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=2a17aac7:61:5)
+    at QueryClientProvider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/node_modules/.vite/deps/@tanstack_react-query.js?v=2a17aac7:2806:3)
+    at App (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/src/App.tsx:103:5)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+at ArticleView (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/src/components/ArticleView.tsx:20:24)
+at div
+at div
+at Article (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/src/pages/Article.tsx:196:20)
+at RenderedRoute (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=2a17aac7:4084:5)
+at Routes (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=2a17aac7:4524:5)
+at Router (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=2a17aac7:4467:15)
+at BrowserRouter (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=2a17aac7:5215:5)
+at Provider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/node_modules/.vite/deps/chunk-O6F56T3P.js?v=2a17aac7:40:15)
+at TooltipProvider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=2a17aac7:61:5)
+at QueryClientProvider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/node_modules/.vite/deps/@tanstack_react-query.js?v=2a17aac7:2806:3)
+at App (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/src/App.tsx:103:5)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+at t.value (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+Cannot read properties of undefined (reading 'length')

@@ -1,0 +1,549 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Styles améliorés pour l'interface du quiz */
+.text-gradient {
+  background: linear-gradient(90deg, #1a365d 0%, #2563eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.quiz-card {
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.quiz-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.08), 0 10px 15px -6px rgba(0, 0, 0, 0.04);
+}
+
+.progress-bar {
+  height: 8px;
+  background-color: #edf2f7;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
+  transition: width 0.5s ease;
+}
+
+.option-card {
+  border: 2px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.option-card:hover {
+  border-color: #90cdf4;
+  background-color: #f0f9ff;
+}
+
+.option-card.selected {
+  border-color: #2563eb;
+  background-color: #ebf5ff;
+}
+
+/* Styles améliorés pour les résultats */
+.result-card {
+  border-radius: 1rem;
+  background: white;
+  padding: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #2563eb;
+}
+
+.recommendation-tile {
+  border-radius: 0.75rem;
+  background: #f8fafc;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.recommendation-tile:hover {
+  background: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+@layer utilities {
+  .animate-fadeIn {
+    animation: fadeIn 0.6s ease-in;
+  }
+
+  .animate-slideIn {
+    animation: slideIn 0.5s ease-out;
+  }
+
+  .animate-pulse-subtle {
+    animation: pulseSoft 2s infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulseSoft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+
+    --natural-50: hsl(210, 20%, 98%);
+    --natural-100: hsl(220, 14%, 96%);
+    --natural-200: hsl(220, 13%, 91%);
+    --natural-300: hsl(216, 12%, 84%);
+    --natural-400: hsl(218, 11%, 65%);
+    --natural-500: hsl(220, 9%, 46%);
+    --natural-600: hsl(215, 14%, 34%);
+    --natural-700: hsl(217, 19%, 27%);
+    --natural-800: hsl(215, 28%, 17%);
+    --natural-900: hsl(221, 39%, 11%);
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Styles avancés pour les articles scientifiques */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display text-natural-800 font-medium leading-tight;
+  }
+
+  h2 {
+    @apply text-2xl md:text-3xl mb-4;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl mb-3;
+  }
+
+  p {
+    @apply leading-relaxed mb-4 text-natural-700;
+  }
+
+  article p {
+    @apply text-base md:text-lg mb-6;
+  }
+
+  article ul, article ol {
+    @apply pl-6 mb-6 space-y-2;
+  }
+
+  article li {
+    @apply text-natural-700;
+  }
+
+  .glass {
+    @apply bg-white bg-opacity-80 backdrop-filter backdrop-blur-sm border border-natural-200;
+  }
+}
+
+@layer components {
+  .lead {
+    @apply text-lg md:text-xl text-natural-700 font-normal leading-relaxed;
+  }
+
+  .article-content {
+    @apply prose max-w-none text-natural-700 prose-headings:text-natural-800 prose-headings:font-display prose-p:text-natural-700 prose-a:text-indigo-600 hover:prose-a:text-indigo-700 prose-a:no-underline hover:prose-a:underline;
+  }
+
+  .scientific-highlight {
+    @apply bg-indigo-50 py-1 px-2 rounded text-indigo-700 font-medium;
+  }
+}
+
+@layer utilities {
+  .fade-in {
+    @apply opacity-0 animate-fadeIn;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.6s ease forwards;
+  }
+}
+
+/* Animation du bouton CTA améliorée */
+.pulse-animation {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(236, 72, 153, 0);
+  }
+}
+
+/* Animation de défilement des problèmes */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-slide-in {
+  animation: fadeSlideIn 0.6s ease-out forwards;
+}
+
+/* Animation de focus sur la recommandation principale */
+@keyframes highlightPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(79, 70, 229, 0);
+  }
+}
+
+.highlight-pulse {
+  animation: highlightPulse 2s infinite;
+}
+
+/* Rotation des mots clés pour captiver l'attention */
+.rotating-words {
+  display: inline-flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 1.5em;
+}
+
+.rotating-words span {
+  display: block;
+  height: 100%;
+  animation: rotateWords 8s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+}
+
+@keyframes rotateWords {
+  0%, 20% {
+    transform: translateY(0);
+  }
+  25%, 45% {
+    transform: translateY(-100%);
+  }
+  50%, 70% {
+    transform: translateY(-200%);
+  }
+  75%, 95% {
+    transform: translateY(-300%);
+  }
+  100% {
+    transform: translateY(-400%);
+  }
+}
+
+/* Effet laboratoire sur les éléments clés */
+.lab-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.lab-effect::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  animation: labSweep 3s linear infinite;
+}
+
+@keyframes labSweep {
+  0% {
+    transform: translate(-100%, -100%) rotate(30deg);
+  }
+  100% {
+    transform: translate(100%, 100%) rotate(30deg);
+  }
+}
+
+/* Animation scientifique pour les badges */
+.scientific-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+.scientific-badge::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0) 0%, 
+    rgba(255,255,255,0.2) 50%, 
+    rgba(255,255,255,0) 100%);
+  transform: translateX(-100%);
+  animation: scientificScan 3s infinite;
+}
+
+@keyframes scientificScan {
+  0% {
+    transform: translateX(-100%);
+  }
+  50%, 100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Animation pour simuler l'analyse des données */
+@keyframes dataAnalysis {
+  0%, 100% {
+    height: 20%;
+  }
+  20% {
+    height: 60%;
+  }
+  40% {
+    height: 40%;
+  }
+  60% {
+    height: 80%;
+  }
+  80% {
+    height: 30%;
+  }
+}
+
+.data-bar {
+  animation: dataAnalysis 3s infinite;
+}
+
+/* Animation générales */
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.animate-fadeIn.delay-100 {
+  animation-delay: 100ms;
+}
+
+.animate-fadeIn.delay-200 {
+  animation-delay: 200ms;
+}
+
+.animate-fadeIn.delay-300 {
+  animation-delay: 300ms;
+}
+
+.animate-fadeIn.delay-400 {
+  animation-delay: 400ms;
+}
+
+.animate-fadeIn.delay-500 {
+  animation-delay: 500ms;
+}
+
+.animate-fadeIn.delay-600 {
+  animation-delay: 600ms;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-in-out forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Animation de rotation pour les problèmes */
+.problem-rotation-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.problem-rotation-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 500ms, transform 500ms;
+}
+.problem-rotation-exit {
+  opacity: 1;
+}
+.problem-rotation-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 500ms, transform 500ms;
+}
+
+
+/* Styles pour le contenu d'article avec tags HTML */
+.prose h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #1e293b;
+  line-height: 1.3;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+  line-height: 1.7;
+}
+
+.prose a {
+  color: #4f46e5;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.prose a:hover {
+  color: #4338ca;
+}
+
+/* Style pour les listes dans le contenu de l'article */
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}

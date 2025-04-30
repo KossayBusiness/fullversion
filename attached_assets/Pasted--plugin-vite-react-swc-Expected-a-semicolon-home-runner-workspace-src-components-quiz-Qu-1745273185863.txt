@@ -1,0 +1,105 @@
+[plugin:vite:react-swc] × Expected a semicolon
+     ╭─[/home/runner/workspace/src/components/quiz/QuizForm.tsx:161:1]
+ 158 │     } catch (error) {
+ 159 │       console.error("Erreur lors de la navigation vers les résultats:", error);
+ 160 │       alert("Une erreur s'est produite. Veuillez réessayer.");
+ 161 │     }a });
+     ·         ─
+ 162 │   };
+ 163 │ 
+ 164 │   const steps = [
+     ╰────
+  × Return statement is not allowed here
+     ╭─[/home/runner/workspace/src/components/quiz/QuizForm.tsx:239:1]
+ 236 │       const currentStep = steps[quizState.currentStep];
+ 237 │       const progress = ((quizState.currentStep + 1) / steps.length) * 100;
+ 238 │     
+ 239 │ ╭─▶   return (
+ 240 │ │       <div className="space-y-8 max-w-3xl mx-auto">
+ 241 │ │         <div className="text-center mb-8">
+ 242 │ │           <h1 className="text-3xl font-bold mb-3">Personalized Nutrition Assessment</h1>
+ 243 │ │           <p className="text-muted-foreground">
+ 244 │ │             <EnhancedScientificText 
+ 245 │ │               content="Our advanced nutritional analysis is based on peer-reviewed research and personalized to your unique biochemistry."
+ 246 │ │               highlightColor="bg-amber-100"
+ 247 │ │             />
+ 248 │ │           </p>
+ 249 │ │         </div>
+ 250 │ │   
+ 251 │ │         <Card className="border-0 shadow-md">
+ 252 │ │           <CardContent className="pt-6">
+ 253 │ │             <QuizProgress 
+ 254 │ │               currentStep={quizState.currentStep + 1} 
+ 255 │ │               totalSteps={steps.length} 
+ 256 │ │             />
+ 257 │ │   
+ 258 │ │             <Tabs defaultValue="questions" className="mt-6">
+ 259 │ │               <TabsList className="grid w-full grid-cols-2">
+ 260 │ │                 <TabsTrigger value="questions">Assessment</TabsTrigger>
+ 261 │ │                 <TabsTrigger value="info">Why We Ask</TabsTrigger>
+ 262 │ │               </TabsList>
+ 263 │ │   
+ 264 │ │               <TabsContent value="questions" className="py-4 space-y-4">
+ 265 │ │                 <h2 className="text-xl font-semibold mb-2">{currentStep.title}</h2>
+ 266 │ │                 <p className="text-muted-foreground mb-6">{currentStep.description}</p>
+ 267 │ │   
+ 268 │ │                 {currentStep.component}
+ 269 │ │   
+ 270 │ │                 <div className="flex justify-between mt-8">
+ 271 │ │                   <Button 
+ 272 │ │                     variant="outline" 
+ 273 │ │                     onClick={handlePrevStep}
+ 274 │ │                     disabled={quizState.currentStep === 0}
+ 275 │ │                   >
+ 276 │ │                     Previous
+ 277 │ │                   </Button>
+ 278 │ │   
+ 279 │ │                   <Button onClick={handleNextStep}>
+ 280 │ │                     {quizState.currentStep < steps.length - 1 ? "Continue" : "Get Your Results"}
+ 281 │ │                   </Button>
+ 282 │ │                 </div>
+ 283 │ │               </TabsContent>
+ 284 │ │   
+ 285 │ │               <TabsContent value="info" className="py-4">
+ 286 │ │                 <div className="space-y-4">
+ 287 │ │                   <h2 className="text-lg font-medium">Why This Information Matters</h2>
+ 288 │ │                   <p>
+ 289 │ │                     <EnhancedScientificText 
+ 290 │ │                       content="The questions in this assessment are designed based on clinical research to identify your specific nutritional needs and potential imbalances."
+ 291 │ │                       highlightColor="bg-amber-100"
+ 292 │ │                     />
+ 293 │ │                   </p>
+ 294 │ │                   <p className="text-muted-foreground">
+ 295 │ │                     Your responses help our system generate evidence-based recommendations tailored to your unique profile.
+ 296 │ │                   </p>
+ 297 │ │   
+ 298 │ │                   <ScientificTrustBadges />
+ 299 │ │                 </div>
+ 300 │ │               </TabsContent>
+ 301 │ │             </Tabs>
+ 302 │ │           </CardContent>
+ 303 │ │         </Card>
+ 304 │ │       </div>
+ 305 │ ╰─▶   );
+ 306 │     };
+ 307 │     
+ 308 │     const ResultsView: React.FC<{ quizData: QuizState }> = ({ quizData }) => {
+     ╰────
+  × Expression expected
+     ╭─[/home/runner/workspace/src/components/quiz/QuizForm.tsx:306:1]
+ 303 │       </Card>
+ 304 │     </div>
+ 305 │   );
+ 306 │ };
+     · ─
+ 307 │ 
+ 308 │ const ResultsView: React.FC<{ quizData: QuizState }> = ({ quizData }) => {
+ 309 │   return (
+     ╰────
+
+
+Caused by:
+    Syntax Error
+/home/runner/workspace/src/components/quiz/QuizForm.tsx
+Click outside, press Esc key, or fix the code to dismiss.
+You can also disable this overlay by setting server.hmr.overlay to false in vite.config.ts.

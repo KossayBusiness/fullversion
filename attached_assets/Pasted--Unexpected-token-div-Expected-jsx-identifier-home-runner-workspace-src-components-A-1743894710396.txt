@@ -1,0 +1,101 @@
+
+  × Unexpected token `div`. Expected jsx identifier
+     ╭─[/home/runner/workspace/src/components/ArticleView.tsx:201:1]
+ 198 │   };
+ 199 │ 
+ 200 │   return (
+ 201 │     <div className="min-h-screen flex flex-col bg-natural-50/30">
+     ·      ───
+ 202 │       {/* Barre de progression de lecture */}
+ 203 │       <div className="fixed top-0 left-0 right-0 h-1 z-50">
+ 204 │         <div 
+     ╰────
+
+
+Caused by:
+11:06:19 PM [vite] Internal server error:   × Unexpected token `div`. Expected jsx identifier
+     ╭─[/home/runner/workspace/src/components/ArticleView.tsx:201:1]
+ 198 │   };
+ 199 │ 
+ 200 │   return (
+ 201 │     <div className="min-h-screen flex flex-col bg-natural-50/30">
+     ·      ───
+ 202 │       {/* Barre de progression de lecture */}
+ 203 │       <div className="fixed top-0 left-0 right-0 h-1 z-50">
+ 204 │         <div 
+     ╰────
+
+
+Caused by:
+    Syntax Error
+  Plugin: vite:react-swc
+  File: /home/runner/workspace/src/components/ArticleView.tsx:201:1
+  
+Error processing file src/components/ArticleView.tsx: SyntaxError: Unexpected token, expected "," (518:12)
+    at constructor (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:362:19)
+    at TypeScriptParserMixin.raise (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:3259:19)
+    at TypeScriptParserMixin.unexpected (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:3279:16)
+    at TypeScriptParserMixin.expect (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:3589:12)
+    at TypeScriptParserMixin.parseParenAndDistinguishExpression (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:11183:14)
+    at TypeScriptParserMixin.parseExprAtom (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10850:23)
+    at TypeScriptParserMixin.parseExprAtom (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:6811:20)
+    at TypeScriptParserMixin.parseExprSubscripts (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10592:23)
+    at TypeScriptParserMixin.parseUpdate (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10577:21)
+    at TypeScriptParserMixin.parseMaybeUnary (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10557:23) {
+  code: 'BABEL_PARSER_SYNTAX_ERROR',
+11:06:20 PM [vite] Internal server error:   × Unexpected token `div`. Expected jsx identifier
+     ╭─[/home/runner/workspace/src/components/ArticleView.tsx:201:1]
+ 198 │   };
+ 199 │ 
+ 200 │   return (
+ 201 │     <div className="min-h-screen flex flex-col bg-natural-50/30">
+     ·      ───
+ 202 │       {/* Barre de progression de lecture */}
+ 203 │       <div className="fixed top-0 left-0 right-0 h-1 z-50">
+ 204 │         <div 
+     ╰────
+
+
+Caused by:
+    Syntax Error
+  Plugin: vite:react-swc
+  File: /home/runner/workspace/src/components/ArticleView.tsx:201:1
+   (x2)
+Error processing file src/components/ArticleView.tsx: SyntaxError: Unexpected token, expected "," (518:12)
+    at constructor (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:362:19)
+    at TypeScriptParserMixin.raise (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:3259:19)
+    at TypeScriptParserMixin.unexpected (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:3279:16)
+    at TypeScriptParserMixin.expect (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:3589:12)
+    at TypeScriptParserMixin.parseParenAndDistinguishExpression (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:11183:14)
+    at TypeScriptParserMixin.parseExprAtom (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10850:23)
+    at TypeScriptParserMixin.parseExprAtom (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:6811:20)
+    at TypeScriptParserMixin.parseExprSubscripts (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10592:23)
+    at TypeScriptParserMixin.parseUpdate (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10577:21)
+    at TypeScriptParserMixin.parseMaybeUnary (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10557:23) {
+  code: 'BABEL_PARSER_SYNTAX_ERROR',
+  reasonCode: 'UnexpectedToken',
+  loc: Position { line: 518, column: 12, index: 21767 },
+  pos: 21767,
+  syntaxPlugin: undefined
+}
+11:11:19 PM [vite] Internal server error:   × Unexpected token `div`. Expected jsx identifier
+     ╭─[/home/runner/workspace/src/components/ArticleView.tsx:201:1]
+ 198 │   };
+ 199 │ 
+ 200 │   return (
+ 201 │     <div className="min-h-screen flex flex-col bg-natural-50/30">
+     ·      ───
+ 202 │       {/* Barre de progression de lecture */}
+ 203 │       <div className="fixed top-0 left-0 right-0 h-1 z-50">
+ 204 │         <div 
+     ╰────
+
+
+Caused by:
+    Syntax Error
+  Plugin: vite:react-swc
+  File: /home/runner/workspace/src/components/ArticleView.tsx:201:1
+   (x3)
+
+
+

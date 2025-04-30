@@ -1,0 +1,118 @@
+Je vais vous fournir une description détaillée de la logique du quiz nutritionnel et du processus de recommandation des compléments alimentaires basée sur l'analyse du code.
+
+Structure du Quiz
+D'après le code, le quiz comporte 6 étapes principales définies dans QuizSteps.ts:
+
+userInfo - Informations personnelles de base
+objectives - Objectifs de santé
+dietaryHabits - Habitudes alimentaires
+proteinConsumption - Consommation de protéines
+lifestyle - Mode de vie
+symptoms - Symptômes actuels
+Questions posées dans chaque étape
+1. Objectifs (ObjectivesStep.tsx)
+Les utilisateurs peuvent sélectionner plusieurs objectifs parmi:
+
+Plus d'énergie
+Meilleur sommeil
+Améliorer ma concentration
+Renforcer mon immunité
+Réduire mon stress
+Soutenir ma digestion
+Améliorer ma peau
+Équilibrer mon poids
+2. Habitudes alimentaires (DietaryHabitsStep.tsx)
+L'utilisateur sélectionne un régime parmi:
+
+Omnivore (je mange de tout)
+Flexitarien (je limite ma consommation de viande)
+Pescetarien (je mange du poisson mais pas de viande)
+Végétarien (pas de viande ni poisson)
+Végan (aucun produit animal)
+3. Consommation de protéines (ProteinConsumptionStep.tsx)
+Trois questions sont posées:
+
+Fréquence de consommation de viande (quotidien à rarement)
+Fréquence de consommation de poisson (quotidien à rarement)
+Portions de fruits et légumes par jour (0-1, 2-3, 4-5, 6+)
+4. Mode de vie (LifestyleStep.tsx)
+Trois questions sont posées:
+
+Fréquence d'activité physique (quotidien à rarement)
+Qualité du sommeil (excellent à mauvais)
+Niveau de stress (faible à sévère)
+5. Symptômes (SymptomsStep.tsx)
+Les utilisateurs peuvent sélectionner plusieurs symptômes parmi:
+
+Fatigue
+Troubles du sommeil
+Stress/Anxiété
+Problèmes digestifs
+Douleurs articulaires
+Problèmes de peau
+Maux de tête
+Sautes d'humeur
+Fringales
+Manque de concentration
+Sensibilité au froid
+Cheveux/Ongles fragiles
+Processus de détermination des compléments alimentaires
+L'algorithme de recommandation se trouve dans recommenderSystem.ts. Voici le processus en détail:
+
+Collecte des données: Toutes les réponses sont collectées dans un objet QuizResponse
+
+Scoring des recommandations: Pour chaque complément potentiel, un score de pertinence est calculé basé sur:
+
+Les symptômes sélectionnés (poids élevé dans le scoring)
+Les objectifs définis (poids moyen dans le scoring)
+Les habitudes alimentaires (impact sur les carences potentielles)
+Le mode de vie (impact sur les besoins spécifiques)
+L'âge et le genre (si disponibles)
+Priorisation:
+
+Les compléments sont classés par score de pertinence
+Les symptômes graves (maux de tête, douleurs) ont priorité sur les symptômes légers (fatigue)
+La fonction scoreRecommendations attribue des poids différents selon l'importance des symptômes
+Base de données des compléments:
+
+Une base complète (SUPPLEMENT_CATALOG) contient tous les compléments avec leurs propriétés
+Chaque complément a des détails: nom scientifique, descriptions, bénéfices, dosage, contre-indications, etc.
+Enrichissement des recommandations:
+
+Ajout de termes scientifiques via enrichRecommendationsWithScientificTerms
+Génération d'explications détaillées via generateDetailedRecommendationExplanation
+Pour intégrer avec Manus.im
+Voici ce que vous devriez demander à Manus.im pour l'aider à améliorer les recommandations:
+
+J'ai besoin d'une analyse approfondie des compléments alimentaires pour un système de recommandation basé sur un quiz de santé personnalisé. Le quiz collecte des informations sur:
+1. Symptômes: Fatigue, troubles du sommeil, stress, problèmes digestifs, douleurs, etc.
+2. Objectifs: Énergie, sommeil, concentration, immunité, stress, etc.
+3. Régime alimentaire: Omnivore, végétarien, végan, etc.
+4. Mode de vie: Activité physique, qualité de sommeil, niveau de stress
+5. Consommation de protéines
+Pour chaque complément alimentaire, j'ai besoin de:
+1. Efficacité scientifiquement prouvée pour chaque symptôme (échelle 1-10)
+2. Efficacité pour chaque objectif de santé (échelle 1-10)
+3. Dosage recommandé selon le profil (âge, sexe, poids si disponible)
+4. Contre-indications et interactions médicamenteuses
+5. Temps d'efficacité attendu
+6. Sources naturelles alternatives
+Les compléments devraient être priorisés en fonction de:
+1. Gravité des symptômes (les symptômes comme les maux de tête ont priorité sur la fatigue)
+2. Objectifs de l'utilisateur
+3. Compatibilité avec le régime alimentaire
+4. Synergies potentielles entre compléments
+Créez une base de données structurée de compléments alimentaires selon ces critères, avec pour chacun:
+- ID unique
+- Nom commun et scientifique
+- Description claire
+- Symptômes traités (avec score d'efficacité)
+- Objectifs supportés (avec score d'efficacité)
+- Base scientifique (études)
+- Dosage standard et adapté
+- Délai d'efficacité
+- Contre-indications
+- Interactions
+- Profil de sécurité (1-10)
+- Sources naturelles
+- Catégories (immunité, énergie, sommeil, etc.)

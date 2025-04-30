@@ -1,0 +1,2663 @@
+[plugin:vite:react-swc] × the name `getAIModelDetailedStatus` is defined multiple times
+      ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:618:1]
+  615 │  * Retourne le statut du modèle d'IA actuel
+  616 │  * @returns Information sur le statut du modèle d'IA
+  617 │  */
+  618 │ export function getAIModelDetailedStatus() {
+      ·                 ────────────┬───────────
+      ·                             ╰── previous definition of `getAIModelDetailedStatus` here
+  619 │   try {
+  620 │     // Récupérer les informations depuis le moteur d'apprentissage
+  621 │     const aiLearningStatus = getAILearningStatus();
+  622 │ 
+  623 │     // Récupérer la qualité des données
+  624 │     const dataQuality = evaluateDataQuality();
+  625 │ 
+  626 │     // Obtenir les corrélations de motifs
+  627 │     const patternCorrelations = getPatternCorrelations();
+  628 │ 
+  629 │     // Préparer des informations sur les recommandations les plus performantes
+  630 │     const recommendationPerformance = analyzeRecommendationPerformance();
+  631 │ 
+  632 │     // Identifier les recommandations les plus efficaces
+  633 │     const topRecommendations = Object.entries(recommendationPerformance)
+  634 │       .filter(([_, data]) => data.totalRatings > 10)
+  635 │       .sort((a, b) => b[1].averageRating - a[1].averageRating)
+  636 │       .slice(0, 5)
+  637 │       .map(([id, data]) => ({
+  638 │         id,
+  639 │         averageRating: data.averageRating,
+  640 │         totalRatings: data.totalRatings
+  641 │       }));
+  642 │ 
+  643 │     // Générer des insights sur l'amélioration du modèle
+  644 │     const improvements = [];
+  645 │ 
+  646 │     if (aiLearningStatus.trainingHistory && aiLearningStatus.trainingHistory.length > 1) {
+  647 │       const lastTraining = aiLearningStatus.trainingHistory[aiLearningStatus.trainingHistory.length - 1];
+  648 │       const previousTraining = aiLearningStatus.trainingHistory[aiLearningStatus.trainingHistory.length - 2];
+  649 │ 
+  650 │       if (lastTraining.accuracy > previousTraining.accuracy) {
+  651 │         const improvementPercent = ((lastTraining.accuracy - previousTraining.accuracy) / previousTraining.accuracy * 100).toFixed(1);
+  652 │         improvements.push(`Précision améliorée de ${improvementPercent}% depuis la dernière version`);
+  653 │       }
+  654 │     }
+  655 │ 
+  656 │     if (aiLearningStatus.uniqueProfilesCount > 1000) {
+  657 │       improvements.push(`Base de données enrichie de ${aiLearningStatus.uniqueProfilesCount} profils uniques`);
+  658 │     }
+  659 │ 
+  660 │     if (Object.keys(patternCorrelations.symptomCorrelations).length > 0) {
+  661 │       improvements.push(`Affinement des corrélations symptômes-suppléments (${Object.keys(patternCorrelations.symptomCorrelations).length} motifs)`);
+  662 │     }
+  663 │ 
+  664 │     // Ajouter des indicateurs de performance du système
+  665 │     const avgUserSatisfaction = Object.values(recommendationPerformance)
+  666 │       .filter(data => data.totalRatings > 0)
+  667 │       .reduce((sum, data) => sum + data.averageRating, 0) / 
+  668 │       Object.values(recommendationPerformance).filter(data => data.totalRatings > 0).length;
+  669 │ 
+  670 │     if (!isNaN(avgUserSatisfaction)) {
+  671 │       const satisfactionPercentage = Math.round((avgUserSatisfaction / 5) * 100);
+  672 │       improvements.push(`Taux de satisfaction utilisateur global de ${satisfactionPercentage}%`);
+  673 │     }
+  674 │ 
+  675 │     if (Object.keys(patternCorrelations.ageCorrelations).length > 0) {
+  676 │       improvements.push(`Corrélations d'âge identifiées (${Object.keys(patternCorrelations.ageCorrelations).length} segments)`);
+  677 │     }
+  678 │ 
+  679 │     if (Object.keys(patternCorrelations.symptomCorrelations).length > 0) {
+  680 │       improvements.push(`Corrélations avancées entre symptômes et efficacité nutritionnelle (${Object.keys(patternCorrelations.symptomCorrelations).length} symptômes)`);
+  681 │     }
+  682 │ 
+  683 │     // Construire et retourner l'état complet du modèle
+  684 │     return {
+  685 │       isActive: aiLearningStatus.isActive,
+  686 │       modelVersion: aiLearningStatus.modelVersion,
+  687 │       lastTrainingDate: aiLearningStatus.lastTrainingDate,
+  688 │       accuracy: aiLearningStatus.accuracy,
+  689 │       dataPointsAnalyzed: aiLearningStatus.dataPointsCount,
+  690 │       improvements: improvements,
+  691 │ 
+  692 │       // Informations supplémentaires
+  693 │       dataQuality: dataQuality.overallQuality,
+  694 │       uniqueProfiles: aiLearningStatus.uniqueProfilesCount,
+  695 │       trainingHistory: aiLearningStatus.trainingHistory,
+  696 │       topPerformingRecommendations: topRecommendations,
+  697 │ 
+  698 │       // Métriques d'interface utilisateur
+  699 │       knowledgeBase: 2500 + Math.round(aiLearningStatus.dataPointsCount / 10),
+  700 │       accuracyImprovement: 2.3,
+  701 │       processingTime: 234,
+  702 │       userSatisfaction: 94,
+  703 │       useCaseCoverage: 87,
+  704 │       recommendationEfficiency: 92,
+  705 │       lastUpdate: new Date().toLocaleDateString(),
+  706 │     };
+  707 │   } catch (error) {
+  708 │     console.error("Erreur lors de la récupération du statut du modèle d'IA:", error);
+  709 │ 
+  710 │     // Fournir des valeurs par défaut en cas d'erreur
+  711 │     return {
+  712 │       isActive: true,
+  713 │       modelVersion: '1.0.0',
+  714 │       lastTrainingDate: new Date().toISOString(),
+  715 │       accuracy: 0.87,
+  716 │       dataPointsAnalyzed: 1250,
+  717 │       improvements: [
+  718 │         "Amélioration de la détection des profils à risque",
+  719 │         "Meilleure personnalisation par âge et sexe",
+  720 │         "Intégration des dernières recherches scientifiques"
+  721 │       ],
+  722 │       knowledgeBase: 2500,
+  723 │       accuracyImprovement: 2.3,
+  724 │       processingTime: 234, userSatisfaction: 94,
+  725 │       useCaseCoverage: 87,
+  726 │       recommendationEfficiency: 92,
+  727 │       lastUpdate: new Date().toLocaleDateString(),
+  728 │       topPerformingRecommendations: []
+  729 │     };
+  730 │   }
+  731 │ }
+  732 │ 
+  733 │ // Fonction unique pour l'analyse comportementale, sans duplication
+  734 │ const processBehavioralData = (behavioralMetrics: BehavioralMetrics) => ({
+  735 │   cognitiveLoad: 0.7,
+  736 │   stressLevel: 0.6,
+  737 │   sleepQuality: 0.8,
+  738 │   attentionLevel: 0.65,
+  739 │   uncertaintyLevel: 0.4,
+  740 │   interestAreas: ['Stress', 'Sommeil','Énergie']
+  741 │ });
+  742 │ 
+  743 │ // Fonction unique pour analyser les performances des recommandations
+  744 │ const analyzeRecommendationPerformance = () => ({
+  745 │   'vitamin_d3': { averageRating: 4.7, totalRatings: 120 },
+  746 │   'magnesium_glycinate': { averageRating: 4.6, totalRatings: 95 },
+  747 │   'omega3': { averageRating: 4.5, totalRatings: 150 },
+  748 │   'probiotics': { averageRating: 4.4, totalRatings: 110 },
+  749 │   'zinc': { averageRating: 4.3, totalRatings: 80 }
+  750 │ });
+  751 │ 
+  752 │ // Fonction unique pour obtenir les corrélations de motifs
+  753 │ const getPatternCorrelations = () => {
+  754 │   return {
+  755 │     symptomCorrelations: {
+  756 │       "stress": ["magnesium_glycinate", "ashwagandha", "l_theanine"],
+  757 │       "fatigue": ["vitamin_b_complex", "iron", "coq10"],
+  758 │       "insomnia": ["melatonin", "magnesium_glycinate", "valerian_root"],
+  759 │       "digestion": ["probiotics", "digestive_enzymes", "fiber_supplement"],
+  760 │       "joint_pain": ["omega3", "curcumin", "glucosamine_chondroitin"]
+  761 │     },
+  762 │     ageCorrelations: {
+  763 │       "18-30": ["vitamin_d3", "iron", "probiotics"],
+  764 │       "31-45": ["coq10", "vitamin_b_complex", "ashwagandha"],
+  765 │       "46-60": ["omega3", "vitamin_d3", "magnesium_glycinate"],
+  766 │       "60+": ["vitamin_d3", "calcium", "vitamin_b12"]
+  767 │     },
+  768 │     genderCorrelations: {
+  769 │       "male": ["magnesium_glycinate", "omega3", "vitamin_d3"],
+  770 │       "female": ["iron", "vitamin_b_complex", "probiotics"]
+  771 │     }
+  772 │   };
+  773 │ }
+  774 │ 
+  775 │ export const generateRecommendations_original = (
+  776 │   quizResponses: QuizResponse,
+  777 │   behavioralMetrics?: BehavioralMetrics,
+  778 │   neuroProfile?: NeuroProfile
+  779 │ ): Recommendation[] => {
+  780 │   try {
+  781 │     // ... (Original generateRecommendations logic remains largely unchanged, but could be refactored to use the new system)
+  782 │     //Example of how to integrate the new system:
+  783 │     const quizData: QuizData = {
+  784 │       //map quizResponses to quizData
+  785 │       // ...mapping logic here...
+  786 │     };
+  787 │     const newRecommendations = getComprehensiveRecommendations(quizData);
+  788 │     return newRecommendations;
+  789 │ 
+  790 │ 
+  791 │   } catch (error) {
+  792 │     console.error("Erreur lors de la génération desrecommandations:", error);
+  793 │     return [];
+  794 │   }
+  795 │ };
+  796 │ 
+  797 │ // La fonction generateExplanationDetails a été remplacée par generateDetailedRecommendationExplanation
+  798 │ // pour éviter les duplications et améliorer la cohérence
+  799 │ 
+  800 │ /**
+  801 │  * Enregistre les données pour l'apprentissage du système IA
+  802 │  */
+  803 │ export const recordLearningData = (data: LearningData): void => {
+  804 │   try {
+  805 │     // Récupérer les données existantes
+  806 │     const existingData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+  807 │ 
+  808 │     // Ajouter les nouvelles données
+  809 │     existingData.push(data);
+  810 │ 
+  811 │     // Limiter la taille des données stockées (garder les 1000 plus récentes)
+  812 │     const trimmedData = existingData.slice(-1000);
+  813 │ 
+  814 │     // Sauvegarder les données
+  815 │     secureStorageService.setItem('aiLearningData', trimmedData);
+  816 │ 
+  817 │   } catch (error) {
+  818 │     console.error("Erreur lors de l'enregistrement des données d'apprentissage:", error);
+  819 │   }
+  820 │ };
+  821 │ 
+  822 │ /**
+  823 │  * Calcule le score de similarité entre deux profils utilisateurs
+  824 │  */
+  825 │ export const calculateProfileSimilarity = (
+  826 │   profile1: any,
+  827 │   profile2: any
+  828 │ ): number => {
+  829 │   try {
+  830 │     let similarityScore = 0;
+  831 │     let totalFactors = 0;
+  832 │ 
+  833 │     // Comparer les symptômes actifs
+  834 │     if (profile1.activeSymptoms && profile2.activeSymptoms) {
+  835 │       const commonSymptoms = profile1.activeSymptoms.filter((s: string) =>
+  836 │         profile2.activeSymptoms.includes(s)
+  837 │       ).length;
+  838 │ 
+  839 │       const totalSymptoms = new Set([
+  840 │         ...profile1.activeSymptoms,
+  841 │         ...profile2.activeSymptoms
+  842 │       ]).size;
+  843 │ 
+  844 │       if (totalSymptoms > 0) {
+  845 │         similarityScore += (commonSymptoms / totalSymptoms) * 50; // Poids plus élevé pour les symptômes
+  846 │         totalFactors += 1;
+  847 │       }
+  848 │     }
+  849 │ 
+  850 │     // Comparer les objectifs
+  851 │     if (profile1.activeGoals && profile2.activeGoals) {
+  852 │       const commonGoals = profile1.activeGoals.filter((g: string) =>
+  853 │         profile2.activeGoals.includes(g)
+  854 │       ).length;
+  855 │ 
+  856 │       const totalGoals = new Set([
+  857 │         ...profile1.activeGoals,
+  858 │         ...profile2.activeGoals
+  859 │       ]).size;
+  860 │ 
+  861 │       if (totalGoals > 0) {
+  862 │         similarityScore += (commonGoals / totalGoals) * 30;
+  863 │         totalFactors += 1;
+  864 │       }
+  865 │     }
+  866 │ 
+  867 │     // Comparer les restrictions alimentaires
+  868 │     if (profile1.dietaryRestrictions && profile2.dietaryRestrictions) {
+  869 │       let matchingRestrictions = 0;
+  870 │       let totalRestrictions = 0;
+  871 │ 
+  872 │       for (const key in profile1.dietaryRestrictions) {
+  873 │         if (profile2.dietaryRestrictions[key] === profile1.dietaryRestrictions[key]) {
+  874 │           matchingRestrictions++;
+  875 │         }
+  876 │         totalRestrictions++;
+  877 │       }
+  878 │ 
+  879 │       if (totalRestrictions > 0) {
+  880 │         similarityScore += (matchingRestrictions / totalRestrictions) * 20;
+  881 │         totalFactors += 1;
+  882 │       }
+  883 │     }
+  884 │ 
+  885 │     // Normaliser le score
+  886 │     return totalFactors > 0 ? similarityScore / totalFactors : 0;
+  887 │ 
+  888 │   } catch (error) {
+  889 │     console.error("Erreur lors du calcul de la similarité:", error);
+  890 │     return 0;
+  891 │   }
+  892 │ };
+  893 │ 
+  894 │ /**
+  895 │  * Enrichit les recommandations en utilisant l'IA externe via API (ChatGPT)
+  896 │  */
+  897 │ export const enrichRecommendationsWithExternalAI = async (
+  898 │   recommendations: Recommendation[],
+  899 │   quizResponses: QuizResponse
+  900 │ ): Promise<Recommendation[]> => {
+  901 │   try {
+  902 │     // Vérifier si la clé API est configurée
+  903 │     const apiKey = secureStorageService.getItem('openai_api_key');
+  904 │ 
+  905 │     if (!apiKey) {
+  906 │       console.log("Clé API OpenAI non configurée, impossible d'enrichir les recommandations");
+  907 │       return recommendations;
+  908 │     }
+  909 │ 
+  910 │     // Préparer les données à envoyer à l'API
+  911 │     const requestData = {
+  912 │       model: "gpt-4",
+  913 │       messages: [
+  914 │         {
+  915 │           role: "system",
+  916 │           content: `Vous êtes un expert en nutrition et suppléments nutritionnels. 
+  917 │           Vous allez analyser les recommandations générées par notre système et les enrichir 
+  918 │           avec des conseils plus personnalisés, des explications scientifiques, et des ajustements 
+  919 │           de dosage si nécessaire. Restez factuel et basez vos recommandations sur la science.`
+  920 │         },
+  921 │         {
+  922 │           role: "user",
+  923 │           content: `Voici les recommandations générées par notre système et les réponses au quiz de l'utilisateur.
+  924 │           Veuillez enrichir ces recommandations avec des détails supplémentaires sur l'efficacité, d'éventuelles 
+  925 │           synergies entre les compléments, et affiner les dosages en fonction du profil spécifique.
+  926 │ 
+  927 │           RÉPONSES AU QUIZ:
+  928 │           ${JSON.stringify(quizResponses, null, 2)}
+  929 │ 
+  930 │           RECOMMANDATIONS GÉNÉRÉES:
+  931 │           ${JSON.stringify(recommendations, null, 2)}
+  932 │ 
+  933 │           Répondez au format JSON avec les recommandations enrichies.`
+  934 │         }
+  935 │       ],
+  936 │       temperature: 0.7,
+  937 │       max_tokens: 1500
+  938 │     };
+  939 │ 
+  940 │     // Appeler l'API OpenAI
+  941 │     const response = await fetch('https://api.openai.com/v1/chat/completions', {
+  942 │       method: 'POST',
+  943 │       headers: {
+  944 │         'Content-Type': 'application/json',
+  945 │         'Authorization': `Bearer ${apiKey}`
+  946 │       },
+  947 │       body: JSON.stringify(requestData)
+  948 │     });
+  949 │ 
+  950 │     if (!response.ok) {
+  951 │       throw new Error(`Erreur API: ${response.status}`);
+  952 │     }
+  953 │ 
+  954 │     const data = await response.json();
+  955 │ 
+  956 │     // Extraire et parser la réponse
+  957 │     try {
+  958 │       const content = data.choices[0].message.content;
+  959 │       const enrichedRecommendations = JSON.parse(content);
+  960 │ 
+  961 │       // Fusionner avec les recommandations originales
+  962 │       return enrichedRecommendations.map((enriched: any, index: number) => ({
+  963 │         ...recommendations[index],
+  964 │         ...enriched,
+  965 │         aiEnriched: true
+  966 │       }));
+  967 │ 
+  968 │     } catch (parseError) {
+  969 │       console.error("Erreur lors du parsing de la réponse AI:", parseError);
+  970 │       return recommendations;
+  971 │     }
+  972 │ 
+  973 │   } catch (error) {
+  974 │     console.error("Erreur lors de l'enrichissement des recommandations par IA:", error);
+  975 │     return recommendations;
+  976 │   }
+  977 │ };
+  978 │ 
+  979 │ /**
+  980 │  * Met à jour le modèle d'apprentissage en fonction des retours utilisateurs
+  981 │  */
+  982 │ export const updateAiModel = (): void => {
+  983 │   try {
+  984 │     // Récupérer toutes les données d'apprentissage
+  985 │     const learningData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+  986 │ 
+  987 │     // Récupérer les retours utilisateurs
+  988 │     const userFeedback: UserFeedback[] = secureStorageService.getItem('userFeedback') || [];
+  989 │ 
+  990 │     if (learningData.length === 0 || userFeedback.length === 0) {
+  991 │       console.log("Pas assez de données pour mettre à jour le modèle");
+  992 │       return;
+  993 │     }
+  994 │ 
+  995 │     // Traiter les données pour améliorer les recommandations
+  996 │     processLearningDataAndFeedback(learningData, userFeedback);
+  997 │ 
+  998 │   } catch (error) {
+  999 │     console.error("Erreur lors de la mise à jour du modèle IA:", error);
+ 1000 │   }
+ 1001 │ };
+ 1002 │ 
+ 1003 │ /**
+ 1004 │  * Traite les données d'apprentissage et les retours utilisateurs pour améliorer le modèle
+ 1005 │  */
+ 1006 │ const processLearningDataAndFeedback = (
+ 1007 │   learningData: LearningData[],
+ 1008 │   userFeedback: UserFeedback[]
+ 1009 │ ): void => {
+ 1010 │   try {
+ 1011 │     // Construire un index pour associer les recommandations à leur feedback
+ 1012 │     const feedbackIndex = new Map<string, number[]>();
+ 1013 │ 
+ 1014 │     userFeedback.forEach(feedback => {
+ 1015 │       if (!feedbackIndex.has(feedback.recommendationId)) {
+ 1016 │         feedbackIndex.set(feedback.recommendationId, []);
+ 1017 │       }
+ 1018 │ 
+ 1019 │       feedbackIndex.get(feedback.recommendationId)?.push(feedback.rating);
+ 1020 │     });
+ 1021 │ 
+ 1022 │     // Ajuster les priorités des recommandations en fonction des retours
+ 1023 │     const supplementAdjustments = new Map<string, {
+ 1024 │       totalPositive: number;
+ 1025 │       totalNegative: number;
+ 1026 │       count: number;
+ 1027 │     }>();
+ 1028 │ 
+ 1029 │     // Parcourir les données d'apprentissage
+ 1030 │     learningData.forEach(data => {
+ 1031 │       data.generatedRecommendations.forEach(rec => {
+ 1032 │         const feedback = feedbackIndex.get(rec.id);
+ 1033 │ 
+ 1034 │         if (feedback && feedback.length > 0) {
+ 1035 │           // Calculer le score moyen
+ 1036 │           const avgRating = feedback.reduce((sum, rating) => sum + rating, 0) / feedback.length;
+ 1037 │ 
+ 1038 │           if (!supplementAdjustments.has(rec.id)) {
+ 1039 │             supplementAdjustments.set(rec.id, {
+ 1040 │               totalPositive: 0,
+ 1041 │               totalNegative: 0,
+ 1042 │               count: 0
+ 1043 │             });
+ 1044 │           }
+ 1045 │ 
+ 1046 │           const adjustment = supplementAdjustments.get(rec.id)!;
+ 1047 │ 
+ 1048 │           if (avgRating >= 3.5) {
+ 1049 │             adjustment.totalPositive++;
+ 1050 │           } else {
+ 1051 │             adjustment.totalNegative++;
+ 1052 │           }
+ 1053 │ 
+ 1054 │           adjustment.count++;
+ 1055 │         }
+ 1056 │       });
+ 1057 │     });
+ 1058 │ 
+ 1059 │     // Appliquer les ajustements au modèle
+ 1060 │     supplementAdjustments.forEach((adjustmentData, supplementId) => {
+ 1061 │       if (adjustmentData.count >= 5) { // Au moins 5 retours pour être significatif
+ 1062 │         const positiveRatio = adjustmentData.totalPositive / adjustmentData.count;
+ 1063 │ 
+ 1064 │         // Ajuster les symptômes associés
+ 1065 │         for (const symptomKey in SYMPTOM_RECOMMENDATIONS) {
+ 1066 │           const recommendations = SYMPTOM_RECOMMENDATIONS[symptomKey];
+ 1067 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 1068 │ 
+ 1069 │           if (recIndex >= 0) {
+ 1070 │             const currentPriority = recommendations[recIndex].priority;
+ 1071 │ 
+ 1072 │             // Courbe d'ajustement plus fine basée sur les retours
+ 1073 │             if (positiveRatio > 0.8) { // Plus de 80% de retours positifs
+ 1074 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 2);
+ 1075 │             } else if (positiveRatio > 0.6) { // Entre 60% et 80% de retours positifs
+ 1076 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 1077 │             } else if (positiveRatio < 0.3) { // Moins de 30% de retours positifs
+ 1078 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 2);
+ 1079 │             } else if (positiveRatio < 0.5) { // Entre 30% et 50% de retours positifs
+ 1080 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 1081 │             }
+ 1082 │           }
+ 1083 │         }
+ 1084 │ 
+ 1085 │         // Ajuster également les objectifs associés
+ 1086 │         for (const goalKey in GOAL_RECOMMENDATIONS) {
+ 1087 │           const recommendations = GOAL_RECOMMENDATIONS[goalKey];
+ 1088 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 1089 │ 
+ 1090 │           if (recIndex >= 0) {
+ 1091 │             const currentPriority = recommendations[recIndex].priority;
+ 1092 │ 
+ 1093 │             // Augmenter ou diminuer la priorité selon les retours
+ 1094 │             if (positiveRatio > 0.7) {
+ 1095 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 1096 │             } else if (positiveRatio < 0.3) {
+ 1097 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 1098 │             }
+ 1099 │           }
+ 1100 │         }
+ 1101 │       }
+ 1102 │     });
+ 1103 │ 
+ 1104 │     // Sauvegarder les données modifiées
+ 1105 │     // Note: Dans une implémentation réelle, nous sauvegarderions ces changements dans une base de données
+ 1106 │     // Pour cette démonstration, nous utilisons le stockage sécurisé local
+ 1107 │     secureStorageService.setItem('symptomRecommendationsUpdated', SYMPTOM_RECOMMENDATIONS);
+ 1108 │     secureStorageService.setItem('goalRecommendationsUpdated', GOAL_RECOMMENDATIONS);
+ 1109 │ 
+ 1110 │     console.log("Modèle IA mis à jour avec succès");
+ 1111 │ 
+ 1112 │   } catch (error) {
+ 1113 │     console.error("Erreur lors du traitement des données d'apprentissage:", error);
+ 1114 │   }
+ 1115 │ };
+ 1116 │ 
+ 1117 │ /**
+ 1118 │  * Génère des recommandations personnalisées avancées avec analyse comportementale et IA
+ 1119 │  */
+ 1120 │ export const generateAdvancedRecommendations = (
+ 1121 │   quizResponses: QuizResponse,
+ 1122 │   behavioralMetrics?: BehavioralMetrics,
+ 1123 │   neuroProfile?: NeuroProfile
+ 1124 │ ): Recommendation[] => {
+ 1125 │   try {
+ 1126 │     // Générer les recommandations de base using the new system.
+ 1127 │     const quizData: QuizData = {
+ 1128 │       //map quizResponses to quizData
+ 1129 │       // ...mapping logic here...
+ 1130 │     };
+ 1131 │     const baseRecommendations = generateRecommendations(quizData);
+ 1132 │ 
+ 1133 │     // Appliquer l'ajustement d'apprentissage IA
+ 1134 │     const aiEnhancedRecommendations = adjustRecommendationsWithLearning(baseRecommendations, quizResponses);
+ 1135 │ 
+ 1136 │     // Si des métriques comportementales sont disponibles, les utiliser pour affiner davantage
+ 1137 │     if (behavioralMetrics) {
+ 1138 │       const behavioralInsights = processBehavioralData(behavioralMetrics);
+ 1139 │ 
+ 1140 │       // Ajuster les priorités en fonction des domaines d'intérêt comportementaux
+ 1141 │       aiEnhancedRecommendations.forEach(rec => {
+ 1142 │         // Vérifier si cette recommandation correspond à un domaine d'intérêt
+ 1143 │         behavioralInsights.interestAreas.forEach(area => {
+ 1144 │           if (
+ 1145 │             (area === 'Stress' && (rec.id.includes('magnes') || rec.id.includes('ashwagandha') || rec.id.includes('theanine'))) ||
+ 1146 │             (area === 'Sommeil' && (rec.id.includes('melatonin') || rec.id.includes('magnes') || rec.id.includes('valerian'))) ||
+ 1147 │             (area === 'Énergie' && (rec.id.includes('vitaminb') || rec.id.includes('iron') || rec.id.includes('coq10'))) ||
+ 1148 │             (area === 'Digestion' && (rec.id.includes('probio') || rec.id.includes('enzymes') || rec.id.includes('fiber'))) ||
+ 1149 │             (area === 'Immunité' && (rec.id.includes('vitaminc') || rec.id.includes('vitd') || rec.id.includes('zinc')))
+ 1150 │           ) {
+ 1151 │             // Augmenter le score pour les recommandations correspondant aux intérêts
+ 1152 │             rec.relevanceScore = Math.min(100, rec.relevanceScore + 5);
+ 1153 │ 
+ 1154 │             // Ajouter une explication IA
+ 1155 │             if (!rec.relatedTerms) {
+ 1156 │               rec.relatedTerms = [];
+ 1157 │             }
+ 1158 │             rec.relatedTerms.push(`Intérêt pour ${area.toLowerCase()}`);
+ 1159 │           }
+ 1160 │         });
+ 1161 │ 
+ 1162 │         // Ajuster en fonction du niveau d'incertitude
+ 1163 │         if (behavioralInsights.uncertaintyLevel > 0.6 && rec.scientificBasis) {
+ 1164 │           // Pour les utilisateurs incertains, ajouter plus d'explications scientifiques
+ 1165 │           if (!rec.relatedTerms) {
+ 1166 │             rec.relatedTerms = [];
+ 1167 │           }
+ 1168 │           rec.relatedTerms.push("Informations détaillées priorisées");
+ 1169 │         }
+ 1170 │ 
+ 1171 │         // Ajuster en fonction du niveau d'attention
+ 1172 │         if (behavioralInsights.attentionLevel < 0.4) {
+ 1173 │           // Pour les utilisateurs à faible attention, donner une explication courte et directe
+ 1174 │           rec.description = `Recommandé pour: ${rec.categories.slice(0, 2).join(', ')}`;
+ 1175 │         }
+ 1176 │       });
+ 1177 │     }
+ 1178 │ 
+ 1179 │     // Enrichir avec des données de neuroProfile si disponibles
+ 1180 │     if (neuroProfile) {
+ 1181 │       aiEnhancedRecommendations.forEach(rec => {
+ 1182 │         if (neuroProfile.decisionStyle === 'analytical' && rec.scientificBasis) {
+ 1183 │           rec.relevanceScore = Math.min(100, rec.relevanceScore + 3);
+ 1184 │ 
+ 1185 │           if (!rec.relatedTerms) {
+ 1186 │             rec.relatedTerms = [];
+ 1187 │           }
+ 1188 │           rec.relatedTerms.push("Approche analytique");
+ 1189 │         }
+ 1190 │ 
+ 1191 │         if (neuroProfile.decisionStyle === 'intuitive' && rec.scientificBasis.includes('rapide')) {
+ 1192 │           rec.relevanceScore = Math.min(100, rec.relevanceScore + 3);
+ 1193 │ 
+ 1194 │           if (!rec.relatedTerms) {
+ 1195 │             rec.relatedTerms = [];
+ 1196 │           }
+ 1197 │           rec.relatedTerms.push("Résultats immédiats");
+ 1198 │         }
+ 1199 │ 
+ 1200 │         if (neuroProfile.riskTolerance === 'low' && rec.scientificBasis.includes('excellent')) {
+ 1201 │           rec.relevanceScore = Math.min(100, rec.relevanceScore + 5);
+ 1202 │ 
+ 1203 │           if (!rec.relatedTerms) {
+ 1204 │             rec.relatedTerms = [];
+ 1205 │           }
+ 1206 │           rec.relatedTerms.push("Excellent profil de sécurité");
+ 1207 │         }
+ 1208 │       });
+ 1209 │     }
+ 1210 │ 
+ 1211 │     // Réordonner les recommandations en fonction des scores ajustés
+ 1212 │     aiEnhancedRecommendations.sort((a, b) => {
+ 1213 │       return b.relevanceScore - a.relevanceScore;
+ 1214 │     });
+ 1215 │ 
+ 1216 │     // Optimiser les recommandations avec l'algorithme avancé
+ 1217 │     const optimizedRecommendations = optimizeRecommendations(
+ 1218 │       aiEnhancedRecommendations,
+ 1219 │       quizResponses,
+ 1220 │       behavioralMetrics,
+ 1221 │       neuroProfile
+ 1222 │     );
+ 1223 │ 
+ 1224 │     // Enregistrer les données pour apprentissage futur
+ 1225 │     saveLearningData(quizResponses, optimizedRecommendations, behavioralMetrics, neuroProfile);
+ 1226 │ 
+ 1227 │     return optimizedRecommendations;
+ 1228 │   } catch (error) {
+ 1229 │     console.error("Erreur lors de la génération des recommandations avancées:", error);
+ 1230 │     return generateRecommendations(quizData); // Fallback to the new system
+ 1231 │   }
+ 1232 │ };
+ 1233 │ 
+ 1234 │ // Importations déjà définies plus haut dans le fichier
+ 1235 │ 
+ 1236 │ 
+ 1237 │ // Définition d'interfaces pour les types utilisés
+ 1238 │ interface QuizResponses {
+ 1239 │   // Interface pour les réponses du quiz
+ 1240 │   healthConcerns?: {
+ 1241 │     stressLevel?: string;
+ 1242 │     energyLevel?: string;
+ 1243 │     sleepIssues?: string;
+ 1244 │     focusIssues?: string;
+ 1245 │     digestiveIssues?: string;
+ 1246 │   };
+ 1247 │   goals?: {
+ 1248 │     reduceStress?: boolean;
+ 1249 │     increaseEnergy?: boolean;
+ 1250 │     improveSleep?: boolean;
+ 1251 │     improveFocus?: boolean;
+ 1252 │     improveDigestion?: boolean;
+ 1253 │   };
+ 1254 │ }
+ 1255 │ 
+ 1256 │ interface BehavioralMetrics {
+ 1257 │   // Interface pour les métriques comportementales
+ 1258 │   cognitiveLoad: number;
+ 1259 │   stressLevel: number;
+ 1260 │   sleepQuality: number;
+ 1261 │ }
+ 1262 │ 
+ 1263 │ 
+ 1264 │ 
+ 1265 │ /**
+ 1266 │  * Retourne le statut du modèle d'IA actuel
+ 1267 │  * @returns Information sur le statut du modèle d'IA
+ 1268 │  */
+ 1269 │ export function getAIModelDetailedStatus() {
+      ·                 ────────────┬───────────
+      ·                             ╰── `getAIModelDetailedStatus` redefined here
+ 1270 │   try {
+ 1271 │     // Récupérer les informations depuis le moteur d'apprentissage
+ 1272 │     const aiLearningStatus = getAILearningStatus();
+      ╰────
+  × the name `processBehavioralData` is defined multiple times
+      ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:734:1]
+  731 │ }
+  732 │ 
+  733 │ // Fonction unique pour l'analyse comportementale, sans duplication
+  734 │ const processBehavioralData = (behavioralMetrics: BehavioralMetrics) => ({
+      ·       ──────────┬──────────
+      ·                 ╰── previous definition of `processBehavioralData` here
+  735 │   cognitiveLoad: 0.7,
+  736 │   stressLevel: 0.6,
+  737 │   sleepQuality: 0.8,
+  738 │   attentionLevel: 0.65,
+  739 │   uncertaintyLevel: 0.4,
+  740 │   interestAreas: ['Stress', 'Sommeil','Énergie']
+  741 │ });
+  742 │ 
+  743 │ // Fonction unique pour analyser les performances des recommandations
+  744 │ const analyzeRecommendationPerformance = () => ({
+  745 │   'vitamin_d3': { averageRating: 4.7, totalRatings: 120 },
+  746 │   'magnesium_glycinate': { averageRating: 4.6, totalRatings: 95 },
+  747 │   'omega3': { averageRating: 4.5, totalRatings: 150 },
+  748 │   'probiotics': { averageRating: 4.4, totalRatings: 110 },
+  749 │   'zinc': { averageRating: 4.3, totalRatings: 80 }
+  750 │ });
+  751 │ 
+  752 │ // Fonction unique pour obtenir les corrélations de motifs
+  753 │ const getPatternCorrelations = () => {
+  754 │   return {
+  755 │     symptomCorrelations: {
+  756 │       "stress": ["magnesium_glycinate", "ashwagandha", "l_theanine"],
+  757 │       "fatigue": ["vitamin_b_complex", "iron", "coq10"],
+  758 │       "insomnia": ["melatonin", "magnesium_glycinate", "valerian_root"],
+  759 │       "digestion": ["probiotics", "digestive_enzymes", "fiber_supplement"],
+  760 │       "joint_pain": ["omega3", "curcumin", "glucosamine_chondroitin"]
+  761 │     },
+  762 │     ageCorrelations: {
+  763 │       "18-30": ["vitamin_d3", "iron", "probiotics"],
+  764 │       "31-45": ["coq10", "vitamin_b_complex", "ashwagandha"],
+  765 │       "46-60": ["omega3", "vitamin_d3", "magnesium_glycinate"],
+  766 │       "60+": ["vitamin_d3", "calcium", "vitamin_b12"]
+  767 │     },
+  768 │     genderCorrelations: {
+  769 │       "male": ["magnesium_glycinate", "omega3", "vitamin_d3"],
+  770 │       "female": ["iron", "vitamin_b_complex", "probiotics"]
+  771 │     }
+  772 │   };
+  773 │ }
+  774 │ 
+  775 │ export const generateRecommendations_original = (
+  776 │   quizResponses: QuizResponse,
+  777 │   behavioralMetrics?: BehavioralMetrics,
+  778 │   neuroProfile?: NeuroProfile
+  779 │ ): Recommendation[] => {
+  780 │   try {
+  781 │     // ... (Original generateRecommendations logic remains largely unchanged, but could be refactored to use the new system)
+  782 │     //Example of how to integrate the new system:
+  783 │     const quizData: QuizData = {
+  784 │       //map quizResponses to quizData
+  785 │       // ...mapping logic here...
+  786 │     };
+  787 │     const newRecommendations = getComprehensiveRecommendations(quizData);
+  788 │     return newRecommendations;
+  789 │ 
+  790 │ 
+  791 │   } catch (error) {
+  792 │     console.error("Erreur lors de la génération desrecommandations:", error);
+  793 │     return [];
+  794 │   }
+  795 │ };
+  796 │ 
+  797 │ // La fonction generateExplanationDetails a été remplacée par generateDetailedRecommendationExplanation
+  798 │ // pour éviter les duplications et améliorer la cohérence
+  799 │ 
+  800 │ /**
+  801 │  * Enregistre les données pour l'apprentissage du système IA
+  802 │  */
+  803 │ export const recordLearningData = (data: LearningData): void => {
+  804 │   try {
+  805 │     // Récupérer les données existantes
+  806 │     const existingData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+  807 │ 
+  808 │     // Ajouter les nouvelles données
+  809 │     existingData.push(data);
+  810 │ 
+  811 │     // Limiter la taille des données stockées (garder les 1000 plus récentes)
+  812 │     const trimmedData = existingData.slice(-1000);
+  813 │ 
+  814 │     // Sauvegarder les données
+  815 │     secureStorageService.setItem('aiLearningData', trimmedData);
+  816 │ 
+  817 │   } catch (error) {
+  818 │     console.error("Erreur lors de l'enregistrement des données d'apprentissage:", error);
+  819 │   }
+  820 │ };
+  821 │ 
+  822 │ /**
+  823 │  * Calcule le score de similarité entre deux profils utilisateurs
+  824 │  */
+  825 │ export const calculateProfileSimilarity = (
+  826 │   profile1: any,
+  827 │   profile2: any
+  828 │ ): number => {
+  829 │   try {
+  830 │     let similarityScore = 0;
+  831 │     let totalFactors = 0;
+  832 │ 
+  833 │     // Comparer les symptômes actifs
+  834 │     if (profile1.activeSymptoms && profile2.activeSymptoms) {
+  835 │       const commonSymptoms = profile1.activeSymptoms.filter((s: string) =>
+  836 │         profile2.activeSymptoms.includes(s)
+  837 │       ).length;
+  838 │ 
+  839 │       const totalSymptoms = new Set([
+  840 │         ...profile1.activeSymptoms,
+  841 │         ...profile2.activeSymptoms
+  842 │       ]).size;
+  843 │ 
+  844 │       if (totalSymptoms > 0) {
+  845 │         similarityScore += (commonSymptoms / totalSymptoms) * 50; // Poids plus élevé pour les symptômes
+  846 │         totalFactors += 1;
+  847 │       }
+  848 │     }
+  849 │ 
+  850 │     // Comparer les objectifs
+  851 │     if (profile1.activeGoals && profile2.activeGoals) {
+  852 │       const commonGoals = profile1.activeGoals.filter((g: string) =>
+  853 │         profile2.activeGoals.includes(g)
+  854 │       ).length;
+  855 │ 
+  856 │       const totalGoals = new Set([
+  857 │         ...profile1.activeGoals,
+  858 │         ...profile2.activeGoals
+  859 │       ]).size;
+  860 │ 
+  861 │       if (totalGoals > 0) {
+  862 │         similarityScore += (commonGoals / totalGoals) * 30;
+  863 │         totalFactors += 1;
+  864 │       }
+  865 │     }
+  866 │ 
+  867 │     // Comparer les restrictions alimentaires
+  868 │     if (profile1.dietaryRestrictions && profile2.dietaryRestrictions) {
+  869 │       let matchingRestrictions = 0;
+  870 │       let totalRestrictions = 0;
+  871 │ 
+  872 │       for (const key in profile1.dietaryRestrictions) {
+  873 │         if (profile2.dietaryRestrictions[key] === profile1.dietaryRestrictions[key]) {
+  874 │           matchingRestrictions++;
+  875 │         }
+  876 │         totalRestrictions++;
+  877 │       }
+  878 │ 
+  879 │       if (totalRestrictions > 0) {
+  880 │         similarityScore += (matchingRestrictions / totalRestrictions) * 20;
+  881 │         totalFactors += 1;
+  882 │       }
+  883 │     }
+  884 │ 
+  885 │     // Normaliser le score
+  886 │     return totalFactors > 0 ? similarityScore / totalFactors : 0;
+  887 │ 
+  888 │   } catch (error) {
+  889 │     console.error("Erreur lors du calcul de la similarité:", error);
+  890 │     return 0;
+  891 │   }
+  892 │ };
+  893 │ 
+  894 │ /**
+  895 │  * Enrichit les recommandations en utilisant l'IA externe via API (ChatGPT)
+  896 │  */
+  897 │ export const enrichRecommendationsWithExternalAI = async (
+  898 │   recommendations: Recommendation[],
+  899 │   quizResponses: QuizResponse
+  900 │ ): Promise<Recommendation[]> => {
+  901 │   try {
+  902 │     // Vérifier si la clé API est configurée
+  903 │     const apiKey = secureStorageService.getItem('openai_api_key');
+  904 │ 
+  905 │     if (!apiKey) {
+  906 │       console.log("Clé API OpenAI non configurée, impossible d'enrichir les recommandations");
+  907 │       return recommendations;
+  908 │     }
+  909 │ 
+  910 │     // Préparer les données à envoyer à l'API
+  911 │     const requestData = {
+  912 │       model: "gpt-4",
+  913 │       messages: [
+  914 │         {
+  915 │           role: "system",
+  916 │           content: `Vous êtes un expert en nutrition et suppléments nutritionnels. 
+  917 │           Vous allez analyser les recommandations générées par notre système et les enrichir 
+  918 │           avec des conseils plus personnalisés, des explications scientifiques, et des ajustements 
+  919 │           de dosage si nécessaire. Restez factuel et basez vos recommandations sur la science.`
+  920 │         },
+  921 │         {
+  922 │           role: "user",
+  923 │           content: `Voici les recommandations générées par notre système et les réponses au quiz de l'utilisateur.
+  924 │           Veuillez enrichir ces recommandations avec des détails supplémentaires sur l'efficacité, d'éventuelles 
+  925 │           synergies entre les compléments, et affiner les dosages en fonction du profil spécifique.
+  926 │ 
+  927 │           RÉPONSES AU QUIZ:
+  928 │           ${JSON.stringify(quizResponses, null, 2)}
+  929 │ 
+  930 │           RECOMMANDATIONS GÉNÉRÉES:
+  931 │           ${JSON.stringify(recommendations, null, 2)}
+  932 │ 
+  933 │           Répondez au format JSON avec les recommandations enrichies.`
+  934 │         }
+  935 │       ],
+  936 │       temperature: 0.7,
+  937 │       max_tokens: 1500
+  938 │     };
+  939 │ 
+  940 │     // Appeler l'API OpenAI
+  941 │     const response = await fetch('https://api.openai.com/v1/chat/completions', {
+  942 │       method: 'POST',
+  943 │       headers: {
+  944 │         'Content-Type': 'application/json',
+  945 │         'Authorization': `Bearer ${apiKey}`
+  946 │       },
+  947 │       body: JSON.stringify(requestData)
+  948 │     });
+  949 │ 
+  950 │     if (!response.ok) {
+  951 │       throw new Error(`Erreur API: ${response.status}`);
+  952 │     }
+  953 │ 
+  954 │     const data = await response.json();
+  955 │ 
+  956 │     // Extraire et parser la réponse
+  957 │     try {
+  958 │       const content = data.choices[0].message.content;
+  959 │       const enrichedRecommendations = JSON.parse(content);
+  960 │ 
+  961 │       // Fusionner avec les recommandations originales
+  962 │       return enrichedRecommendations.map((enriched: any, index: number) => ({
+  963 │         ...recommendations[index],
+  964 │         ...enriched,
+  965 │         aiEnriched: true
+  966 │       }));
+  967 │ 
+  968 │     } catch (parseError) {
+  969 │       console.error("Erreur lors du parsing de la réponse AI:", parseError);
+  970 │       return recommendations;
+  971 │     }
+  972 │ 
+  973 │   } catch (error) {
+  974 │     console.error("Erreur lors de l'enrichissement des recommandations par IA:", error);
+  975 │     return recommendations;
+  976 │   }
+  977 │ };
+  978 │ 
+  979 │ /**
+  980 │  * Met à jour le modèle d'apprentissage en fonction des retours utilisateurs
+  981 │  */
+  982 │ export const updateAiModel = (): void => {
+  983 │   try {
+  984 │     // Récupérer toutes les données d'apprentissage
+  985 │     const learningData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+  986 │ 
+  987 │     // Récupérer les retours utilisateurs
+  988 │     const userFeedback: UserFeedback[] = secureStorageService.getItem('userFeedback') || [];
+  989 │ 
+  990 │     if (learningData.length === 0 || userFeedback.length === 0) {
+  991 │       console.log("Pas assez de données pour mettre à jour le modèle");
+  992 │       return;
+  993 │     }
+  994 │ 
+  995 │     // Traiter les données pour améliorer les recommandations
+  996 │     processLearningDataAndFeedback(learningData, userFeedback);
+  997 │ 
+  998 │   } catch (error) {
+  999 │     console.error("Erreur lors de la mise à jour du modèle IA:", error);
+ 1000 │   }
+ 1001 │ };
+ 1002 │ 
+ 1003 │ /**
+ 1004 │  * Traite les données d'apprentissage et les retours utilisateurs pour améliorer le modèle
+ 1005 │  */
+ 1006 │ const processLearningDataAndFeedback = (
+ 1007 │   learningData: LearningData[],
+ 1008 │   userFeedback: UserFeedback[]
+ 1009 │ ): void => {
+ 1010 │   try {
+ 1011 │     // Construire un index pour associer les recommandations à leur feedback
+ 1012 │     const feedbackIndex = new Map<string, number[]>();
+ 1013 │ 
+ 1014 │     userFeedback.forEach(feedback => {
+ 1015 │       if (!feedbackIndex.has(feedback.recommendationId)) {
+ 1016 │         feedbackIndex.set(feedback.recommendationId, []);
+ 1017 │       }
+ 1018 │ 
+ 1019 │       feedbackIndex.get(feedback.recommendationId)?.push(feedback.rating);
+ 1020 │     });
+ 1021 │ 
+ 1022 │     // Ajuster les priorités des recommandations en fonction des retours
+ 1023 │     const supplementAdjustments = new Map<string, {
+ 1024 │       totalPositive: number;
+ 1025 │       totalNegative: number;
+ 1026 │       count: number;
+ 1027 │     }>();
+ 1028 │ 
+ 1029 │     // Parcourir les données d'apprentissage
+ 1030 │     learningData.forEach(data => {
+ 1031 │       data.generatedRecommendations.forEach(rec => {
+ 1032 │         const feedback = feedbackIndex.get(rec.id);
+ 1033 │ 
+ 1034 │         if (feedback && feedback.length > 0) {
+ 1035 │           // Calculer le score moyen
+ 1036 │           const avgRating = feedback.reduce((sum, rating) => sum + rating, 0) / feedback.length;
+ 1037 │ 
+ 1038 │           if (!supplementAdjustments.has(rec.id)) {
+ 1039 │             supplementAdjustments.set(rec.id, {
+ 1040 │               totalPositive: 0,
+ 1041 │               totalNegative: 0,
+ 1042 │               count: 0
+ 1043 │             });
+ 1044 │           }
+ 1045 │ 
+ 1046 │           const adjustment = supplementAdjustments.get(rec.id)!;
+ 1047 │ 
+ 1048 │           if (avgRating >= 3.5) {
+ 1049 │             adjustment.totalPositive++;
+ 1050 │           } else {
+ 1051 │             adjustment.totalNegative++;
+ 1052 │           }
+ 1053 │ 
+ 1054 │           adjustment.count++;
+ 1055 │         }
+ 1056 │       });
+ 1057 │     });
+ 1058 │ 
+ 1059 │     // Appliquer les ajustements au modèle
+ 1060 │     supplementAdjustments.forEach((adjustmentData, supplementId) => {
+ 1061 │       if (adjustmentData.count >= 5) { // Au moins 5 retours pour être significatif
+ 1062 │         const positiveRatio = adjustmentData.totalPositive / adjustmentData.count;
+ 1063 │ 
+ 1064 │         // Ajuster les symptômes associés
+ 1065 │         for (const symptomKey in SYMPTOM_RECOMMENDATIONS) {
+ 1066 │           const recommendations = SYMPTOM_RECOMMENDATIONS[symptomKey];
+ 1067 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 1068 │ 
+ 1069 │           if (recIndex >= 0) {
+ 1070 │             const currentPriority = recommendations[recIndex].priority;
+ 1071 │ 
+ 1072 │             // Courbe d'ajustement plus fine basée sur les retours
+ 1073 │             if (positiveRatio > 0.8) { // Plus de 80% de retours positifs
+ 1074 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 2);
+ 1075 │             } else if (positiveRatio > 0.6) { // Entre 60% et 80% de retours positifs
+ 1076 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 1077 │             } else if (positiveRatio < 0.3) { // Moins de 30% de retours positifs
+ 1078 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 2);
+ 1079 │             } else if (positiveRatio < 0.5) { // Entre 30% et 50% de retours positifs
+ 1080 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 1081 │             }
+ 1082 │           }
+ 1083 │         }
+ 1084 │ 
+ 1085 │         // Ajuster également les objectifs associés
+ 1086 │         for (const goalKey in GOAL_RECOMMENDATIONS) {
+ 1087 │           const recommendations = GOAL_RECOMMENDATIONS[goalKey];
+ 1088 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 1089 │ 
+ 1090 │           if (recIndex >= 0) {
+ 1091 │             const currentPriority = recommendations[recIndex].priority;
+ 1092 │ 
+ 1093 │             // Augmenter ou diminuer la priorité selon les retours
+ 1094 │             if (positiveRatio > 0.7) {
+ 1095 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 1096 │             } else if (positiveRatio < 0.3) {
+ 1097 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 1098 │             }
+ 1099 │           }
+ 1100 │         }
+ 1101 │       }
+ 1102 │     });
+ 1103 │ 
+ 1104 │     // Sauvegarder les données modifiées
+ 1105 │     // Note: Dans une implémentation réelle, nous sauvegarderions ces changements dans une base de données
+ 1106 │     // Pour cette démonstration, nous utilisons le stockage sécurisé local
+ 1107 │     secureStorageService.setItem('symptomRecommendationsUpdated', SYMPTOM_RECOMMENDATIONS);
+ 1108 │     secureStorageService.setItem('goalRecommendationsUpdated', GOAL_RECOMMENDATIONS);
+ 1109 │ 
+ 1110 │     console.log("Modèle IA mis à jour avec succès");
+ 1111 │ 
+ 1112 │   } catch (error) {
+ 1113 │     console.error("Erreur lors du traitement des données d'apprentissage:", error);
+ 1114 │   }
+ 1115 │ };
+ 1116 │ 
+ 1117 │ /**
+ 1118 │  * Génère des recommandations personnalisées avancées avec analyse comportementale et IA
+ 1119 │  */
+ 1120 │ export const generateAdvancedRecommendations = (
+ 1121 │   quizResponses: QuizResponse,
+ 1122 │   behavioralMetrics?: BehavioralMetrics,
+ 1123 │   neuroProfile?: NeuroProfile
+ 1124 │ ): Recommendation[] => {
+ 1125 │   try {
+ 1126 │     // Générer les recommandations de base using the new system.
+ 1127 │     const quizData: QuizData = {
+ 1128 │       //map quizResponses to quizData
+ 1129 │       // ...mapping logic here...
+ 1130 │     };
+ 1131 │     const baseRecommendations = generateRecommendations(quizData);
+ 1132 │ 
+ 1133 │     // Appliquer l'ajustement d'apprentissage IA
+ 1134 │     const aiEnhancedRecommendations = adjustRecommendationsWithLearning(baseRecommendations, quizResponses);
+ 1135 │ 
+ 1136 │     // Si des métriques comportementales sont disponibles, les utiliser pour affiner davantage
+ 1137 │     if (behavioralMetrics) {
+ 1138 │       const behavioralInsights = processBehavioralData(behavioralMetrics);
+ 1139 │ 
+ 1140 │       // Ajuster les priorités en fonction des domaines d'intérêt comportementaux
+ 1141 │       aiEnhancedRecommendations.forEach(rec => {
+ 1142 │         // Vérifier si cette recommandation correspond à un domaine d'intérêt
+ 1143 │         behavioralInsights.interestAreas.forEach(area => {
+ 1144 │           if (
+ 1145 │             (area === 'Stress' && (rec.id.includes('magnes') || rec.id.includes('ashwagandha') || rec.id.includes('theanine'))) ||
+ 1146 │             (area === 'Sommeil' && (rec.id.includes('melatonin') || rec.id.includes('magnes') || rec.id.includes('valerian'))) ||
+ 1147 │             (area === 'Énergie' && (rec.id.includes('vitaminb') || rec.id.includes('iron') || rec.id.includes('coq10'))) ||
+ 1148 │             (area === 'Digestion' && (rec.id.includes('probio') || rec.id.includes('enzymes') || rec.id.includes('fiber'))) ||
+ 1149 │             (area === 'Immunité' && (rec.id.includes('vitaminc') || rec.id.includes('vitd') || rec.id.includes('zinc')))
+ 1150 │           ) {
+ 1151 │             // Augmenter le score pour les recommandations correspondant aux intérêts
+ 1152 │             rec.relevanceScore = Math.min(100, rec.relevanceScore + 5);
+ 1153 │ 
+ 1154 │             // Ajouter une explication IA
+ 1155 │             if (!rec.relatedTerms) {
+ 1156 │               rec.relatedTerms = [];
+ 1157 │             }
+ 1158 │             rec.relatedTerms.push(`Intérêt pour ${area.toLowerCase()}`);
+ 1159 │           }
+ 1160 │         });
+ 1161 │ 
+ 1162 │         // Ajuster en fonction du niveau d'incertitude
+ 1163 │         if (behavioralInsights.uncertaintyLevel > 0.6 && rec.scientificBasis) {
+ 1164 │           // Pour les utilisateurs incertains, ajouter plus d'explications scientifiques
+ 1165 │           if (!rec.relatedTerms) {
+ 1166 │             rec.relatedTerms = [];
+ 1167 │           }
+ 1168 │           rec.relatedTerms.push("Informations détaillées priorisées");
+ 1169 │         }
+ 1170 │ 
+ 1171 │         // Ajuster en fonction du niveau d'attention
+ 1172 │         if (behavioralInsights.attentionLevel < 0.4) {
+ 1173 │           // Pour les utilisateurs à faible attention, donner une explication courte et directe
+ 1174 │           rec.description = `Recommandé pour: ${rec.categories.slice(0, 2).join(', ')}`;
+ 1175 │         }
+ 1176 │       });
+ 1177 │     }
+ 1178 │ 
+ 1179 │     // Enrichir avec des données de neuroProfile si disponibles
+ 1180 │     if (neuroProfile) {
+ 1181 │       aiEnhancedRecommendations.forEach(rec => {
+ 1182 │         if (neuroProfile.decisionStyle === 'analytical' && rec.scientificBasis) {
+ 1183 │           rec.relevanceScore = Math.min(100, rec.relevanceScore + 3);
+ 1184 │ 
+ 1185 │           if (!rec.relatedTerms) {
+ 1186 │             rec.relatedTerms = [];
+ 1187 │           }
+ 1188 │           rec.relatedTerms.push("Approche analytique");
+ 1189 │         }
+ 1190 │ 
+ 1191 │         if (neuroProfile.decisionStyle === 'intuitive' && rec.scientificBasis.includes('rapide')) {
+ 1192 │           rec.relevanceScore = Math.min(100, rec.relevanceScore + 3);
+ 1193 │ 
+ 1194 │           if (!rec.relatedTerms) {
+ 1195 │             rec.relatedTerms = [];
+ 1196 │           }
+ 1197 │           rec.relatedTerms.push("Résultats immédiats");
+ 1198 │         }
+ 1199 │ 
+ 1200 │         if (neuroProfile.riskTolerance === 'low' && rec.scientificBasis.includes('excellent')) {
+ 1201 │           rec.relevanceScore = Math.min(100, rec.relevanceScore + 5);
+ 1202 │ 
+ 1203 │           if (!rec.relatedTerms) {
+ 1204 │             rec.relatedTerms = [];
+ 1205 │           }
+ 1206 │           rec.relatedTerms.push("Excellent profil de sécurité");
+ 1207 │         }
+ 1208 │       });
+ 1209 │     }
+ 1210 │ 
+ 1211 │     // Réordonner les recommandations en fonction des scores ajustés
+ 1212 │     aiEnhancedRecommendations.sort((a, b) => {
+ 1213 │       return b.relevanceScore - a.relevanceScore;
+ 1214 │     });
+ 1215 │ 
+ 1216 │     // Optimiser les recommandations avec l'algorithme avancé
+ 1217 │     const optimizedRecommendations = optimizeRecommendations(
+ 1218 │       aiEnhancedRecommendations,
+ 1219 │       quizResponses,
+ 1220 │       behavioralMetrics,
+ 1221 │       neuroProfile
+ 1222 │     );
+ 1223 │ 
+ 1224 │     // Enregistrer les données pour apprentissage futur
+ 1225 │     saveLearningData(quizResponses, optimizedRecommendations, behavioralMetrics, neuroProfile);
+ 1226 │ 
+ 1227 │     return optimizedRecommendations;
+ 1228 │   } catch (error) {
+ 1229 │     console.error("Erreur lors de la génération des recommandations avancées:", error);
+ 1230 │     return generateRecommendations(quizData); // Fallback to the new system
+ 1231 │   }
+ 1232 │ };
+ 1233 │ 
+ 1234 │ // Importations déjà définies plus haut dans le fichier
+ 1235 │ 
+ 1236 │ 
+ 1237 │ // Définition d'interfaces pour les types utilisés
+ 1238 │ interface QuizResponses {
+ 1239 │   // Interface pour les réponses du quiz
+ 1240 │   healthConcerns?: {
+ 1241 │     stressLevel?: string;
+ 1242 │     energyLevel?: string;
+ 1243 │     sleepIssues?: string;
+ 1244 │     focusIssues?: string;
+ 1245 │     digestiveIssues?: string;
+ 1246 │   };
+ 1247 │   goals?: {
+ 1248 │     reduceStress?: boolean;
+ 1249 │     increaseEnergy?: boolean;
+ 1250 │     improveSleep?: boolean;
+ 1251 │     improveFocus?: boolean;
+ 1252 │     improveDigestion?: boolean;
+ 1253 │   };
+ 1254 │ }
+ 1255 │ 
+ 1256 │ interface BehavioralMetrics {
+ 1257 │   // Interface pour les métriques comportementales
+ 1258 │   cognitiveLoad: number;
+ 1259 │   stressLevel: number;
+ 1260 │   sleepQuality: number;
+ 1261 │ }
+ 1262 │ 
+ 1263 │ 
+ 1264 │ 
+ 1265 │ /**
+ 1266 │  * Retourne le statut du modèle d'IA actuel
+ 1267 │  * @returns Information sur le statut du modèle d'IA
+ 1268 │  */
+ 1269 │ export function getAIModelDetailedStatus() {
+ 1270 │   try {
+ 1271 │     // Récupérer les informations depuis le moteur d'apprentissage
+ 1272 │     const aiLearningStatus = getAILearningStatus();
+ 1273 │ 
+ 1274 │     // Récupérer la qualité des données
+ 1275 │     const dataQuality = evaluateDataQuality();
+ 1276 │ 
+ 1277 │     // Obtenir les corrélations de motifs
+ 1278 │     const patternCorrelations = getPatternCorrelations();
+ 1279 │ 
+ 1280 │     // Préparer des informations sur les recommandations les plus performantes
+ 1281 │     const recommendationPerformance = analyzeRecommendationPerformance();
+ 1282 │ 
+ 1283 │     // Identifier les recommandations les plus efficaces
+ 1284 │     const topRecommendations = Object.entries(recommendationPerformance)
+ 1285 │       .filter(([_, data]) => data.totalRatings > 10)
+ 1286 │       .sort((a, b) => b[1].averageRating - a[1].averageRating)
+ 1287 │       .slice(0, 5)
+ 1288 │       .map(([id, data]) => ({
+ 1289 │         id,
+ 1290 │         averageRating: data.averageRating,
+ 1291 │         totalRatings: data.totalRatings
+ 1292 │       }));
+ 1293 │ 
+ 1294 │     // Générer des insights sur l'amélioration du modèle
+ 1295 │     const improvements = [];
+ 1296 │ 
+ 1297 │     if (aiLearningStatus.trainingHistory && aiLearningStatus.trainingHistory.length > 1) {
+ 1298 │       const lastTraining = aiLearningStatus.trainingHistory[aiLearningStatus.trainingHistory.length - 1];
+ 1299 │       const previousTraining = aiLearningStatus.trainingHistory[aiLearningStatus.trainingHistory.length - 2];
+ 1300 │ 
+ 1301 │       if (lastTraining.accuracy > previousTraining.accuracy) {
+ 1302 │         const improvementPercent = ((lastTraining.accuracy - previousTraining.accuracy) / previousTraining.accuracy * 100).toFixed(1);
+ 1303 │         improvements.push(`Précision améliorée de ${improvementPercent}% depuis la dernière version`);
+ 1304 │       }
+ 1305 │     }
+ 1306 │ 
+ 1307 │     if (aiLearningStatus.uniqueProfilesCount > 1000) {
+ 1308 │       improvements.push(`Base de données enrichie de ${aiLearningStatus.uniqueProfilesCount} profils uniques`);
+ 1309 │     }
+ 1310 │ 
+ 1311 │     if (Object.keys(patternCorrelations.symptomCorrelations).length > 0) {
+ 1312 │       improvements.push(`Affinement des corrélations symptômes-suppléments (${Object.keys(patternCorrelations.symptomCorrelations).length} motifs)`);
+ 1313 │     }
+ 1314 │ 
+ 1315 │     // Ajouter des indicateurs de performance du système
+ 1316 │     const avgUserSatisfaction = Object.values(recommendationPerformance)
+ 1317 │       .filter(data => data.totalRatings > 0)
+ 1318 │       .reduce((sum, data) => sum + data.averageRating, 0) /
+ 1319 │       Object.values(recommendationPerformance).filter(data => data.totalRatings > 0).length;
+ 1320 │ 
+ 1321 │     if (!isNaN(avgUserSatisfaction)) {
+ 1322 │       const satisfactionPercentage = Math.round((avgUserSatisfaction / 5) * 100);
+ 1323 │       improvements.push(`Taux de satisfaction utilisateur global de ${satisfactionPercentage}%`);
+ 1324 │     }
+ 1325 │ 
+ 1326 │     if (Object.keys(patternCorrelations.ageCorrelations).length > 0) {
+ 1327 │       improvements.push(`Corrélations d'âge identifiées (${Object.keys(patternCorrelations.ageCorrelations).length} segments)`);
+ 1328 │     }
+ 1329 │ 
+ 1330 │     if (Object.keys(patternCorrelations.symptomCorrelations).length > 0) {
+ 1331 │       improvements.push(`Corrélations avancées entre symptômes et efficacité nutritionnelle (${Object.keys(patternCorrelations.symptomCorrelations).length} symptômes)`);
+ 1332 │     }
+ 1333 │ 
+ 1334 │     // Construire et retourner l'état complet du modèle
+ 1335 │     return {
+ 1336 │       isActive: aiLearningStatus.isActive,
+ 1337 │       modelVersion: aiLearningStatus.modelVersion,
+ 1338 │       lastTrainingDate: aiLearningStatus.lastTrainingDate,
+ 1339 │       accuracy: aiLearningStatus.accuracy,
+ 1340 │       dataPointsAnalyzed: aiLearningStatus.dataPointsCount,
+ 1341 │       improvements: improvements,
+ 1342 │ 
+ 1343 │       // Informations supplémentaires
+ 1344 │       dataQuality: dataQuality.overallQuality,
+ 1345 │       uniqueProfiles: aiLearningStatus.uniqueProfilesCount,
+ 1346 │       trainingHistory: aiLearningStatus.trainingHistory,
+ 1347 │       topPerformingRecommendations: topRecommendations,
+ 1348 │ 
+ 1349 │       // Métriques d'interface utilisateur
+ 1350 │       knowledgeBase: 2500 + Math.round(aiLearningStatus.dataPointsCount / 10),
+ 1351 │       accuracyImprovement: 2.3,
+ 1352 │       processingTime: 234,
+ 1353 │       userSatisfaction: 94,
+ 1354 │       useCaseCoverage: 87,
+ 1355 │       recommendationEfficiency: 92,
+ 1356 │       lastUpdate: new Date().toLocaleDateString(),
+ 1357 │     };
+ 1358 │   } catch (error) {
+ 1359 │     console.error("Erreur lors de la récupération du statut du modèle d'IA:", error);
+ 1360 │ 
+ 1361 │     // Fournir des valeurs par défaut en cas d'erreur
+ 1362 │     return {
+ 1363 │       isActive: true,
+ 1364 │       modelVersion: '1.0.0',
+ 1365 │       lastTrainingDate: new Date().toISOString(),
+ 1366 │       accuracy: 0.87,
+ 1367 │       dataPointsAnalyzed: 1250,
+ 1368 │       improvements: [
+ 1369 │         "Amélioration de la détection des profils à risque",
+ 1370 │         "Meilleure personnalisation par âge et sexe",
+ 1371 │         "Intégration des dernières recherches scientifiques"
+ 1372 │       ],
+ 1373 │       knowledgeBase: 2500,
+ 1374 │       accuracyImprovement: 2.3,
+ 1375 │       processingTime: 234, userSatisfaction: 94,
+ 1376 │       useCaseCoverage: 87,
+ 1377 │       recommendationEfficiency: 92,
+ 1378 │       lastUpdate: new Date().toLocaleDateString(),
+ 1379 │       topPerformingRecommendations: []
+ 1380 │     };
+ 1381 │   }
+ 1382 │ }
+ 1383 │ 
+ 1384 │ // Fonction unique pour l'analyse comportementale, sans duplication
+ 1385 │ const processBehavioralData = (behavioralMetrics: BehavioralMetrics) => ({
+      ·       ──────────┬──────────
+      ·                 ╰── `processBehavioralData` redefined here
+ 1386 │   cognitiveLoad: 0.7,
+ 1387 │   stressLevel: 0.6,
+ 1388 │   sleepQuality: 0.8,
+      ╰────
+  × the name `analyzeRecommendationPerformance` is defined multiple times
+      ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:744:1]
+  741 │ });
+  742 │ 
+  743 │ // Fonction unique pour analyser les performances des recommandations
+  744 │ const analyzeRecommendationPerformance = () => ({
+      ·       ────────────────┬───────────────
+      ·                       ╰── previous definition of `analyzeRecommendationPerformance` here
+  745 │   'vitamin_d3': { averageRating: 4.7, totalRatings: 120 },
+  746 │   'magnesium_glycinate': { averageRating: 4.6, totalRatings: 95 },
+  747 │   'omega3': { averageRating: 4.5, totalRatings: 150 },
+  748 │   'probiotics': { averageRating: 4.4, totalRatings: 110 },
+  749 │   'zinc': { averageRating: 4.3, totalRatings: 80 }
+  750 │ });
+  751 │ 
+  752 │ // Fonction unique pour obtenir les corrélations de motifs
+  753 │ const getPatternCorrelations = () => {
+  754 │   return {
+  755 │     symptomCorrelations: {
+  756 │       "stress": ["magnesium_glycinate", "ashwagandha", "l_theanine"],
+  757 │       "fatigue": ["vitamin_b_complex", "iron", "coq10"],
+  758 │       "insomnia": ["melatonin", "magnesium_glycinate", "valerian_root"],
+  759 │       "digestion": ["probiotics", "digestive_enzymes", "fiber_supplement"],
+  760 │       "joint_pain": ["omega3", "curcumin", "glucosamine_chondroitin"]
+  761 │     },
+  762 │     ageCorrelations: {
+  763 │       "18-30": ["vitamin_d3", "iron", "probiotics"],
+  764 │       "31-45": ["coq10", "vitamin_b_complex", "ashwagandha"],
+  765 │       "46-60": ["omega3", "vitamin_d3", "magnesium_glycinate"],
+  766 │       "60+": ["vitamin_d3", "calcium", "vitamin_b12"]
+  767 │     },
+  768 │     genderCorrelations: {
+  769 │       "male": ["magnesium_glycinate", "omega3", "vitamin_d3"],
+  770 │       "female": ["iron", "vitamin_b_complex", "probiotics"]
+  771 │     }
+  772 │   };
+  773 │ }
+  774 │ 
+  775 │ export const generateRecommendations_original = (
+  776 │   quizResponses: QuizResponse,
+  777 │   behavioralMetrics?: BehavioralMetrics,
+  778 │   neuroProfile?: NeuroProfile
+  779 │ ): Recommendation[] => {
+  780 │   try {
+  781 │     // ... (Original generateRecommendations logic remains largely unchanged, but could be refactored to use the new system)
+  782 │     //Example of how to integrate the new system:
+  783 │     const quizData: QuizData = {
+  784 │       //map quizResponses to quizData
+  785 │       // ...mapping logic here...
+  786 │     };
+  787 │     const newRecommendations = getComprehensiveRecommendations(quizData);
+  788 │     return newRecommendations;
+  789 │ 
+  790 │ 
+  791 │   } catch (error) {
+  792 │     console.error("Erreur lors de la génération desrecommandations:", error);
+  793 │     return [];
+  794 │   }
+  795 │ };
+  796 │ 
+  797 │ // La fonction generateExplanationDetails a été remplacée par generateDetailedRecommendationExplanation
+  798 │ // pour éviter les duplications et améliorer la cohérence
+  799 │ 
+  800 │ /**
+  801 │  * Enregistre les données pour l'apprentissage du système IA
+  802 │  */
+  803 │ export const recordLearningData = (data: LearningData): void => {
+  804 │   try {
+  805 │     // Récupérer les données existantes
+  806 │     const existingData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+  807 │ 
+  808 │     // Ajouter les nouvelles données
+  809 │     existingData.push(data);
+  810 │ 
+  811 │     // Limiter la taille des données stockées (garder les 1000 plus récentes)
+  812 │     const trimmedData = existingData.slice(-1000);
+  813 │ 
+  814 │     // Sauvegarder les données
+  815 │     secureStorageService.setItem('aiLearningData', trimmedData);
+  816 │ 
+  817 │   } catch (error) {
+  818 │     console.error("Erreur lors de l'enregistrement des données d'apprentissage:", error);
+  819 │   }
+  820 │ };
+  821 │ 
+  822 │ /**
+  823 │  * Calcule le score de similarité entre deux profils utilisateurs
+  824 │  */
+  825 │ export const calculateProfileSimilarity = (
+  826 │   profile1: any,
+  827 │   profile2: any
+  828 │ ): number => {
+  829 │   try {
+  830 │     let similarityScore = 0;
+  831 │     let totalFactors = 0;
+  832 │ 
+  833 │     // Comparer les symptômes actifs
+  834 │     if (profile1.activeSymptoms && profile2.activeSymptoms) {
+  835 │       const commonSymptoms = profile1.activeSymptoms.filter((s: string) =>
+  836 │         profile2.activeSymptoms.includes(s)
+  837 │       ).length;
+  838 │ 
+  839 │       const totalSymptoms = new Set([
+  840 │         ...profile1.activeSymptoms,
+  841 │         ...profile2.activeSymptoms
+  842 │       ]).size;
+  843 │ 
+  844 │       if (totalSymptoms > 0) {
+  845 │         similarityScore += (commonSymptoms / totalSymptoms) * 50; // Poids plus élevé pour les symptômes
+  846 │         totalFactors += 1;
+  847 │       }
+  848 │     }
+  849 │ 
+  850 │     // Comparer les objectifs
+  851 │     if (profile1.activeGoals && profile2.activeGoals) {
+  852 │       const commonGoals = profile1.activeGoals.filter((g: string) =>
+  853 │         profile2.activeGoals.includes(g)
+  854 │       ).length;
+  855 │ 
+  856 │       const totalGoals = new Set([
+  857 │         ...profile1.activeGoals,
+  858 │         ...profile2.activeGoals
+  859 │       ]).size;
+  860 │ 
+  861 │       if (totalGoals > 0) {
+  862 │         similarityScore += (commonGoals / totalGoals) * 30;
+  863 │         totalFactors += 1;
+  864 │       }
+  865 │     }
+  866 │ 
+  867 │     // Comparer les restrictions alimentaires
+  868 │     if (profile1.dietaryRestrictions && profile2.dietaryRestrictions) {
+  869 │       let matchingRestrictions = 0;
+  870 │       let totalRestrictions = 0;
+  871 │ 
+  872 │       for (const key in profile1.dietaryRestrictions) {
+  873 │         if (profile2.dietaryRestrictions[key] === profile1.dietaryRestrictions[key]) {
+  874 │           matchingRestrictions++;
+  875 │         }
+  876 │         totalRestrictions++;
+  877 │       }
+  878 │ 
+  879 │       if (totalRestrictions > 0) {
+  880 │         similarityScore += (matchingRestrictions / totalRestrictions) * 20;
+  881 │         totalFactors += 1;
+  882 │       }
+  883 │     }
+  884 │ 
+  885 │     // Normaliser le score
+  886 │     return totalFactors > 0 ? similarityScore / totalFactors : 0;
+  887 │ 
+  888 │   } catch (error) {
+  889 │     console.error("Erreur lors du calcul de la similarité:", error);
+  890 │     return 0;
+  891 │   }
+  892 │ };
+  893 │ 
+  894 │ /**
+  895 │  * Enrichit les recommandations en utilisant l'IA externe via API (ChatGPT)
+  896 │  */
+  897 │ export const enrichRecommendationsWithExternalAI = async (
+  898 │   recommendations: Recommendation[],
+  899 │   quizResponses: QuizResponse
+  900 │ ): Promise<Recommendation[]> => {
+  901 │   try {
+  902 │     // Vérifier si la clé API est configurée
+  903 │     const apiKey = secureStorageService.getItem('openai_api_key');
+  904 │ 
+  905 │     if (!apiKey) {
+  906 │       console.log("Clé API OpenAI non configurée, impossible d'enrichir les recommandations");
+  907 │       return recommendations;
+  908 │     }
+  909 │ 
+  910 │     // Préparer les données à envoyer à l'API
+  911 │     const requestData = {
+  912 │       model: "gpt-4",
+  913 │       messages: [
+  914 │         {
+  915 │           role: "system",
+  916 │           content: `Vous êtes un expert en nutrition et suppléments nutritionnels. 
+  917 │           Vous allez analyser les recommandations générées par notre système et les enrichir 
+  918 │           avec des conseils plus personnalisés, des explications scientifiques, et des ajustements 
+  919 │           de dosage si nécessaire. Restez factuel et basez vos recommandations sur la science.`
+  920 │         },
+  921 │         {
+  922 │           role: "user",
+  923 │           content: `Voici les recommandations générées par notre système et les réponses au quiz de l'utilisateur.
+  924 │           Veuillez enrichir ces recommandations avec des détails supplémentaires sur l'efficacité, d'éventuelles 
+  925 │           synergies entre les compléments, et affiner les dosages en fonction du profil spécifique.
+  926 │ 
+  927 │           RÉPONSES AU QUIZ:
+  928 │           ${JSON.stringify(quizResponses, null, 2)}
+  929 │ 
+  930 │           RECOMMANDATIONS GÉNÉRÉES:
+  931 │           ${JSON.stringify(recommendations, null, 2)}
+  932 │ 
+  933 │           Répondez au format JSON avec les recommandations enrichies.`
+  934 │         }
+  935 │       ],
+  936 │       temperature: 0.7,
+  937 │       max_tokens: 1500
+  938 │     };
+  939 │ 
+  940 │     // Appeler l'API OpenAI
+  941 │     const response = await fetch('https://api.openai.com/v1/chat/completions', {
+  942 │       method: 'POST',
+  943 │       headers: {
+  944 │         'Content-Type': 'application/json',
+  945 │         'Authorization': `Bearer ${apiKey}`
+  946 │       },
+  947 │       body: JSON.stringify(requestData)
+  948 │     });
+  949 │ 
+  950 │     if (!response.ok) {
+  951 │       throw new Error(`Erreur API: ${response.status}`);
+  952 │     }
+  953 │ 
+  954 │     const data = await response.json();
+  955 │ 
+  956 │     // Extraire et parser la réponse
+  957 │     try {
+  958 │       const content = data.choices[0].message.content;
+  959 │       const enrichedRecommendations = JSON.parse(content);
+  960 │ 
+  961 │       // Fusionner avec les recommandations originales
+  962 │       return enrichedRecommendations.map((enriched: any, index: number) => ({
+  963 │         ...recommendations[index],
+  964 │         ...enriched,
+  965 │         aiEnriched: true
+  966 │       }));
+  967 │ 
+  968 │     } catch (parseError) {
+  969 │       console.error("Erreur lors du parsing de la réponse AI:", parseError);
+  970 │       return recommendations;
+  971 │     }
+  972 │ 
+  973 │   } catch (error) {
+  974 │     console.error("Erreur lors de l'enrichissement des recommandations par IA:", error);
+  975 │     return recommendations;
+  976 │   }
+  977 │ };
+  978 │ 
+  979 │ /**
+  980 │  * Met à jour le modèle d'apprentissage en fonction des retours utilisateurs
+  981 │  */
+  982 │ export const updateAiModel = (): void => {
+  983 │   try {
+  984 │     // Récupérer toutes les données d'apprentissage
+  985 │     const learningData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+  986 │ 
+  987 │     // Récupérer les retours utilisateurs
+  988 │     const userFeedback: UserFeedback[] = secureStorageService.getItem('userFeedback') || [];
+  989 │ 
+  990 │     if (learningData.length === 0 || userFeedback.length === 0) {
+  991 │       console.log("Pas assez de données pour mettre à jour le modèle");
+  992 │       return;
+  993 │     }
+  994 │ 
+  995 │     // Traiter les données pour améliorer les recommandations
+  996 │     processLearningDataAndFeedback(learningData, userFeedback);
+  997 │ 
+  998 │   } catch (error) {
+  999 │     console.error("Erreur lors de la mise à jour du modèle IA:", error);
+ 1000 │   }
+ 1001 │ };
+ 1002 │ 
+ 1003 │ /**
+ 1004 │  * Traite les données d'apprentissage et les retours utilisateurs pour améliorer le modèle
+ 1005 │  */
+ 1006 │ const processLearningDataAndFeedback = (
+ 1007 │   learningData: LearningData[],
+ 1008 │   userFeedback: UserFeedback[]
+ 1009 │ ): void => {
+ 1010 │   try {
+ 1011 │     // Construire un index pour associer les recommandations à leur feedback
+ 1012 │     const feedbackIndex = new Map<string, number[]>();
+ 1013 │ 
+ 1014 │     userFeedback.forEach(feedback => {
+ 1015 │       if (!feedbackIndex.has(feedback.recommendationId)) {
+ 1016 │         feedbackIndex.set(feedback.recommendationId, []);
+ 1017 │       }
+ 1018 │ 
+ 1019 │       feedbackIndex.get(feedback.recommendationId)?.push(feedback.rating);
+ 1020 │     });
+ 1021 │ 
+ 1022 │     // Ajuster les priorités des recommandations en fonction des retours
+ 1023 │     const supplementAdjustments = new Map<string, {
+ 1024 │       totalPositive: number;
+ 1025 │       totalNegative: number;
+ 1026 │       count: number;
+ 1027 │     }>();
+ 1028 │ 
+ 1029 │     // Parcourir les données d'apprentissage
+ 1030 │     learningData.forEach(data => {
+ 1031 │       data.generatedRecommendations.forEach(rec => {
+ 1032 │         const feedback = feedbackIndex.get(rec.id);
+ 1033 │ 
+ 1034 │         if (feedback && feedback.length > 0) {
+ 1035 │           // Calculer le score moyen
+ 1036 │           const avgRating = feedback.reduce((sum, rating) => sum + rating, 0) / feedback.length;
+ 1037 │ 
+ 1038 │           if (!supplementAdjustments.has(rec.id)) {
+ 1039 │             supplementAdjustments.set(rec.id, {
+ 1040 │               totalPositive: 0,
+ 1041 │               totalNegative: 0,
+ 1042 │               count: 0
+ 1043 │             });
+ 1044 │           }
+ 1045 │ 
+ 1046 │           const adjustment = supplementAdjustments.get(rec.id)!;
+ 1047 │ 
+ 1048 │           if (avgRating >= 3.5) {
+ 1049 │             adjustment.totalPositive++;
+ 1050 │           } else {
+ 1051 │             adjustment.totalNegative++;
+ 1052 │           }
+ 1053 │ 
+ 1054 │           adjustment.count++;
+ 1055 │         }
+ 1056 │       });
+ 1057 │     });
+ 1058 │ 
+ 1059 │     // Appliquer les ajustements au modèle
+ 1060 │     supplementAdjustments.forEach((adjustmentData, supplementId) => {
+ 1061 │       if (adjustmentData.count >= 5) { // Au moins 5 retours pour être significatif
+ 1062 │         const positiveRatio = adjustmentData.totalPositive / adjustmentData.count;
+ 1063 │ 
+ 1064 │         // Ajuster les symptômes associés
+ 1065 │         for (const symptomKey in SYMPTOM_RECOMMENDATIONS) {
+ 1066 │           const recommendations = SYMPTOM_RECOMMENDATIONS[symptomKey];
+ 1067 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 1068 │ 
+ 1069 │           if (recIndex >= 0) {
+ 1070 │             const currentPriority = recommendations[recIndex].priority;
+ 1071 │ 
+ 1072 │             // Courbe d'ajustement plus fine basée sur les retours
+ 1073 │             if (positiveRatio > 0.8) { // Plus de 80% de retours positifs
+ 1074 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 2);
+ 1075 │             } else if (positiveRatio > 0.6) { // Entre 60% et 80% de retours positifs
+ 1076 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 1077 │             } else if (positiveRatio < 0.3) { // Moins de 30% de retours positifs
+ 1078 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 2);
+ 1079 │             } else if (positiveRatio < 0.5) { // Entre 30% et 50% de retours positifs
+ 1080 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 1081 │             }
+ 1082 │           }
+ 1083 │         }
+ 1084 │ 
+ 1085 │         // Ajuster également les objectifs associés
+ 1086 │         for (const goalKey in GOAL_RECOMMENDATIONS) {
+ 1087 │           const recommendations = GOAL_RECOMMENDATIONS[goalKey];
+ 1088 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 1089 │ 
+ 1090 │           if (recIndex >= 0) {
+ 1091 │             const currentPriority = recommendations[recIndex].priority;
+ 1092 │ 
+ 1093 │             // Augmenter ou diminuer la priorité selon les retours
+ 1094 │             if (positiveRatio > 0.7) {
+ 1095 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 1096 │             } else if (positiveRatio < 0.3) {
+ 1097 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 1098 │             }
+ 1099 │           }
+ 1100 │         }
+ 1101 │       }
+ 1102 │     });
+ 1103 │ 
+ 1104 │     // Sauvegarder les données modifiées
+ 1105 │     // Note: Dans une implémentation réelle, nous sauvegarderions ces changements dans une base de données
+ 1106 │     // Pour cette démonstration, nous utilisons le stockage sécurisé local
+ 1107 │     secureStorageService.setItem('symptomRecommendationsUpdated', SYMPTOM_RECOMMENDATIONS);
+ 1108 │     secureStorageService.setItem('goalRecommendationsUpdated', GOAL_RECOMMENDATIONS);
+ 1109 │ 
+ 1110 │     console.log("Modèle IA mis à jour avec succès");
+ 1111 │ 
+ 1112 │   } catch (error) {
+ 1113 │     console.error("Erreur lors du traitement des données d'apprentissage:", error);
+ 1114 │   }
+ 1115 │ };
+ 1116 │ 
+ 1117 │ /**
+ 1118 │  * Génère des recommandations personnalisées avancées avec analyse comportementale et IA
+ 1119 │  */
+ 1120 │ export const generateAdvancedRecommendations = (
+ 1121 │   quizResponses: QuizResponse,
+ 1122 │   behavioralMetrics?: BehavioralMetrics,
+ 1123 │   neuroProfile?: NeuroProfile
+ 1124 │ ): Recommendation[] => {
+ 1125 │   try {
+ 1126 │     // Générer les recommandations de base using the new system.
+ 1127 │     const quizData: QuizData = {
+ 1128 │       //map quizResponses to quizData
+ 1129 │       // ...mapping logic here...
+ 1130 │     };
+ 1131 │     const baseRecommendations = generateRecommendations(quizData);
+ 1132 │ 
+ 1133 │     // Appliquer l'ajustement d'apprentissage IA
+ 1134 │     const aiEnhancedRecommendations = adjustRecommendationsWithLearning(baseRecommendations, quizResponses);
+ 1135 │ 
+ 1136 │     // Si des métriques comportementales sont disponibles, les utiliser pour affiner davantage
+ 1137 │     if (behavioralMetrics) {
+ 1138 │       const behavioralInsights = processBehavioralData(behavioralMetrics);
+ 1139 │ 
+ 1140 │       // Ajuster les priorités en fonction des domaines d'intérêt comportementaux
+ 1141 │       aiEnhancedRecommendations.forEach(rec => {
+ 1142 │         // Vérifier si cette recommandation correspond à un domaine d'intérêt
+ 1143 │         behavioralInsights.interestAreas.forEach(area => {
+ 1144 │           if (
+ 1145 │             (area === 'Stress' && (rec.id.includes('magnes') || rec.id.includes('ashwagandha') || rec.id.includes('theanine'))) ||
+ 1146 │             (area === 'Sommeil' && (rec.id.includes('melatonin') || rec.id.includes('magnes') || rec.id.includes('valerian'))) ||
+ 1147 │             (area === 'Énergie' && (rec.id.includes('vitaminb') || rec.id.includes('iron') || rec.id.includes('coq10'))) ||
+ 1148 │             (area === 'Digestion' && (rec.id.includes('probio') || rec.id.includes('enzymes') || rec.id.includes('fiber'))) ||
+ 1149 │             (area === 'Immunité' && (rec.id.includes('vitaminc') || rec.id.includes('vitd') || rec.id.includes('zinc')))
+ 1150 │           ) {
+ 1151 │             // Augmenter le score pour les recommandations correspondant aux intérêts
+ 1152 │             rec.relevanceScore = Math.min(100, rec.relevanceScore + 5);
+ 1153 │ 
+ 1154 │             // Ajouter une explication IA
+ 1155 │             if (!rec.relatedTerms) {
+ 1156 │               rec.relatedTerms = [];
+ 1157 │             }
+ 1158 │             rec.relatedTerms.push(`Intérêt pour ${area.toLowerCase()}`);
+ 1159 │           }
+ 1160 │         });
+ 1161 │ 
+ 1162 │         // Ajuster en fonction du niveau d'incertitude
+ 1163 │         if (behavioralInsights.uncertaintyLevel > 0.6 && rec.scientificBasis) {
+ 1164 │           // Pour les utilisateurs incertains, ajouter plus d'explications scientifiques
+ 1165 │           if (!rec.relatedTerms) {
+ 1166 │             rec.relatedTerms = [];
+ 1167 │           }
+ 1168 │           rec.relatedTerms.push("Informations détaillées priorisées");
+ 1169 │         }
+ 1170 │ 
+ 1171 │         // Ajuster en fonction du niveau d'attention
+ 1172 │         if (behavioralInsights.attentionLevel < 0.4) {
+ 1173 │           // Pour les utilisateurs à faible attention, donner une explication courte et directe
+ 1174 │           rec.description = `Recommandé pour: ${rec.categories.slice(0, 2).join(', ')}`;
+ 1175 │         }
+ 1176 │       });
+ 1177 │     }
+ 1178 │ 
+ 1179 │     // Enrichir avec des données de neuroProfile si disponibles
+ 1180 │     if (neuroProfile) {
+ 1181 │       aiEnhancedRecommendations.forEach(rec => {
+ 1182 │         if (neuroProfile.decisionStyle === 'analytical' && rec.scientificBasis) {
+ 1183 │           rec.relevanceScore = Math.min(100, rec.relevanceScore + 3);
+ 1184 │ 
+ 1185 │           if (!rec.relatedTerms) {
+ 1186 │             rec.relatedTerms = [];
+ 1187 │           }
+ 1188 │           rec.relatedTerms.push("Approche analytique");
+ 1189 │         }
+ 1190 │ 
+ 1191 │         if (neuroProfile.decisionStyle === 'intuitive' && rec.scientificBasis.includes('rapide')) {
+ 1192 │           rec.relevanceScore = Math.min(100, rec.relevanceScore + 3);
+ 1193 │ 
+ 1194 │           if (!rec.relatedTerms) {
+ 1195 │             rec.relatedTerms = [];
+ 1196 │           }
+ 1197 │           rec.relatedTerms.push("Résultats immédiats");
+ 1198 │         }
+ 1199 │ 
+ 1200 │         if (neuroProfile.riskTolerance === 'low' && rec.scientificBasis.includes('excellent')) {
+ 1201 │           rec.relevanceScore = Math.min(100, rec.relevanceScore + 5);
+ 1202 │ 
+ 1203 │           if (!rec.relatedTerms) {
+ 1204 │             rec.relatedTerms = [];
+ 1205 │           }
+ 1206 │           rec.relatedTerms.push("Excellent profil de sécurité");
+ 1207 │         }
+ 1208 │       });
+ 1209 │     }
+ 1210 │ 
+ 1211 │     // Réordonner les recommandations en fonction des scores ajustés
+ 1212 │     aiEnhancedRecommendations.sort((a, b) => {
+ 1213 │       return b.relevanceScore - a.relevanceScore;
+ 1214 │     });
+ 1215 │ 
+ 1216 │     // Optimiser les recommandations avec l'algorithme avancé
+ 1217 │     const optimizedRecommendations = optimizeRecommendations(
+ 1218 │       aiEnhancedRecommendations,
+ 1219 │       quizResponses,
+ 1220 │       behavioralMetrics,
+ 1221 │       neuroProfile
+ 1222 │     );
+ 1223 │ 
+ 1224 │     // Enregistrer les données pour apprentissage futur
+ 1225 │     saveLearningData(quizResponses, optimizedRecommendations, behavioralMetrics, neuroProfile);
+ 1226 │ 
+ 1227 │     return optimizedRecommendations;
+ 1228 │   } catch (error) {
+ 1229 │     console.error("Erreur lors de la génération des recommandations avancées:", error);
+ 1230 │     return generateRecommendations(quizData); // Fallback to the new system
+ 1231 │   }
+ 1232 │ };
+ 1233 │ 
+ 1234 │ // Importations déjà définies plus haut dans le fichier
+ 1235 │ 
+ 1236 │ 
+ 1237 │ // Définition d'interfaces pour les types utilisés
+ 1238 │ interface QuizResponses {
+ 1239 │   // Interface pour les réponses du quiz
+ 1240 │   healthConcerns?: {
+ 1241 │     stressLevel?: string;
+ 1242 │     energyLevel?: string;
+ 1243 │     sleepIssues?: string;
+ 1244 │     focusIssues?: string;
+ 1245 │     digestiveIssues?: string;
+ 1246 │   };
+ 1247 │   goals?: {
+ 1248 │     reduceStress?: boolean;
+ 1249 │     increaseEnergy?: boolean;
+ 1250 │     improveSleep?: boolean;
+ 1251 │     improveFocus?: boolean;
+ 1252 │     improveDigestion?: boolean;
+ 1253 │   };
+ 1254 │ }
+ 1255 │ 
+ 1256 │ interface BehavioralMetrics {
+ 1257 │   // Interface pour les métriques comportementales
+ 1258 │   cognitiveLoad: number;
+ 1259 │   stressLevel: number;
+ 1260 │   sleepQuality: number;
+ 1261 │ }
+ 1262 │ 
+ 1263 │ 
+ 1264 │ 
+ 1265 │ /**
+ 1266 │  * Retourne le statut du modèle d'IA actuel
+ 1267 │  * @returns Information sur le statut du modèle d'IA
+ 1268 │  */
+ 1269 │ export function getAIModelDetailedStatus() {
+ 1270 │   try {
+ 1271 │     // Récupérer les informations depuis le moteur d'apprentissage
+ 1272 │     const aiLearningStatus = getAILearningStatus();
+ 1273 │ 
+ 1274 │     // Récupérer la qualité des données
+ 1275 │     const dataQuality = evaluateDataQuality();
+ 1276 │ 
+ 1277 │     // Obtenir les corrélations de motifs
+ 1278 │     const patternCorrelations = getPatternCorrelations();
+ 1279 │ 
+ 1280 │     // Préparer des informations sur les recommandations les plus performantes
+ 1281 │     const recommendationPerformance = analyzeRecommendationPerformance();
+ 1282 │ 
+ 1283 │     // Identifier les recommandations les plus efficaces
+ 1284 │     const topRecommendations = Object.entries(recommendationPerformance)
+ 1285 │       .filter(([_, data]) => data.totalRatings > 10)
+ 1286 │       .sort((a, b) => b[1].averageRating - a[1].averageRating)
+ 1287 │       .slice(0, 5)
+ 1288 │       .map(([id, data]) => ({
+ 1289 │         id,
+ 1290 │         averageRating: data.averageRating,
+ 1291 │         totalRatings: data.totalRatings
+ 1292 │       }));
+ 1293 │ 
+ 1294 │     // Générer des insights sur l'amélioration du modèle
+ 1295 │     const improvements = [];
+ 1296 │ 
+ 1297 │     if (aiLearningStatus.trainingHistory && aiLearningStatus.trainingHistory.length > 1) {
+ 1298 │       const lastTraining = aiLearningStatus.trainingHistory[aiLearningStatus.trainingHistory.length - 1];
+ 1299 │       const previousTraining = aiLearningStatus.trainingHistory[aiLearningStatus.trainingHistory.length - 2];
+ 1300 │ 
+ 1301 │       if (lastTraining.accuracy > previousTraining.accuracy) {
+ 1302 │         const improvementPercent = ((lastTraining.accuracy - previousTraining.accuracy) / previousTraining.accuracy * 100).toFixed(1);
+ 1303 │         improvements.push(`Précision améliorée de ${improvementPercent}% depuis la dernière version`);
+ 1304 │       }
+ 1305 │     }
+ 1306 │ 
+ 1307 │     if (aiLearningStatus.uniqueProfilesCount > 1000) {
+ 1308 │       improvements.push(`Base de données enrichie de ${aiLearningStatus.uniqueProfilesCount} profils uniques`);
+ 1309 │     }
+ 1310 │ 
+ 1311 │     if (Object.keys(patternCorrelations.symptomCorrelations).length > 0) {
+ 1312 │       improvements.push(`Affinement des corrélations symptômes-suppléments (${Object.keys(patternCorrelations.symptomCorrelations).length} motifs)`);
+ 1313 │     }
+ 1314 │ 
+ 1315 │     // Ajouter des indicateurs de performance du système
+ 1316 │     const avgUserSatisfaction = Object.values(recommendationPerformance)
+ 1317 │       .filter(data => data.totalRatings > 0)
+ 1318 │       .reduce((sum, data) => sum + data.averageRating, 0) /
+ 1319 │       Object.values(recommendationPerformance).filter(data => data.totalRatings > 0).length;
+ 1320 │ 
+ 1321 │     if (!isNaN(avgUserSatisfaction)) {
+ 1322 │       const satisfactionPercentage = Math.round((avgUserSatisfaction / 5) * 100);
+ 1323 │       improvements.push(`Taux de satisfaction utilisateur global de ${satisfactionPercentage}%`);
+ 1324 │     }
+ 1325 │ 
+ 1326 │     if (Object.keys(patternCorrelations.ageCorrelations).length > 0) {
+ 1327 │       improvements.push(`Corrélations d'âge identifiées (${Object.keys(patternCorrelations.ageCorrelations).length} segments)`);
+ 1328 │     }
+ 1329 │ 
+ 1330 │     if (Object.keys(patternCorrelations.symptomCorrelations).length > 0) {
+ 1331 │       improvements.push(`Corrélations avancées entre symptômes et efficacité nutritionnelle (${Object.keys(patternCorrelations.symptomCorrelations).length} symptômes)`);
+ 1332 │     }
+ 1333 │ 
+ 1334 │     // Construire et retourner l'état complet du modèle
+ 1335 │     return {
+ 1336 │       isActive: aiLearningStatus.isActive,
+ 1337 │       modelVersion: aiLearningStatus.modelVersion,
+ 1338 │       lastTrainingDate: aiLearningStatus.lastTrainingDate,
+ 1339 │       accuracy: aiLearningStatus.accuracy,
+ 1340 │       dataPointsAnalyzed: aiLearningStatus.dataPointsCount,
+ 1341 │       improvements: improvements,
+ 1342 │ 
+ 1343 │       // Informations supplémentaires
+ 1344 │       dataQuality: dataQuality.overallQuality,
+ 1345 │       uniqueProfiles: aiLearningStatus.uniqueProfilesCount,
+ 1346 │       trainingHistory: aiLearningStatus.trainingHistory,
+ 1347 │       topPerformingRecommendations: topRecommendations,
+ 1348 │ 
+ 1349 │       // Métriques d'interface utilisateur
+ 1350 │       knowledgeBase: 2500 + Math.round(aiLearningStatus.dataPointsCount / 10),
+ 1351 │       accuracyImprovement: 2.3,
+ 1352 │       processingTime: 234,
+ 1353 │       userSatisfaction: 94,
+ 1354 │       useCaseCoverage: 87,
+ 1355 │       recommendationEfficiency: 92,
+ 1356 │       lastUpdate: new Date().toLocaleDateString(),
+ 1357 │     };
+ 1358 │   } catch (error) {
+ 1359 │     console.error("Erreur lors de la récupération du statut du modèle d'IA:", error);
+ 1360 │ 
+ 1361 │     // Fournir des valeurs par défaut en cas d'erreur
+ 1362 │     return {
+ 1363 │       isActive: true,
+ 1364 │       modelVersion: '1.0.0',
+ 1365 │       lastTrainingDate: new Date().toISOString(),
+ 1366 │       accuracy: 0.87,
+ 1367 │       dataPointsAnalyzed: 1250,
+ 1368 │       improvements: [
+ 1369 │         "Amélioration de la détection des profils à risque",
+ 1370 │         "Meilleure personnalisation par âge et sexe",
+ 1371 │         "Intégration des dernières recherches scientifiques"
+ 1372 │       ],
+ 1373 │       knowledgeBase: 2500,
+ 1374 │       accuracyImprovement: 2.3,
+ 1375 │       processingTime: 234, userSatisfaction: 94,
+ 1376 │       useCaseCoverage: 87,
+ 1377 │       recommendationEfficiency: 92,
+ 1378 │       lastUpdate: new Date().toLocaleDateString(),
+ 1379 │       topPerformingRecommendations: []
+ 1380 │     };
+ 1381 │   }
+ 1382 │ }
+ 1383 │ 
+ 1384 │ // Fonction unique pour l'analyse comportementale, sans duplication
+ 1385 │ const processBehavioralData = (behavioralMetrics: BehavioralMetrics) => ({
+ 1386 │   cognitiveLoad: 0.7,
+ 1387 │   stressLevel: 0.6,
+ 1388 │   sleepQuality: 0.8,
+ 1389 │   attentionLevel: 0.65,
+ 1390 │   uncertaintyLevel: 0.4,
+ 1391 │   interestAreas: ['Stress', 'Sommeil', 'Énergie']
+ 1392 │ });
+ 1393 │ 
+ 1394 │ // Fonction unique pour analyser les performances des recommandations
+ 1395 │ const analyzeRecommendationPerformance = () => ({
+      ·       ────────────────┬───────────────
+      ·                       ╰── `analyzeRecommendationPerformance` redefined here
+ 1396 │   'vitamin_d3': { averageRating: 4.7, totalRatings: 120 },
+ 1397 │   'magnesium_glycinate': { averageRating: 4.6, totalRatings: 95 },
+ 1398 │   'omega3': { averageRating: 4.5, totalRatings: 150 },
+      ╰────
+  × the name `getPatternCorrelations` is defined multiple times
+      ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:753:1]
+  750 │ });
+  751 │ 
+  752 │ // Fonction unique pour obtenir les corrélations de motifs
+  753 │ const getPatternCorrelations = () => {
+      ·       ───────────┬──────────
+      ·                  ╰── previous definition of `getPatternCorrelations` here
+  754 │   return {
+  755 │     symptomCorrelations: {
+  756 │       "stress": ["magnesium_glycinate", "ashwagandha", "l_theanine"],
+  757 │       "fatigue": ["vitamin_b_complex", "iron", "coq10"],
+  758 │       "insomnia": ["melatonin", "magnesium_glycinate", "valerian_root"],
+  759 │       "digestion": ["probiotics", "digestive_enzymes", "fiber_supplement"],
+  760 │       "joint_pain": ["omega3", "curcumin", "glucosamine_chondroitin"]
+  761 │     },
+  762 │     ageCorrelations: {
+  763 │       "18-30": ["vitamin_d3", "iron", "probiotics"],
+  764 │       "31-45": ["coq10", "vitamin_b_complex", "ashwagandha"],
+  765 │       "46-60": ["omega3", "vitamin_d3", "magnesium_glycinate"],
+  766 │       "60+": ["vitamin_d3", "calcium", "vitamin_b12"]
+  767 │     },
+  768 │     genderCorrelations: {
+  769 │       "male": ["magnesium_glycinate", "omega3", "vitamin_d3"],
+  770 │       "female": ["iron", "vitamin_b_complex", "probiotics"]
+  771 │     }
+  772 │   };
+  773 │ }
+  774 │ 
+  775 │ export const generateRecommendations_original = (
+  776 │   quizResponses: QuizResponse,
+  777 │   behavioralMetrics?: BehavioralMetrics,
+  778 │   neuroProfile?: NeuroProfile
+  779 │ ): Recommendation[] => {
+  780 │   try {
+  781 │     // ... (Original generateRecommendations logic remains largely unchanged, but could be refactored to use the new system)
+  782 │     //Example of how to integrate the new system:
+  783 │     const quizData: QuizData = {
+  784 │       //map quizResponses to quizData
+  785 │       // ...mapping logic here...
+  786 │     };
+  787 │     const newRecommendations = getComprehensiveRecommendations(quizData);
+  788 │     return newRecommendations;
+  789 │ 
+  790 │ 
+  791 │   } catch (error) {
+  792 │     console.error("Erreur lors de la génération desrecommandations:", error);
+  793 │     return [];
+  794 │   }
+  795 │ };
+  796 │ 
+  797 │ // La fonction generateExplanationDetails a été remplacée par generateDetailedRecommendationExplanation
+  798 │ // pour éviter les duplications et améliorer la cohérence
+  799 │ 
+  800 │ /**
+  801 │  * Enregistre les données pour l'apprentissage du système IA
+  802 │  */
+  803 │ export const recordLearningData = (data: LearningData): void => {
+  804 │   try {
+  805 │     // Récupérer les données existantes
+  806 │     const existingData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+  807 │ 
+  808 │     // Ajouter les nouvelles données
+  809 │     existingData.push(data);
+  810 │ 
+  811 │     // Limiter la taille des données stockées (garder les 1000 plus récentes)
+  812 │     const trimmedData = existingData.slice(-1000);
+  813 │ 
+  814 │     // Sauvegarder les données
+  815 │     secureStorageService.setItem('aiLearningData', trimmedData);
+  816 │ 
+  817 │   } catch (error) {
+  818 │     console.error("Erreur lors de l'enregistrement des données d'apprentissage:", error);
+  819 │   }
+  820 │ };
+  821 │ 
+  822 │ /**
+  823 │  * Calcule le score de similarité entre deux profils utilisateurs
+  824 │  */
+  825 │ export const calculateProfileSimilarity = (
+  826 │   profile1: any,
+  827 │   profile2: any
+  828 │ ): number => {
+  829 │   try {
+  830 │     let similarityScore = 0;
+  831 │     let totalFactors = 0;
+  832 │ 
+  833 │     // Comparer les symptômes actifs
+  834 │     if (profile1.activeSymptoms && profile2.activeSymptoms) {
+  835 │       const commonSymptoms = profile1.activeSymptoms.filter((s: string) =>
+  836 │         profile2.activeSymptoms.includes(s)
+  837 │       ).length;
+  838 │ 
+  839 │       const totalSymptoms = new Set([
+  840 │         ...profile1.activeSymptoms,
+  841 │         ...profile2.activeSymptoms
+  842 │       ]).size;
+  843 │ 
+  844 │       if (totalSymptoms > 0) {
+  845 │         similarityScore += (commonSymptoms / totalSymptoms) * 50; // Poids plus élevé pour les symptômes
+  846 │         totalFactors += 1;
+  847 │       }
+  848 │     }
+  849 │ 
+  850 │     // Comparer les objectifs
+  851 │     if (profile1.activeGoals && profile2.activeGoals) {
+  852 │       const commonGoals = profile1.activeGoals.filter((g: string) =>
+  853 │         profile2.activeGoals.includes(g)
+  854 │       ).length;
+  855 │ 
+  856 │       const totalGoals = new Set([
+  857 │         ...profile1.activeGoals,
+  858 │         ...profile2.activeGoals
+  859 │       ]).size;
+  860 │ 
+  861 │       if (totalGoals > 0) {
+  862 │         similarityScore += (commonGoals / totalGoals) * 30;
+  863 │         totalFactors += 1;
+  864 │       }
+  865 │     }
+  866 │ 
+  867 │     // Comparer les restrictions alimentaires
+  868 │     if (profile1.dietaryRestrictions && profile2.dietaryRestrictions) {
+  869 │       let matchingRestrictions = 0;
+  870 │       let totalRestrictions = 0;
+  871 │ 
+  872 │       for (const key in profile1.dietaryRestrictions) {
+  873 │         if (profile2.dietaryRestrictions[key] === profile1.dietaryRestrictions[key]) {
+  874 │           matchingRestrictions++;
+  875 │         }
+  876 │         totalRestrictions++;
+  877 │       }
+  878 │ 
+  879 │       if (totalRestrictions > 0) {
+  880 │         similarityScore += (matchingRestrictions / totalRestrictions) * 20;
+  881 │         totalFactors += 1;
+  882 │       }
+  883 │     }
+  884 │ 
+  885 │     // Normaliser le score
+  886 │     return totalFactors > 0 ? similarityScore / totalFactors : 0;
+  887 │ 
+  888 │   } catch (error) {
+  889 │     console.error("Erreur lors du calcul de la similarité:", error);
+  890 │     return 0;
+  891 │   }
+  892 │ };
+  893 │ 
+  894 │ /**
+  895 │  * Enrichit les recommandations en utilisant l'IA externe via API (ChatGPT)
+  896 │  */
+  897 │ export const enrichRecommendationsWithExternalAI = async (
+  898 │   recommendations: Recommendation[],
+  899 │   quizResponses: QuizResponse
+  900 │ ): Promise<Recommendation[]> => {
+  901 │   try {
+  902 │     // Vérifier si la clé API est configurée
+  903 │     const apiKey = secureStorageService.getItem('openai_api_key');
+  904 │ 
+  905 │     if (!apiKey) {
+  906 │       console.log("Clé API OpenAI non configurée, impossible d'enrichir les recommandations");
+  907 │       return recommendations;
+  908 │     }
+  909 │ 
+  910 │     // Préparer les données à envoyer à l'API
+  911 │     const requestData = {
+  912 │       model: "gpt-4",
+  913 │       messages: [
+  914 │         {
+  915 │           role: "system",
+  916 │           content: `Vous êtes un expert en nutrition et suppléments nutritionnels. 
+  917 │           Vous allez analyser les recommandations générées par notre système et les enrichir 
+  918 │           avec des conseils plus personnalisés, des explications scientifiques, et des ajustements 
+  919 │           de dosage si nécessaire. Restez factuel et basez vos recommandations sur la science.`
+  920 │         },
+  921 │         {
+  922 │           role: "user",
+  923 │           content: `Voici les recommandations générées par notre système et les réponses au quiz de l'utilisateur.
+  924 │           Veuillez enrichir ces recommandations avec des détails supplémentaires sur l'efficacité, d'éventuelles 
+  925 │           synergies entre les compléments, et affiner les dosages en fonction du profil spécifique.
+  926 │ 
+  927 │           RÉPONSES AU QUIZ:
+  928 │           ${JSON.stringify(quizResponses, null, 2)}
+  929 │ 
+  930 │           RECOMMANDATIONS GÉNÉRÉES:
+  931 │           ${JSON.stringify(recommendations, null, 2)}
+  932 │ 
+  933 │           Répondez au format JSON avec les recommandations enrichies.`
+  934 │         }
+  935 │       ],
+  936 │       temperature: 0.7,
+  937 │       max_tokens: 1500
+  938 │     };
+  939 │ 
+  940 │     // Appeler l'API OpenAI
+  941 │     const response = await fetch('https://api.openai.com/v1/chat/completions', {
+  942 │       method: 'POST',
+  943 │       headers: {
+  944 │         'Content-Type': 'application/json',
+  945 │         'Authorization': `Bearer ${apiKey}`
+  946 │       },
+  947 │       body: JSON.stringify(requestData)
+  948 │     });
+  949 │ 
+  950 │     if (!response.ok) {
+  951 │       throw new Error(`Erreur API: ${response.status}`);
+  952 │     }
+  953 │ 
+  954 │     const data = await response.json();
+  955 │ 
+  956 │     // Extraire et parser la réponse
+  957 │     try {
+  958 │       const content = data.choices[0].message.content;
+  959 │       const enrichedRecommendations = JSON.parse(content);
+  960 │ 
+  961 │       // Fusionner avec les recommandations originales
+  962 │       return enrichedRecommendations.map((enriched: any, index: number) => ({
+  963 │         ...recommendations[index],
+  964 │         ...enriched,
+  965 │         aiEnriched: true
+  966 │       }));
+  967 │ 
+  968 │     } catch (parseError) {
+  969 │       console.error("Erreur lors du parsing de la réponse AI:", parseError);
+  970 │       return recommendations;
+  971 │     }
+  972 │ 
+  973 │   } catch (error) {
+  974 │     console.error("Erreur lors de l'enrichissement des recommandations par IA:", error);
+  975 │     return recommendations;
+  976 │   }
+  977 │ };
+  978 │ 
+  979 │ /**
+  980 │  * Met à jour le modèle d'apprentissage en fonction des retours utilisateurs
+  981 │  */
+  982 │ export const updateAiModel = (): void => {
+  983 │   try {
+  984 │     // Récupérer toutes les données d'apprentissage
+  985 │     const learningData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+  986 │ 
+  987 │     // Récupérer les retours utilisateurs
+  988 │     const userFeedback: UserFeedback[] = secureStorageService.getItem('userFeedback') || [];
+  989 │ 
+  990 │     if (learningData.length === 0 || userFeedback.length === 0) {
+  991 │       console.log("Pas assez de données pour mettre à jour le modèle");
+  992 │       return;
+  993 │     }
+  994 │ 
+  995 │     // Traiter les données pour améliorer les recommandations
+  996 │     processLearningDataAndFeedback(learningData, userFeedback);
+  997 │ 
+  998 │   } catch (error) {
+  999 │     console.error("Erreur lors de la mise à jour du modèle IA:", error);
+ 1000 │   }
+ 1001 │ };
+ 1002 │ 
+ 1003 │ /**
+ 1004 │  * Traite les données d'apprentissage et les retours utilisateurs pour améliorer le modèle
+ 1005 │  */
+ 1006 │ const processLearningDataAndFeedback = (
+ 1007 │   learningData: LearningData[],
+ 1008 │   userFeedback: UserFeedback[]
+ 1009 │ ): void => {
+ 1010 │   try {
+ 1011 │     // Construire un index pour associer les recommandations à leur feedback
+ 1012 │     const feedbackIndex = new Map<string, number[]>();
+ 1013 │ 
+ 1014 │     userFeedback.forEach(feedback => {
+ 1015 │       if (!feedbackIndex.has(feedback.recommendationId)) {
+ 1016 │         feedbackIndex.set(feedback.recommendationId, []);
+ 1017 │       }
+ 1018 │ 
+ 1019 │       feedbackIndex.get(feedback.recommendationId)?.push(feedback.rating);
+ 1020 │     });
+ 1021 │ 
+ 1022 │     // Ajuster les priorités des recommandations en fonction des retours
+ 1023 │     const supplementAdjustments = new Map<string, {
+ 1024 │       totalPositive: number;
+ 1025 │       totalNegative: number;
+ 1026 │       count: number;
+ 1027 │     }>();
+ 1028 │ 
+ 1029 │     // Parcourir les données d'apprentissage
+ 1030 │     learningData.forEach(data => {
+ 1031 │       data.generatedRecommendations.forEach(rec => {
+ 1032 │         const feedback = feedbackIndex.get(rec.id);
+ 1033 │ 
+ 1034 │         if (feedback && feedback.length > 0) {
+ 1035 │           // Calculer le score moyen
+ 1036 │           const avgRating = feedback.reduce((sum, rating) => sum + rating, 0) / feedback.length;
+ 1037 │ 
+ 1038 │           if (!supplementAdjustments.has(rec.id)) {
+ 1039 │             supplementAdjustments.set(rec.id, {
+ 1040 │               totalPositive: 0,
+ 1041 │               totalNegative: 0,
+ 1042 │               count: 0
+ 1043 │             });
+ 1044 │           }
+ 1045 │ 
+ 1046 │           const adjustment = supplementAdjustments.get(rec.id)!;
+ 1047 │ 
+ 1048 │           if (avgRating >= 3.5) {
+ 1049 │             adjustment.totalPositive++;
+ 1050 │           } else {
+ 1051 │             adjustment.totalNegative++;
+ 1052 │           }
+ 1053 │ 
+ 1054 │           adjustment.count++;
+ 1055 │         }
+ 1056 │       });
+ 1057 │     });
+ 1058 │ 
+ 1059 │     // Appliquer les ajustements au modèle
+ 1060 │     supplementAdjustments.forEach((adjustmentData, supplementId) => {
+ 1061 │       if (adjustmentData.count >= 5) { // Au moins 5 retours pour être significatif
+ 1062 │         const positiveRatio = adjustmentData.totalPositive / adjustmentData.count;
+ 1063 │ 
+ 1064 │         // Ajuster les symptômes associés
+ 1065 │         for (const symptomKey in SYMPTOM_RECOMMENDATIONS) {
+ 1066 │           const recommendations = SYMPTOM_RECOMMENDATIONS[symptomKey];
+ 1067 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 1068 │ 
+ 1069 │           if (recIndex >= 0) {
+ 1070 │             const currentPriority = recommendations[recIndex].priority;
+ 1071 │ 
+ 1072 │             // Courbe d'ajustement plus fine basée sur les retours
+ 1073 │             if (positiveRatio > 0.8) { // Plus de 80% de retours positifs
+ 1074 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 2);
+ 1075 │             } else if (positiveRatio > 0.6) { // Entre 60% et 80% de retours positifs
+ 1076 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 1077 │             } else if (positiveRatio < 0.3) { // Moins de 30% de retours positifs
+ 1078 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 2);
+ 1079 │             } else if (positiveRatio < 0.5) { // Entre 30% et 50% de retours positifs
+ 1080 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 1081 │             }
+ 1082 │           }
+ 1083 │         }
+ 1084 │ 
+ 1085 │         // Ajuster également les objectifs associés
+ 1086 │         for (const goalKey in GOAL_RECOMMENDATIONS) {
+ 1087 │           const recommendations = GOAL_RECOMMENDATIONS[goalKey];
+ 1088 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 1089 │ 
+ 1090 │           if (recIndex >= 0) {
+ 1091 │             const currentPriority = recommendations[recIndex].priority;
+ 1092 │ 
+ 1093 │             // Augmenter ou diminuer la priorité selon les retours
+ 1094 │             if (positiveRatio > 0.7) {
+ 1095 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 1096 │             } else if (positiveRatio < 0.3) {
+ 1097 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 1098 │             }
+ 1099 │           }
+ 1100 │         }
+ 1101 │       }
+ 1102 │     });
+ 1103 │ 
+ 1104 │     // Sauvegarder les données modifiées
+ 1105 │     // Note: Dans une implémentation réelle, nous sauvegarderions ces changements dans une base de données
+ 1106 │     // Pour cette démonstration, nous utilisons le stockage sécurisé local
+ 1107 │     secureStorageService.setItem('symptomRecommendationsUpdated', SYMPTOM_RECOMMENDATIONS);
+ 1108 │     secureStorageService.setItem('goalRecommendationsUpdated', GOAL_RECOMMENDATIONS);
+ 1109 │ 
+ 1110 │     console.log("Modèle IA mis à jour avec succès");
+ 1111 │ 
+ 1112 │   } catch (error) {
+ 1113 │     console.error("Erreur lors du traitement des données d'apprentissage:", error);
+ 1114 │   }
+ 1115 │ };
+ 1116 │ 
+ 1117 │ /**
+ 1118 │  * Génère des recommandations personnalisées avancées avec analyse comportementale et IA
+ 1119 │  */
+ 1120 │ export const generateAdvancedRecommendations = (
+ 1121 │   quizResponses: QuizResponse,
+ 1122 │   behavioralMetrics?: BehavioralMetrics,
+ 1123 │   neuroProfile?: NeuroProfile
+ 1124 │ ): Recommendation[] => {
+ 1125 │   try {
+ 1126 │     // Générer les recommandations de base using the new system.
+ 1127 │     const quizData: QuizData = {
+ 1128 │       //map quizResponses to quizData
+ 1129 │       // ...mapping logic here...
+ 1130 │     };
+ 1131 │     const baseRecommendations = generateRecommendations(quizData);
+ 1132 │ 
+ 1133 │     // Appliquer l'ajustement d'apprentissage IA
+ 1134 │     const aiEnhancedRecommendations = adjustRecommendationsWithLearning(baseRecommendations, quizResponses);
+ 1135 │ 
+ 1136 │     // Si des métriques comportementales sont disponibles, les utiliser pour affiner davantage
+ 1137 │     if (behavioralMetrics) {
+ 1138 │       const behavioralInsights = processBehavioralData(behavioralMetrics);
+ 1139 │ 
+ 1140 │       // Ajuster les priorités en fonction des domaines d'intérêt comportementaux
+ 1141 │       aiEnhancedRecommendations.forEach(rec => {
+ 1142 │         // Vérifier si cette recommandation correspond à un domaine d'intérêt
+ 1143 │         behavioralInsights.interestAreas.forEach(area => {
+ 1144 │           if (
+ 1145 │             (area === 'Stress' && (rec.id.includes('magnes') || rec.id.includes('ashwagandha') || rec.id.includes('theanine'))) ||
+ 1146 │             (area === 'Sommeil' && (rec.id.includes('melatonin') || rec.id.includes('magnes') || rec.id.includes('valerian'))) ||
+ 1147 │             (area === 'Énergie' && (rec.id.includes('vitaminb') || rec.id.includes('iron') || rec.id.includes('coq10'))) ||
+ 1148 │             (area === 'Digestion' && (rec.id.includes('probio') || rec.id.includes('enzymes') || rec.id.includes('fiber'))) ||
+ 1149 │             (area === 'Immunité' && (rec.id.includes('vitaminc') || rec.id.includes('vitd') || rec.id.includes('zinc')))
+ 1150 │           ) {
+ 1151 │             // Augmenter le score pour les recommandations correspondant aux intérêts
+ 1152 │             rec.relevanceScore = Math.min(100, rec.relevanceScore + 5);
+ 1153 │ 
+ 1154 │             // Ajouter une explication IA
+ 1155 │             if (!rec.relatedTerms) {
+ 1156 │               rec.relatedTerms = [];
+ 1157 │             }
+ 1158 │             rec.relatedTerms.push(`Intérêt pour ${area.toLowerCase()}`);
+ 1159 │           }
+ 1160 │         });
+ 1161 │ 
+ 1162 │         // Ajuster en fonction du niveau d'incertitude
+ 1163 │         if (behavioralInsights.uncertaintyLevel > 0.6 && rec.scientificBasis) {
+ 1164 │           // Pour les utilisateurs incertains, ajouter plus d'explications scientifiques
+ 1165 │           if (!rec.relatedTerms) {
+ 1166 │             rec.relatedTerms = [];
+ 1167 │           }
+ 1168 │           rec.relatedTerms.push("Informations détaillées priorisées");
+ 1169 │         }
+ 1170 │ 
+ 1171 │         // Ajuster en fonction du niveau d'attention
+ 1172 │         if (behavioralInsights.attentionLevel < 0.4) {
+ 1173 │           // Pour les utilisateurs à faible attention, donner une explication courte et directe
+ 1174 │           rec.description = `Recommandé pour: ${rec.categories.slice(0, 2).join(', ')}`;
+ 1175 │         }
+ 1176 │       });
+ 1177 │     }
+ 1178 │ 
+ 1179 │     // Enrichir avec des données de neuroProfile si disponibles
+ 1180 │     if (neuroProfile) {
+ 1181 │       aiEnhancedRecommendations.forEach(rec => {
+ 1182 │         if (neuroProfile.decisionStyle === 'analytical' && rec.scientificBasis) {
+ 1183 │           rec.relevanceScore = Math.min(100, rec.relevanceScore + 3);
+ 1184 │ 
+ 1185 │           if (!rec.relatedTerms) {
+ 1186 │             rec.relatedTerms = [];
+ 1187 │           }
+ 1188 │           rec.relatedTerms.push("Approche analytique");
+ 1189 │         }
+ 1190 │ 
+ 1191 │         if (neuroProfile.decisionStyle === 'intuitive' && rec.scientificBasis.includes('rapide')) {
+ 1192 │           rec.relevanceScore = Math.min(100, rec.relevanceScore + 3);
+ 1193 │ 
+ 1194 │           if (!rec.relatedTerms) {
+ 1195 │             rec.relatedTerms = [];
+ 1196 │           }
+ 1197 │           rec.relatedTerms.push("Résultats immédiats");
+ 1198 │         }
+ 1199 │ 
+ 1200 │         if (neuroProfile.riskTolerance === 'low' && rec.scientificBasis.includes('excellent')) {
+ 1201 │           rec.relevanceScore = Math.min(100, rec.relevanceScore + 5);
+ 1202 │ 
+ 1203 │           if (!rec.relatedTerms) {
+ 1204 │             rec.relatedTerms = [];
+ 1205 │           }
+ 1206 │           rec.relatedTerms.push("Excellent profil de sécurité");
+ 1207 │         }
+ 1208 │       });
+ 1209 │     }
+ 1210 │ 
+ 1211 │     // Réordonner les recommandations en fonction des scores ajustés
+ 1212 │     aiEnhancedRecommendations.sort((a, b) => {
+ 1213 │       return b.relevanceScore - a.relevanceScore;
+ 1214 │     });
+ 1215 │ 
+ 1216 │     // Optimiser les recommandations avec l'algorithme avancé
+ 1217 │     const optimizedRecommendations = optimizeRecommendations(
+ 1218 │       aiEnhancedRecommendations,
+ 1219 │       quizResponses,
+ 1220 │       behavioralMetrics,
+ 1221 │       neuroProfile
+ 1222 │     );
+ 1223 │ 
+ 1224 │     // Enregistrer les données pour apprentissage futur
+ 1225 │     saveLearningData(quizResponses, optimizedRecommendations, behavioralMetrics, neuroProfile);
+ 1226 │ 
+ 1227 │     return optimizedRecommendations;
+ 1228 │   } catch (error) {
+ 1229 │     console.error("Erreur lors de la génération des recommandations avancées:", error);
+ 1230 │     return generateRecommendations(quizData); // Fallback to the new system
+ 1231 │   }
+ 1232 │ };
+ 1233 │ 
+ 1234 │ // Importations déjà définies plus haut dans le fichier
+ 1235 │ 
+ 1236 │ 
+ 1237 │ // Définition d'interfaces pour les types utilisés
+ 1238 │ interface QuizResponses {
+ 1239 │   // Interface pour les réponses du quiz
+ 1240 │   healthConcerns?: {
+ 1241 │     stressLevel?: string;
+ 1242 │     energyLevel?: string;
+ 1243 │     sleepIssues?: string;
+ 1244 │     focusIssues?: string;
+ 1245 │     digestiveIssues?: string;
+ 1246 │   };
+ 1247 │   goals?: {
+ 1248 │     reduceStress?: boolean;
+ 1249 │     increaseEnergy?: boolean;
+ 1250 │     improveSleep?: boolean;
+ 1251 │     improveFocus?: boolean;
+ 1252 │     improveDigestion?: boolean;
+ 1253 │   };
+ 1254 │ }
+ 1255 │ 
+ 1256 │ interface BehavioralMetrics {
+ 1257 │   // Interface pour les métriques comportementales
+ 1258 │   cognitiveLoad: number;
+ 1259 │   stressLevel: number;
+ 1260 │   sleepQuality: number;
+ 1261 │ }
+ 1262 │ 
+ 1263 │ 
+ 1264 │ 
+ 1265 │ /**
+ 1266 │  * Retourne le statut du modèle d'IA actuel
+ 1267 │  * @returns Information sur le statut du modèle d'IA
+ 1268 │  */
+ 1269 │ export function getAIModelDetailedStatus() {
+ 1270 │   try {
+ 1271 │     // Récupérer les informations depuis le moteur d'apprentissage
+ 1272 │     const aiLearningStatus = getAILearningStatus();
+ 1273 │ 
+ 1274 │     // Récupérer la qualité des données
+ 1275 │     const dataQuality = evaluateDataQuality();
+ 1276 │ 
+ 1277 │     // Obtenir les corrélations de motifs
+ 1278 │     const patternCorrelations = getPatternCorrelations();
+ 1279 │ 
+ 1280 │     // Préparer des informations sur les recommandations les plus performantes
+ 1281 │     const recommendationPerformance = analyzeRecommendationPerformance();
+ 1282 │ 
+ 1283 │     // Identifier les recommandations les plus efficaces
+ 1284 │     const topRecommendations = Object.entries(recommendationPerformance)
+ 1285 │       .filter(([_, data]) => data.totalRatings > 10)
+ 1286 │       .sort((a, b) => b[1].averageRating - a[1].averageRating)
+ 1287 │       .slice(0, 5)
+ 1288 │       .map(([id, data]) => ({
+ 1289 │         id,
+ 1290 │         averageRating: data.averageRating,
+ 1291 │         totalRatings: data.totalRatings
+ 1292 │       }));
+ 1293 │ 
+ 1294 │     // Générer des insights sur l'amélioration du modèle
+ 1295 │     const improvements = [];
+ 1296 │ 
+ 1297 │     if (aiLearningStatus.trainingHistory && aiLearningStatus.trainingHistory.length > 1) {
+ 1298 │       const lastTraining = aiLearningStatus.trainingHistory[aiLearningStatus.trainingHistory.length - 1];
+ 1299 │       const previousTraining = aiLearningStatus.trainingHistory[aiLearningStatus.trainingHistory.length - 2];
+ 1300 │ 
+ 1301 │       if (lastTraining.accuracy > previousTraining.accuracy) {
+ 1302 │         const improvementPercent = ((lastTraining.accuracy - previousTraining.accuracy) / previousTraining.accuracy * 100).toFixed(1);
+ 1303 │         improvements.push(`Précision améliorée de ${improvementPercent}% depuis la dernière version`);
+ 1304 │       }
+ 1305 │     }
+ 1306 │ 
+ 1307 │     if (aiLearningStatus.uniqueProfilesCount > 1000) {
+ 1308 │       improvements.push(`Base de données enrichie de ${aiLearningStatus.uniqueProfilesCount} profils uniques`);
+ 1309 │     }
+ 1310 │ 
+ 1311 │     if (Object.keys(patternCorrelations.symptomCorrelations).length > 0) {
+ 1312 │       improvements.push(`Affinement des corrélations symptômes-suppléments (${Object.keys(patternCorrelations.symptomCorrelations).length} motifs)`);
+ 1313 │     }
+ 1314 │ 
+ 1315 │     // Ajouter des indicateurs de performance du système
+ 1316 │     const avgUserSatisfaction = Object.values(recommendationPerformance)
+ 1317 │       .filter(data => data.totalRatings > 0)
+ 1318 │       .reduce((sum, data) => sum + data.averageRating, 0) /
+ 1319 │       Object.values(recommendationPerformance).filter(data => data.totalRatings > 0).length;
+ 1320 │ 
+ 1321 │     if (!isNaN(avgUserSatisfaction)) {
+ 1322 │       const satisfactionPercentage = Math.round((avgUserSatisfaction / 5) * 100);
+ 1323 │       improvements.push(`Taux de satisfaction utilisateur global de ${satisfactionPercentage}%`);
+ 1324 │     }
+ 1325 │ 
+ 1326 │     if (Object.keys(patternCorrelations.ageCorrelations).length > 0) {
+ 1327 │       improvements.push(`Corrélations d'âge identifiées (${Object.keys(patternCorrelations.ageCorrelations).length} segments)`);
+ 1328 │     }
+ 1329 │ 
+ 1330 │     if (Object.keys(patternCorrelations.symptomCorrelations).length > 0) {
+ 1331 │       improvements.push(`Corrélations avancées entre symptômes et efficacité nutritionnelle (${Object.keys(patternCorrelations.symptomCorrelations).length} symptômes)`);
+ 1332 │     }
+ 1333 │ 
+ 1334 │     // Construire et retourner l'état complet du modèle
+ 1335 │     return {
+ 1336 │       isActive: aiLearningStatus.isActive,
+ 1337 │       modelVersion: aiLearningStatus.modelVersion,
+ 1338 │       lastTrainingDate: aiLearningStatus.lastTrainingDate,
+ 1339 │       accuracy: aiLearningStatus.accuracy,
+ 1340 │       dataPointsAnalyzed: aiLearningStatus.dataPointsCount,
+ 1341 │       improvements: improvements,
+ 1342 │ 
+ 1343 │       // Informations supplémentaires
+ 1344 │       dataQuality: dataQuality.overallQuality,
+ 1345 │       uniqueProfiles: aiLearningStatus.uniqueProfilesCount,
+ 1346 │       trainingHistory: aiLearningStatus.trainingHistory,
+ 1347 │       topPerformingRecommendations: topRecommendations,
+ 1348 │ 
+ 1349 │       // Métriques d'interface utilisateur
+ 1350 │       knowledgeBase: 2500 + Math.round(aiLearningStatus.dataPointsCount / 10),
+ 1351 │       accuracyImprovement: 2.3,
+ 1352 │       processingTime: 234,
+ 1353 │       userSatisfaction: 94,
+ 1354 │       useCaseCoverage: 87,
+ 1355 │       recommendationEfficiency: 92,
+ 1356 │       lastUpdate: new Date().toLocaleDateString(),
+ 1357 │     };
+ 1358 │   } catch (error) {
+ 1359 │     console.error("Erreur lors de la récupération du statut du modèle d'IA:", error);
+ 1360 │ 
+ 1361 │     // Fournir des valeurs par défaut en cas d'erreur
+ 1362 │     return {
+ 1363 │       isActive: true,
+ 1364 │       modelVersion: '1.0.0',
+ 1365 │       lastTrainingDate: new Date().toISOString(),
+ 1366 │       accuracy: 0.87,
+ 1367 │       dataPointsAnalyzed: 1250,
+ 1368 │       improvements: [
+ 1369 │         "Amélioration de la détection des profils à risque",
+ 1370 │         "Meilleure personnalisation par âge et sexe",
+ 1371 │         "Intégration des dernières recherches scientifiques"
+ 1372 │       ],
+ 1373 │       knowledgeBase: 2500,
+ 1374 │       accuracyImprovement: 2.3,
+ 1375 │       processingTime: 234, userSatisfaction: 94,
+ 1376 │       useCaseCoverage: 87,
+ 1377 │       recommendationEfficiency: 92,
+ 1378 │       lastUpdate: new Date().toLocaleDateString(),
+ 1379 │       topPerformingRecommendations: []
+ 1380 │     };
+ 1381 │   }
+ 1382 │ }
+ 1383 │ 
+ 1384 │ // Fonction unique pour l'analyse comportementale, sans duplication
+ 1385 │ const processBehavioralData = (behavioralMetrics: BehavioralMetrics) => ({
+ 1386 │   cognitiveLoad: 0.7,
+ 1387 │   stressLevel: 0.6,
+ 1388 │   sleepQuality: 0.8,
+ 1389 │   attentionLevel: 0.65,
+ 1390 │   uncertaintyLevel: 0.4,
+ 1391 │   interestAreas: ['Stress', 'Sommeil', 'Énergie']
+ 1392 │ });
+ 1393 │ 
+ 1394 │ // Fonction unique pour analyser les performances des recommandations
+ 1395 │ const analyzeRecommendationPerformance = () => ({
+ 1396 │   'vitamin_d3': { averageRating: 4.7, totalRatings: 120 },
+ 1397 │   'magnesium_glycinate': { averageRating: 4.6, totalRatings: 95 },
+ 1398 │   'omega3': { averageRating: 4.5, totalRatings: 150 },
+ 1399 │   'probiotics': { averageRating: 4.4, totalRatings: 110 },
+ 1400 │   'zinc': { averageRating: 4.3, totalRatings: 80 }
+ 1401 │ });
+ 1402 │ 
+ 1403 │ // Fonction unique pour obtenir les corrélations de motifs
+ 1404 │ const getPatternCorrelations = () => {
+      ·       ───────────┬──────────
+      ·                  ╰── `getPatternCorrelations` redefined here
+ 1405 │   return {
+ 1406 │     symptomCorrelations: {
+ 1407 │       "stress": ["magnesium_glycinate", "ashwagandha", "l_theanine"],
+      ╰────
+/home/runner/workspace/src/utils/recommenderSystem.ts:618:1
+Click outside, press Esc key, or fix the code to dismiss.
+You can also disable this overlay by setting server.hmr.overlay to false in vite.config.ts.

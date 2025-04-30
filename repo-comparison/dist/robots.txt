@@ -1,0 +1,30 @@
+
+# Natural Pure Academy Robots.txt
+# Website: https://naturalpureacademy.org
+
+User-agent: *
+Allow: /
+
+# Disallow admin and system paths
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-login.php
+Disallow: /wp-register.php
+Disallow: /*?*
+
+# Allow Google to index everything
+User-agent: Googlebot
+Allow: /
+
+# Allow Bing to index everything
+User-agent: Bingbot
+Allow: /
+
+# Allow DuckDuckGo to index everything
+User-agent: DuckDuckBot
+Allow: /
+
+# Sitemap location
+Sitemap: https://naturalpureacademy.org/sitemap.xml

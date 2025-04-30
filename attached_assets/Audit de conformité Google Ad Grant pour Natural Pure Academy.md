@@ -1,0 +1,98 @@
+# Audit de conformité Google Ad Grant pour Natural Pure Academy
+
+## Introduction
+
+Cet audit a pour objectif d'évaluer la conformité du site web de l'association Natural Pure Academy avec les exigences du programme Google Ad Grant. L'association, basée aux États-Unis, souhaite s'assurer que son site web respecte toutes les règles nécessaires pour être éligible et maintenir l'accès au programme Google Ad Grant.
+
+## Méthodologie d'audit
+
+L'audit a été réalisé en suivant ces étapes :
+1. Examen complet du site web actuel
+2. Analyse des documents fournis par l'association
+3. Vérification des exigences officielles de Google Ad Grant
+4. Identification des problèmes et non-conformités
+5. Préparation de recommandations détaillées
+
+## Résumé des exigences Google Ad Grant
+
+Selon les sources officielles de Google, voici les principales exigences pour être éligible et maintenir l'accès au programme Google Ad Grant :
+
+### Critères d'éligibilité généraux
+- Être une organisation à but non lucratif reconnue dans le pays d'opération
+- Être validée par Goodstack, le partenaire de validation de Google pour les associations
+- Respecter les exigences spécifiques au pays d'opération
+- Accepter les Conditions d'utilisation supplémentaires de Google pour les associations
+
+### Règles de gestion du compte Google Ad Grant
+1. **Pas de mots clés composés d'un seul mot** (sauf exceptions comme les noms de marque, problèmes de santé reconnus)
+2. **Pas de mots clés trop génériques** ne correspondant pas clairement à la recherche de l'internaute
+3. **Niveau de qualité des mots clés supérieur à 2** (obligation de suspendre les mots clés avec un niveau de qualité de 1 ou 2)
+4. **Taux de clic (CTR) minimum de 5% tous les mois** (risque de désactivation temporaire après deux mois consécutifs sous ce seuil)
+5. **Mise en place d'un suivi des conversions valide** (pour les comptes créés depuis janvier 2018)
+6. **Structure de compte géographiquement ciblée** avec des annonces pertinentes pour les zones géographiques ciblées
+7. **Au moins 2 groupes d'annonces actifs par campagne**
+8. **Au moins 2 annonces actives par groupe d'annonces**
+9. **Au moins 2 extensions d'annonce**
+10. **Réponse aux enquêtes annuelles du programme**
+
+## Analyse du site web actuel
+
+### Forces du site
+- Le site présente clairement la mission éducative de l'association
+- La structure du site est bien organisée avec des sections distinctes
+- Le contenu est axé sur l'information scientifique et l'éducation
+- Le site affirme clairement ne pas vendre de produits (section FAQ)
+
+### Problèmes identifiés et non-conformités
+
+#### 1. Problèmes de contenu et d'identification
+- **Absence d'informations sur le statut juridique** : Le site ne mentionne pas clairement qu'il s'agit d'une association à but non lucratif aux États-Unis
+- **Absence de numéro d'identification fiscale** : Aucune mention du numéro d'identification fiscale (EIN) requis pour les organisations à but non lucratif aux États-Unis
+- **Sections incomplètes** : Plusieurs sections du site contiennent des messages comme "This section will display our scientific team members" et "This section will list our scientific publications"
+
+#### 2. Problèmes de conformité Google Ad Grant
+- **Mots clés potentiellement trop génériques** : Le site se concentre sur des termes comme "stress", "fatigue", "micronutriments" qui pourraient être considérés comme trop génériques
+- **Absence de page de politique de confidentialité complète** : Bien qu'un lien existe dans le pied de page, la page n'a pas été examinée
+- **Absence de suivi des conversions visible** : Aucune indication claire de la mise en place d'un suivi des conversions
+- **Contenu principalement en français** : Le site est actuellement en français alors que l'association est basée aux États-Unis, ce qui pourrait créer une confusion pour Google lors de l'évaluation
+
+#### 3. Problèmes techniques
+- **Sections non finalisées** : Plusieurs sections du site semblent être en cours de développement
+- **Absence d'informations de contact complètes** : Pas d'adresse physique visible, ce qui est généralement requis pour les organisations à but non lucratif
+- **Absence de rapports annuels ou de transparence financière** : Aucune section dédiée aux rapports annuels ou à la transparence financière, souvent attendus pour les organisations à but non lucratif
+
+## Recommandations préliminaires
+
+Sur la base des problèmes identifiés, voici les recommandations préliminaires pour améliorer la conformité du site avec les exigences Google Ad Grant :
+
+### 1. Améliorations structurelles
+- Ajouter une section "À propos de nous" complète incluant :
+  - Le statut juridique clair de l'organisation aux États-Unis
+  - Le numéro d'identification fiscale (EIN)
+  - La mission et les valeurs de l'organisation
+  - L'historique de l'organisation
+- Compléter toutes les sections inachevées du site
+
+### 2. Conformité Google Ad Grant
+- Mettre en place un système de suivi des conversions
+- Développer une stratégie de mots clés conforme aux exigences (pas de mots clés d'un seul mot, pas de termes trop génériques)
+- Créer au moins 2 groupes d'annonces par campagne avec au moins 2 annonces par groupe
+- Ajouter au moins 2 extensions d'annonce à toutes les campagnes
+
+### 3. Améliorations techniques
+- Finaliser toutes les sections du site
+- Ajouter des informations de contact complètes
+- Créer une page de politique de confidentialité détaillée
+- Ajouter une section de transparence financière ou de rapports annuels
+
+### 4. Considérations linguistiques
+- Décider d'une stratégie linguistique claire :
+  - Soit maintenir le site en français avec une explication claire du lien avec les États-Unis
+  - Soit créer une version anglaise complète du site
+  - Soit adopter une approche bilingue avec sélection de langue
+
+## Conclusion préliminaire
+
+Le site web de Natural Pure Academy présente plusieurs éléments positifs mais nécessite des améliorations significatives pour être pleinement conforme aux exigences du programme Google Ad Grant. Les principales préoccupations concernent l'absence d'informations claires sur le statut juridique de l'organisation, les sections incomplètes du site, et le manque d'éléments techniques requis pour la conformité Google Ad Grant.
+
+Une analyse plus approfondie et des recommandations détaillées seront fournies dans le rapport d'audit complet.

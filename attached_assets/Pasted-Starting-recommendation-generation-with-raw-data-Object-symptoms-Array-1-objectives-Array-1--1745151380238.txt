@@ -1,0 +1,87 @@
+Starting recommendation generation with raw data: 
+Object {symptoms: Array(1), objectives: Array(1), dietaryHabits: Array(2), lifestyle: {…}, proteinConsumption: "moderate", …}
+Formatting quiz data for recommender: 
+Object {symptoms: Array(1), objectives: Array(1), dietaryHabits: Array(2), lifestyle: {…}, proteinConsumption: "moderate", …}
+Formatted data for recommender: 
+Object {symptoms: Array(1), objectives: Array(1), dietaryHabits: Array(2), lifestyle: Array(1), proteinConsumption: "moderate", …}
+Formatted data for recommender: 
+Object {symptoms: Array(1), objectives: Array(1), dietaryHabits: Array(2), lifestyle: Array(1), proteinConsumption: "moderate", …}
+Génération de recommandations complètes avec les données: 
+Object {symptoms: Array(1), objectives: Array(1), dietaryHabits: Array(2), lifestyle: Array(1), proteinConsumption: "moderate", …}
+Génération de recommandations avec les données: 
+Object {symptoms: Array(1), objectives: Array(1), dietaryHabits: Array(2), lifestyle: Array(1), proteinConsumption: "moderate", …}
+Quiz data keys: 
+(7) ["symptoms", "objectives", "dietaryHabits", "lifestyle", "proteinConsumption", "age", "gender"]
+Quiz data symptoms: 
+Array ["Weak immune system"]
+Quiz data objectives: 
+Array ["digestion"]
+Quiz data lifestyle: 
+Array ["poor_sleep"]
+Analyse des données du quiz pour les recommandations: 
+Object {symptoms: Array(1), objectives: Array(1), dietaryHabits: Array(2), lifestyle: Array(1), proteinConsumption: "moderate", …}
+Erreur dans generateRecommendations: 
+TypeError {}
+
+Recommandations de base générées: 3
+Recommandations enrichies générées: 3
+Generated recommendations via standard pipeline: 
+(3) [{…}, {…}, {…}]
+Generated personalized recommendations: 
+(3) [{…}, {…}, {…}]
+Processing quiz data in component: 
+Object {symptoms: Array(1), objectives: Array(1), dietaryHabits: Array(2), lifestyle: {…}, proteinConsumption: "moderate", …}
+Using pre-generated recommendations: 
+(3) [{…}, {…}, {…}]
+Processing quiz data in component: 
+Object {symptoms: Array(1), objectives: Array(1), dietaryHabits: Array(2), lifestyle: {…}, proteinConsumption: "moderate", …}
+Using pre-generated recommendations: 
+(3) [{…}, {…}, {…}]
+quizData?.lifestyle?.includes is not a function
+at QuizResults (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/components/quiz/QuizResults.tsx:997:86)
+at renderWithHooks (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:11548:26)
+at updateFunctionComponent (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:14582:28)
+at beginWork (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:15924:22)
+at HTMLUnknownElement.callCallback2 (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3674:22)
+at Object.invokeGuardedCallbackDev (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3699:24)
+at invokeGuardedCallback (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3733:39)
+at beginWork$1 (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:19765:15)
+at performUnitOfWork (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:19198:20)
+at workLoopSync (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:19137:13)
+quizData?.lifestyle?.includes is not a function
+at QuizResults (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/components/quiz/QuizResults.tsx:997:86)
+at renderWithHooks (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:11548:26)
+at updateFunctionComponent (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:14582:28)
+at beginWork (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:15924:22)
+at HTMLUnknownElement.callCallback2 (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3674:22)
+at Object.invokeGuardedCallbackDev (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3699:24)
+at invokeGuardedCallback (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3733:39)
+at beginWork$1 (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:19765:15)
+at performUnitOfWork (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:19198:20)
+at workLoopSync (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:19137:13)
+The above error occurred in the <QuizResults> component:
+
+    at QuizResults (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/components/quiz/QuizResults.tsx:28:31)
+    at div
+    at _c8 (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/components/ui/card.tsx:95:61)
+    at div
+    at _c (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/components/ui/card.tsx:23:53)
+    at div
+    at QuizResults (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/pages/QuizResults.tsx:29:22)
+    at RenderedRoute (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=d5140d30:4069:5)
+    at Outlet (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=d5140d30:4444:26)
+    at div
+    at Provider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-LSQNWB54.js?v=d5140d30:38:15)
+    at TooltipProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=d5140d30:61:5)
+    at div
+    at LanguageProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/components/LanguageProvider.tsx:24:36)
+    at QueryClientProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/@tanstack_react-query.js?v=d5140d30:2794:3)
+    at App (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/App.tsx:98:47)
+    at RenderedRoute (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=d5140d30:4069:5)
+    at RenderErrorBoundary (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=d5140d30:4029:5)
+    at DataRoutes (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=d5140d30:5188:5)
+    at Router (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=d5140d30:4451:15)
+    at RouterProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=d5140d30:5003:5)
+    at _a (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-helmet-async.js?v=d5140d30:624:5)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, RenderErrorBoundary.

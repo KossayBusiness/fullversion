@@ -1,0 +1,365 @@
+Rapport d'audit complet - Conformité Google Ad Grant
+Natural Pure Academy
+Date de l'audit : 15 avril 2025
+
+Préparé pour : Natural Pure Academy
+
+Version : 1.0
+Table des matières
+Introduction et contexte
+Méthodologie d'audit
+Exigences du programme Google Ad Grant
+Analyse du site web actuel
+Problèmes identifiés et non-conformités
+Recommandations détaillées
+Plan de mise en œuvre
+Conclusion
+Annexes
+1. Introduction et contexte
+Ce rapport présente les résultats d'un audit complet du site web de Natural Pure Academy, une association à but non lucratif basée aux États-Unis, dans le cadre de sa démarche pour assurer la conformité avec les exigences du programme Google Ad Grant.
+Natural Pure Academy est une organisation dédiée à la recherche et à l'éducation dans le domaine de la nutrition et des micronutriments. L'association souhaite bénéficier du programme Google Ad Grant qui offre jusqu'à 10 000 dollars par mois en annonces de recherche Google aux organisations à but non lucratif éligibles.
+L'objectif de cet audit est d'identifier les problèmes de conformité actuels et de fournir des recommandations détaillées pour optimiser le site web et les pratiques de l'association afin de respecter les règles du programme Google Ad Grant.
+2. Méthodologie d'audit
+L'audit a été réalisé selon une méthodologie rigoureuse en quatre phases :
+Phase 1 : Examen du site web
+Analyse complète de la structure du site
+Évaluation du contenu et des fonctionnalités
+Vérification des éléments techniques et de performance
+Examen des pages clés (accueil, à propos, contact)
+Phase 2 : Analyse des documents fournis
+Étude des documents techniques sur l'architecture du site
+Analyse des stratégies de conversion et marketing existantes
+Examen des pratiques actuelles de conformité Google Ad Grant
+Phase 3 : Vérification des exigences officielles
+Consultation des sources officielles Google Ad Grant
+Analyse des critères d'éligibilité et règles de conformité
+Identification des meilleures pratiques recommandées
+Phase 4 : Analyse comparative
+Comparaison des pratiques actuelles avec les exigences officielles
+Identification des écarts et non-conformités
+Élaboration de recommandations basées sur les meilleures pratiques
+3. Exigences du programme Google Ad Grant
+3.1 Critères d'éligibilité généraux
+Pour être éligible au programme Google Ad Grant, une organisation doit :
+Être une organisation à but non lucratif reconnue dans son pays d'opération
+Être validée par Goodstack, le partenaire de validation de Google pour les associations
+Respecter les exigences spécifiques au pays d'opération
+Accepter les Conditions d'utilisation supplémentaires de Google pour les associations
+Les organisations suivantes ne sont pas éligibles :
+Entités ou organisations gouvernementales
+Établissements hospitaliers ou de soins de santé (sauf branches caritatives)
+Établissements scolaires, institutions académiques ou universités (sauf branches philanthropiques)
+3.2 Règles de gestion du compte Google Ad Grant
+Une fois acceptée dans le programme, l'organisation doit respecter ces règles de gestion :
+Pas de mots clés composés d'un seul mot (sauf exceptions comme les noms de marque, problèmes de santé reconnus)
+Pas de mots clés trop génériques ne correspondant pas clairement à la recherche de l'internaute
+Niveau de qualité des mots clés supérieur à 2 (obligation de suspendre les mots clés avec un niveau de qualité de 1 ou 2)
+Taux de clic (CTR) minimum de 5% tous les mois (risque de désactivation temporaire après deux mois consécutifs sous ce seuil)
+Mise en place d'un suivi des conversions valide (pour les comptes créés depuis janvier 2018)
+Structure de compte géographiquement ciblée avec des annonces pertinentes pour les zones géographiques ciblées
+Au moins 2 groupes d'annonces actifs par campagne
+Au moins 2 annonces actives par groupe d'annonces
+Au moins 2 extensions d'annonce
+Réponse aux enquêtes annuelles du programme
+4. Analyse du site web actuel
+4.1 Structure générale du site
+Le site web de Natural Pure Academy présente une structure relativement claire avec les sections principales suivantes :
+Accueil
+Articles
+Quiz Nutrition
+Profil Santé
+Nos Recherches
+Labo Solutions
+Nutrition
+Bibliothèque Scientifique
+À propos
+Contact
+La navigation est intuitive et les principales sections sont accessibles depuis le menu principal.
+4.2 Contenu et positionnement
+Le site positionne clairement l'organisation comme un laboratoire de recherche indépendant axé sur l'étude des micronutriments et leur impact sur la santé. Les principaux éléments de contenu incluent :
+Page d'accueil : Présentation de la mission avec focus sur le stress et la fatigue, proposition d'un test gratuit pour identifier les micronutriments manquants
+Section Méthodologie : Description détaillée du processus de recherche en 6 étapes
+Section Équipe : Présentation de quelques membres clés (Dr. Marie Dubois, Thomas Legrand)
+Section Vision : Présentation de la vision d'avenir et des projets (application mobile, expansion de la recherche)
+Le site affirme explicitement ne pas vendre de produits ou compléments alimentaires, ce qui est conforme à une mission éducative et non commerciale.
+4.3 Aspects techniques
+Le site présente un design moderne et responsive. Cependant, plusieurs sections sont incomplètes avec des messages comme "This section will display our scientific team members" et "This section will list our scientific publications", indiquant que le site est encore en développement.
+Le pied de page contient des liens vers les politiques de confidentialité et conditions d'utilisation, ainsi qu'un formulaire d'abonnement à la newsletter.
+5. Problèmes identifiés et non-conformités
+5.1 Problèmes de statut et d'identification
+5.1.1 Absence d'informations sur le statut juridique
+Le site ne mentionne pas clairement qu'il s'agit d'une association à but non lucratif aux États-Unis
+Aucune référence au type d'organisation (501(c)(3) ou autre)
+Absence de mission officielle telle que déclarée dans les documents d'incorporation
+5.1.2 Absence de numéro d'identification fiscale
+Aucune mention du numéro d'identification fiscale (EIN) requis pour les organisations à but non lucratif aux États-Unis
+Cette information est cruciale pour la validation par Goodstack
+5.1.3 Informations incomplètes sur la gouvernance
+Présentation limitée de l'équipe (seulement deux membres)
+Absence d'informations sur le conseil d'administration
+Manque de transparence sur la structure organisationnelle
+5.2 Problèmes de contenu
+5.2.1 Sections incomplètes
+Section "Notre Équipe Scientifique" : Message placeholder au lieu de contenu réel
+Section "Publications Scientifiques" : Message placeholder au lieu de contenu réel
+Absence de contenu détaillé sur les recherches menées
+5.2.2 Absence de contenu sur l'impact
+Pas de section dédiée aux résultats et à l'impact de l'organisation
+Absence de témoignages ou d'études de cas
+Manque de données quantitatives sur l'efficacité des recherches
+5.2.3 Problèmes linguistiques
+Site principalement en français alors que l'organisation est basée aux États-Unis
+Absence de stratégie linguistique claire (site bilingue ou explication du choix linguistique)
+Potentielle confusion pour Google lors de l'évaluation
+5.3 Problèmes de conformité Google Ad Grant
+5.3.1 Mots clés potentiellement problématiques
+Focus sur des termes comme "stress", "fatigue", "micronutriments" qui pourraient être considérés comme trop génériques
+Absence de stratégie visible pour les mots clés composés de plusieurs mots
+Risque de non-conformité avec l'exigence d'éviter les mots clés d'un seul mot
+5.3.2 Absence de suivi des conversions
+Aucune indication visible de la mise en place d'un suivi des conversions
+Pas de définition claire des actions considérées comme des conversions
+Non-conformité potentielle avec l'exigence de suivi des conversions
+5.3.3 Structure de compte non optimisée
+Pas d'information sur la structure actuelle du compte Google Ads
+Risque de non-conformité avec les exigences de structure (2 groupes d'annonces par campagne, 2 annonces par groupe)
+Absence de ciblage géographique clair pour les États-Unis
+5.4 Problèmes techniques et légaux
+5.4.1 Documentation légale insuffisante
+Absence de rapports annuels ou de transparence financière
+Liens vers les politiques de confidentialité et conditions d'utilisation présents mais contenu non vérifié
+Absence d'informations sur la conformité aux réglementations américaines
+5.4.2 Informations de contact incomplètes
+Pas d'adresse physique visible
+Absence de numéro de téléphone américain
+Formulaire de contact présent mais informations limitées
+6. Recommandations détaillées
+6.1 Statut juridique et conformité organisationnelle
+6.1.1 Clarification du statut juridique
+Action requise : Ajouter une section dédiée au statut juridique de l'organisation
+Emplacement recommandé : Page "À propos"
+Contenu à inclure :
+Type d'organisation à but non lucratif (501(c)(3), etc.)
+Date de création et d'enregistrement
+État d'incorporation aux États-Unis
+Numéro d'identification fiscale (EIN)
+Mission officielle telle que déclarée dans les documents d'incorporation
+6.1.2 Documentation légale
+Action requise : Créer une page "Documents légaux"
+Contenu à inclure :
+Statuts de l'organisation (version téléchargeable)
+Lettre de détermination de l'IRS confirmant le statut d'exonération fiscale
+Rapports annuels des 2-3 dernières années
+États financiers ou résumés financiers
+6.1.3 Conseil d'administration
+Action requise : Compléter la section "Notre Équipe" avec les membres du conseil d'administration
+Informations à inclure pour chaque membre :
+Nom et titre
+Courte biographie professionnelle
+Rôle dans l'organisation
+Photo professionnelle
+6.2 Structure et contenu du site web
+6.2.1 Finalisation des sections incomplètes
+Action requise : Compléter toutes les sections marquées comme "This section will display..."
+Sections prioritaires :
+"Notre Équipe Scientifique" : Ajouter au moins 3-5 membres avec leurs qualifications
+"Publications Scientifiques" : Ajouter au moins 5-10 publications avec références complètes
+Toute autre section incomplète identifiée lors de l'audit
+6.2.2 Création d'une page "Impact"
+Action requise : Développer une page dédiée aux résultats et à l'impact de l'organisation
+Contenu recommandé :
+Statistiques clés (nombre de personnes aidées, recherches menées, etc.)
+Témoignages de bénéficiaires ou de partenaires
+Études de cas ou exemples concrets de l'impact de l'organisation
+Objectifs futurs et mesures d'impact prévues
+6.2.3 Amélioration de la page d'accueil
+Action requise : Restructurer la page d'accueil pour mettre en évidence le statut non lucratif
+Éléments à ajouter :
+Mention claire du statut non lucratif dès le premier écran
+Déclaration de mission concise et impactante
+Appel à l'action principal orienté vers la mission (non commercial)
+Section "Comment nous aider" ou "Soutenir notre mission"
+6.3 Conformité technique Google Ad Grant
+6.3.1 Mise en place du suivi des conversions
+Action requise : Implémenter un système de suivi des conversions conforme aux exigences Google
+Conversions à suivre :
+Inscriptions à la newsletter
+Téléchargements de ressources éducatives
+Participation aux quiz ou tests
+Visites de pages clés (minimum 3 minutes)
+Formulaires de contact complétés
+Implémentation technique :
+Configurer Google Tag Manager
+Définir au moins 3-5 objectifs de conversion dans Google Analytics
+Lier Google Analytics à Google Ads
+Importer les conversions dans Google Ads
+6.3.2 Structure de compte Google Ads optimisée
+Action requise : Créer une structure de compte conforme aux exigences
+Structure recommandée :
+Minimum 3 campagnes thématiques (ex: Nutrition, Recherche scientifique, Éducation)
+Au moins 2 groupes d'annonces par campagne
+Minimum 2 annonces par groupe d'annonces
+Au moins 2 extensions d'annonce par campagne (extensions d'appel, de site, de liens annexes, etc.)
+Ciblage géographique :
+Définir un ciblage géographique précis (États-Unis principalement)
+Adapter les annonces aux régions ciblées si pertinent
+6.3.3 Stratégie de mots clés conforme
+Action requise : Développer une liste de mots clés conforme aux règles Google Ad Grant
+Directives pour les mots clés :
+Éviter les mots clés d'un seul mot (sauf exceptions autorisées)
+Utiliser des expressions de 2-3 mots minimum
+Cibler des mots clés spécifiques à la mission de l'organisation
+Éviter les termes trop génériques comme "vidéos gratuites", "actualités du jour"
+Viser un niveau de qualité minimum de 3 pour tous les mots clés
+Exemples de mots clés conformes :
+"recherche micronutriments santé"
+"études scientifiques nutrition"
+"carence vitamines symptômes"
+"analyse nutritionnelle personnalisée"
+"éducation nutrition basée preuves"
+6.3.4 Optimisation pour le taux de clic (CTR)
+Action requise : Mettre en place une stratégie pour maintenir un CTR supérieur à 5%
+Actions recommandées :
+Créer des titres d'annonces attractifs et pertinents
+Inclure des appels à l'action clairs dans les descriptions
+Utiliser des URL de destination spécifiques pour chaque annonce
+Surveiller hebdomadairement les performances et suspendre les mots clés à faible CTR
+Mettre en place des règles automatiques pour suspendre les mots clés sous-performants
+6.4 Considérations linguistiques et internationales
+6.4.1 Stratégie linguistique
+Action requise : Définir et mettre en œuvre une stratégie linguistique claire
+Options recommandées :
+Option 1 - Site bilingue :
+Créer une version anglaise complète du site
+Ajouter un sélecteur de langue visible
+Assurer que toutes les pages existent dans les deux langues
+Option 2 - Site principal en anglais avec section française :
+Convertir le site principal en anglais
+Créer une section dédiée au contenu français
+Expliquer clairement la connexion internationale de l'organisation
+6.4.2 Adaptation du contenu au public américain
+Action requise : Adapter le contenu pour le public américain
+Éléments à adapter :
+Références aux systèmes de santé et réglementations américaines
+Utilisation d'exemples et de statistiques pertinents pour le public américain
+Adaptation des témoignages et études de cas au contexte américain
+Mention des partenariats avec des organisations américaines reconnues
+6.5 Politiques et conformité légale
+6.5.1 Politique de confidentialité
+Action requise : Créer une politique de confidentialité complète et conforme
+Éléments à inclure :
+Types de données collectées
+Utilisation des données
+Partage des données avec des tiers
+Droits des utilisateurs concernant leurs données
+Conformité avec les lois américaines (CCPA si applicable) et internationales (RGPD)
+Politique concernant les cookies et technologies similaires
+6.5.2 Conditions d'utilisation
+Action requise : Développer des conditions d'utilisation complètes
+Éléments à inclure :
+Droits de propriété intellectuelle
+Limitation de responsabilité
+Règles d'utilisation du site
+Procédure de réclamation
+Juridiction applicable (lois américaines)
+6.5.3 Accessibilité
+Action requise : Améliorer l'accessibilité du site
+Normes à respecter :
+Conformité WCAG 2.1 niveau AA
+Texte alternatif pour toutes les images
+Structure de navigation claire
+Contraste suffisant pour le texte
+Compatibilité avec les lecteurs d'écran
+7. Plan de mise en œuvre
+7.1 Priorisation des actions
+Phase 1 : Fondations (1-2 semaines)
+Clarification du statut juridique
+Finalisation des sections incomplètes
+Mise en place du suivi des conversions
+Création des politiques de confidentialité et conditions d'utilisation
+Phase 2 : Optimisation marketing (2-4 semaines)
+Développement de la stratégie de mots clés conforme
+Structure de compte Google Ads optimisée
+Stratégie linguistique et adaptation du contenu
+Amélioration de la page d'accueil
+Phase 3 : Enrichissement (1-2 mois)
+Création de la page "Impact"
+Documentation légale complète
+Optimisations SEO
+Amélioration de l'accessibilité
+Phase 4 : Maintenance (continu)
+Surveillance du taux de clic (CTR)
+Optimisation continue des mots clés
+Mise à jour régulière du contenu
+Suivi des performances des conversions
+7.2 Ressources nécessaires
+Compétences requises
+Expertise juridique pour les documents légaux
+Compétences en marketing digital pour Google Ads
+Développement web pour les modifications techniques
+Rédaction de contenu pour les sections manquantes
+Traduction professionnelle si option bilingue choisie
+Outils recommandés
+Google Tag Manager et Google Analytics
+Outils d'audit SEO (Screaming Frog, SEMrush, etc.)
+Outils de test d'accessibilité (WAVE, axe, etc.)
+Outils de test de vitesse (PageSpeed Insights, GTmetrix)
+7.3 Suivi et évaluation
+Indicateurs de performance clés
+Taux de clic (CTR) des annonces Google Ads (objectif > 5%)
+Niveau de qualité moyen des mots clés (objectif ≥ 3)
+Taux de conversion des objectifs définis
+Conformité aux exigences Google Ad Grant (audit mensuel)
+Calendrier de révision
+Vérification hebdomadaire des performances Google Ads
+Audit mensuel de conformité Google Ad Grant
+Révision trimestrielle du contenu et des informations légales
+Mise à jour annuelle des documents officiels
+8. Conclusion
+Le site web de Natural Pure Academy présente un potentiel significatif pour bénéficier du programme Google Ad Grant, mais nécessite plusieurs améliorations importantes pour assurer sa conformité avec les exigences du programme.
+Les principaux défis identifiés concernent :
+La clarification du statut juridique de l'organisation aux États-Unis
+La finalisation des sections incomplètes du site
+La mise en place d'une stratégie de mots clés conforme aux règles Google Ad Grant
+L'implémentation d'un système de suivi des conversions
+La définition d'une stratégie linguistique claire
+En mettant en œuvre les recommandations détaillées dans ce rapport, Natural Pure Academy pourra non seulement se conformer aux exigences du programme Google Ad Grant, mais également renforcer sa présence en ligne, améliorer son impact et mieux servir sa mission éducative et scientifique.
+La mise en œuvre devrait suivre le plan de priorisation proposé, en commençant par les éléments fondamentaux liés au statut juridique et à la structure du site, puis en progressant vers les optimisations techniques plus avancées.
+9. Annexes
+Annexe A : Glossaire des termes Google Ad Grant
+CTR (Click-Through Rate) : Pourcentage de clics par rapport aux impressions d'une annonce
+Niveau de qualité : Score attribué par Google à chaque mot clé en fonction de sa pertinence et de sa performance
+Conversion : Action spécifique qu'un utilisateur effectue sur votre site web (inscription, téléchargement, etc.)
+Extension d'annonce : Informations supplémentaires qui enrichissent votre annonce (liens de site, appels, emplacements, etc.)
+Mot clé à correspondance exacte : Type de ciblage où l'annonce n'apparaît que lorsque la recherche correspond exactement au mot clé
+Annexe B : Ressources utiles
+Page officielle Google Ad Grant
+Centre d'aide Google Ad Grant
+Guide de mise en conformité avec le règlement du programme Ad Grants
+Guide de suivi des conversions pour le programme Ad Grants
+Critères d'éligibilité pour Google pour les associations
+Annexe C : Exemples de mots clés recommandés
+Catégorie
+Exemples de mots clés
+Nutrition
+"recherche nutrition scientifique", "études micronutriments santé", "carences nutritionnelles symptômes"
+Éducation
+"éducation nutrition basée preuves", "ressources éducatives nutrition", "formation nutrition scientifique"
+Recherche
+"méthodologie recherche nutrition", "études cliniques micronutriments", "recherche scientifique vitamines"
+Santé
+"amélioration santé naturelle", "prévention carences nutritionnelles", "optimisation santé micronutriments"
+Annexe D : Checklist de conformité Google Ad Grant
+ Statut d'organisation à but non lucratif clairement indiqué
+ Numéro d'identification fiscale (EIN) mentionné
+ Sections du site complètes et fonctionnelles
+ Stratégie de mots clés conforme (pas de mots clés d'un seul mot)
+ Niveau de qualité des mots clés supérieur à 2
+ Système de suivi des conversions en place
+ Structure de compte avec au moins 2 groupes d'annonces par campagne
+ Au moins 2 annonces par groupe d'annonces
+ Au moins 2 extensions d'annonce
+ Taux de clic (CTR) supérieur à 5%
+ Ciblage géographique pertinent
+ Politique de confidentialité conforme
+ Conditions d'utilisation complètes

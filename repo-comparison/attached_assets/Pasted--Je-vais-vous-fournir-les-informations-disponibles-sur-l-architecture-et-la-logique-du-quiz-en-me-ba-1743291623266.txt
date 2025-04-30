@@ -1,0 +1,131 @@
+ Je vais vous fournir les informations disponibles sur l'architecture et la logique du quiz en me basant sur le code existant.
+
+1. Architecture Globale
+Schéma MermaidJS du flux de données entre composants
+
+graph TD
+    User[Utilisateur] --> Quiz[Page Quiz]
+    Quiz --> Intro[Introduction Quiz]
+    Quiz --> NutritionalQuiz[Questionnaire Nutritionnel]
+    Quiz --> Results[Résultats du Quiz]
+    
+    NutritionalQuiz --> QuizNavigation[useQuizNavigation Hook]
+    NutritionalQuiz --> NeuroEngine[Moteur d'Analyse Neuro]
+    NutritionalQuiz --> SocialProof[Preuve Sociale Dynamique]
+    
+    QuizNavigation --> UserInfo[Étape Infos Utilisateur]
+    QuizNavigation --> Objectives[Étape Objectifs]
+    QuizNavigation --> DietaryHabits[Étape Habitudes Alimentaires]
+    QuizNavigation --> ProteinConsumption[Étape Consommation Protéines]
+    QuizNavigation --> Lifestyle[Étape Mode de Vie]
+    QuizNavigation --> Symptoms[Étape Symptômes]
+    
+    Results --> Recommendations[Recommandations Personnalisées]
+    
+    Quiz --> GDPRCompliance[Consentement GDPR]
+    Quiz --> SecureStorage[Stockage Sécurisé]
+API Endpoints
+Le projet actuel est principalement frontend et n'implémente pas d'API backend. Les données sont stockées localement via secureStorage (une abstraction de sessionStorage/localStorage avec chiffrement).
+
+Diagramme de séquence
+
+sequenceDiagram
+    participant User as Utilisateur
+    participant Quiz as Page Quiz
+    participant QuizNavigation as Navigation Quiz
+    participant Storage as Stockage Sécurisé
+    participant NeuroEngine as Moteur Neuro
+    
+    User->>Quiz: Commence le quiz
+    Quiz->>Storage: Vérifie progression sauvegardée
+    Storage-->>Quiz: Retourne données sauvegardées (si présentes)
+    
+    User->>QuizNavigation: Répond aux questions (étape par étape)
+    QuizNavigation->>Storage: Sauvegarde les réponses
+    
+    User->>NeuroEngine: Interactions comportementales (implicite)
+    NeuroEngine->>Quiz: Fournit analyse comportementale
+    
+    Quiz->>Quiz: Calcule les résultats personnalisés
+    Quiz-->>User: Affiche les recommandations
+    
+    Quiz->>Storage: Enregistre les résultats complets
+2. Logique du Quiz
+Il n'y a pas de fichier QuizGenerator.ts dans le projet actuel. Cependant, je peux vous détailler la logique de personnalisation présente dans NeuroEngine.ts qui constitue le cœur de la personnalisation du quiz :
+
+Analyse du fichier NeuroEngine.ts
+
+// Calcule le niveau de stress cognitif basé sur les patterns de navigation
+export const calculateCortisolLevel = (userBehaviorData: {
+  scrollSpeed?: number;
+  timeSpent?: number;
+  clickPatterns?: number[];
+}): number => {
+  // Valeurs par défaut si les données ne sont pas disponibles
+  const { 
+    scrollSpeed = Math.random() * 3 + 1, 
+    timeSpent = Math.random() * 120 + 60,
+    clickPatterns = [Math.random(), Math.random(), Math.random() * 2]
+  } = userBehaviorData;
+  
+  // Algorithme neuroscientifique simplifié
+  const baseLevel = 50; // Niveau de base
+  const scrollFactor = scrollSpeed > 2 ? scrollSpeed * 5 : scrollSpeed * 2;
+  const timeFactor = Math.min(timeSpent / 30, 5) * 6;
+  const clickIntensity = clickPatterns.reduce((sum, val) => sum + val, 0) / clickPatterns.length;
+  
+  // Calcul avec pondération
+  let cortisolLevel = baseLevel + scrollFactor + timeFactor + (clickIntensity * 15);
+  
+  // Normalisation entre 20 et 90
+  cortisolLevel = Math.min(Math.max(cortisolLevel, 20), 90);
+  
+  // Ajout d'une variation aléatoire pour rendre les résultats moins prévisibles
+  const randomVariation = Math.random() * 10 - 5;
+  return Math.round(cortisolLevel + randomVariation);
+};
+
+// Mesure l'attention portée à des termes spécifiques
+export const measureAttention = (
+  keyTerms: string[],
+  userInteractions: {
+    hoverTime?: Record<string, number>;
+    dwellTime?: number;
+    rereadCount?: number;
+  }
+): number => {
+  // Valeurs par défaut
+  const { 
+    hoverTime = {}, 
+    dwellTime = Math.random() * 180 + 60,
+    rereadCount = Math.floor(Math.random() * 3)
+  } = userInteractions;
+  
+  // Calcul d'un score d'attention
+  let attentionScore = 50; // Score de base
+  
+  // Analyser le temps passé sur les termes clés
+  const termAttention = keyTerms.reduce((score, term) => {
+    const timeOnTerm = hoverTime[term] || Math.random() * 5;
+    return score + (timeOnTerm * 2);
+  }, 0);
+  
+  // Considérer le temps total passé sur le questionnaire
+  const dwellFactor = Math.min(dwellTime / 60, 3) * 10;
+  
+  // Impact de la relecture (indique un intérêt)
+  const rereadFactor = rereadCount * 5;
+  
+  // Compilation du score final
+  attentionScore += termAttention + dwellFactor + rereadFactor;
+  
+  // Normalisation entre 30 et 95
+  attentionScore = Math.min(Math.max(attentionScore, 30), 95);
+  
+  // Variation aléatoire
+  const randomFactor = Math.random() * 8 - 4;
+  return Math.round(attentionScore + randomFactor);
+};
+
+// Analyse le profil neuropsychologique complet
+export const genera...

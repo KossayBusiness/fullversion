@@ -1,0 +1,175 @@
+2. Structure et contenu du site web
+2.1 Finalisation des sections incomplètes
+Action requise : Compléter toutes les sections marquées comme "This section will display..."
+Sections prioritaires :
+"Notre Équipe Scientifique" : Ajouter au moins 3-5 membres avec leurs qualifications
+"Publications Scientifiques" : Ajouter au moins 5-10 publications avec références complètes
+Toute autre section incomplète identifiée lors de l'audit
+2.2 Création d'une page "Impact"
+Action requise : Développer une page dédiée aux résultats et à l'impact de l'organisation
+Contenu recommandé :
+Statistiques clés (nombre de personnes aidées, recherches menées, etc.)
+Témoignages de bénéficiaires ou de partenaires
+Études de cas ou exemples concrets de l'impact de l'organisation
+Objectifs futurs et mesures d'impact prévues
+2.3 Amélioration de la page d'accueil
+Action requise : Restructurer la page d'accueil pour mettre en évidence le statut non lucratif
+Éléments à ajouter :
+Mention claire du statut non lucratif dès le premier écran
+Déclaration de mission concise et impactante
+Appel à l'action principal orienté vers la mission (non commercial)
+Section "Comment nous aider" ou "Soutenir notre mission"
+3. Conformité technique Google Ad Grant
+3.1 Mise en place du suivi des conversions
+Action requise : Implémenter un système de suivi des conversions conforme aux exigences Google
+Conversions à suivre :
+Inscriptions à la newsletter
+Téléchargements de ressources éducatives
+Participation aux quiz ou tests
+Visites de pages clés (minimum 3 minutes)
+Formulaires de contact complétés
+Implémentation technique :
+Configurer Google Tag Manager
+Définir au moins 3-5 objectifs de conversion dans Google Analytics
+Lier Google Analytics à Google Ads
+Importer les conversions dans Google Ads
+3.2 Structure de compte Google Ads optimisée
+Action requise : Créer une structure de compte conforme aux exigences
+Structure recommandée :
+Minimum 3 campagnes thématiques (ex: Nutrition, Recherche scientifique, Éducation)
+Au moins 2 groupes d'annonces par campagne
+Minimum 2 annonces par groupe d'annonces
+Au moins 2 extensions d'annonce par campagne (extensions d'appel, de site, de liens annexes, etc.)
+Ciblage géographique :
+Définir un ciblage géographique précis (États-Unis principalement)
+Adapter les annonces aux régions ciblées si pertinent
+3.3 Stratégie de mots clés conforme
+Action requise : Développer une liste de mots clés conforme aux règles Google Ad Grant
+Directives pour les mots clés :
+Éviter les mots clés d'un seul mot (sauf exceptions autorisées)
+Utiliser des expressions de 2-3 mots minimum
+Cibler des mots clés spécifiques à la mission de l'organisation
+Éviter les termes trop génériques comme "vidéos gratuites", "actualités du jour"
+Viser un niveau de qualité minimum de 3 pour tous les mots clés
+Exemples de mots clés conformes :
+"recherche micronutriments santé"
+"études scientifiques nutrition"
+"carence vitamines symptômes"
+"analyse nutritionnelle personnalisée"
+"éducation nutrition basée preuves"
+3.4 Optimisation pour le taux de clic (CTR)
+Action requise : Mettre en place une stratégie pour maintenir un CTR supérieur à 5%
+Actions recommandées :
+Créer des titres d'annonces attractifs et pertinents
+Inclure des appels à l'action clairs dans les descriptions
+Utiliser des URL de destination spécifiques pour chaque annonce
+Surveiller hebdomadairement les performances et suspendre les mots clés à faible CTR
+Mettre en place des règles automatiques pour suspendre les mots clés sous-performants
+4. Considérations linguistiques et internationales
+4.1 Stratégie linguistique
+Action requise : Définir et mettre en œuvre une stratégie linguistique claire
+Options recommandées :
+Option 1 - Site bilingue :
+Créer une version anglaise complète du site
+Ajouter un sélecteur de langue visible
+Assurer que toutes les pages existent dans les deux langues
+Option 2 - Site principal en anglais avec section française :
+Convertir le site principal en anglais
+Créer une section dédiée au contenu français
+Expliquer clairement la connexion internationale de l'organisation
+4.2 Adaptation du contenu au public américain
+Action requise : Adapter le contenu pour le public américain
+Éléments à adapter :
+Références aux systèmes de santé et réglementations américaines
+Utilisation d'exemples et de statistiques pertinents pour le public américain
+Adaptation des témoignages et études de cas au contexte américain
+Mention des partenariats avec des organisations américaines reconnues
+5. Politiques et conformité légale
+5.1 Politique de confidentialité
+Action requise : Créer une politique de confidentialité complète et conforme
+Éléments à inclure :
+Types de données collectées
+Utilisation des données
+Partage des données avec des tiers
+Droits des utilisateurs concernant leurs données
+Conformité avec les lois américaines (CCPA si applicable) et internationales (RGPD)
+Politique concernant les cookies et technologies similaires
+5.2 Conditions d'utilisation
+Action requise : Développer des conditions d'utilisation complètes
+Éléments à inclure :
+Droits de propriété intellectuelle
+Limitation de responsabilité
+Règles d'utilisation du site
+Procédure de réclamation
+Juridiction applicable (lois américaines)
+5.3 Accessibilité
+Action requise : Améliorer l'accessibilité du site
+Normes à respecter :
+Conformité WCAG 2.1 niveau AA
+Texte alternatif pour toutes les images
+Structure de navigation claire
+Contraste suffisant pour le texte
+Compatibilité avec les lecteurs d'écran
+6. Optimisations techniques supplémentaires
+6.1 Vitesse de chargement
+Action requise : Optimiser la vitesse de chargement du site
+Optimisations recommandées :
+Compression des images
+Minification des fichiers CSS et JavaScript
+Mise en cache du navigateur
+Utilisation d'un CDN si nécessaire
+Réduction des redirections
+6.2 Optimisation pour les moteurs de recherche (SEO)
+Action requise : Améliorer le SEO du site
+Éléments à optimiser :
+Méta-descriptions pour toutes les pages
+Balises de titre optimisées
+Structure des URL claire et descriptive
+Balisage schéma.org pour les organisations à but non lucratif
+Plan du site XML
+Contenu textuel suffisant sur chaque page
+6.3 Sécurité du site
+Action requise : Renforcer la sécurité du site
+Mesures recommandées :
+Certificat SSL valide (HTTPS)
+Mise à jour régulière des plugins et du CMS
+Protection contre les attaques par injection SQL et XSS
+Sauvegarde régulière du site
+Politique de mots de passe forts
+7. Plan de mise en œuvre
+7.1 Priorisation des actions
+Priorité immédiate (1-2 semaines) :
+Clarification du statut juridique
+Finalisation des sections incomplètes
+Mise en place du suivi des conversions
+Création des politiques de confidentialité et conditions d'utilisation
+Priorité élevée (2-4 semaines) :
+Développement de la stratégie de mots clés conforme
+Structure de compte Google Ads optimisée
+Stratégie linguistique et adaptation du contenu
+Amélioration de la page d'accueil
+Priorité moyenne (1-2 mois) :
+Création de la page "Impact"
+Documentation légale complète
+Optimisations SEO
+Amélioration de l'accessibilité
+Priorité de maintenance (continu) :
+Surveillance du taux de clic (CTR)
+Optimisation continue des mots clés
+Mise à jour régulière du contenu
+Suivi des performances des conversions
+7.2 Ressources nécessaires
+Compétences requises :
+Expertise juridique pour les documents légaux
+Compétences en marketing digital pour Google Ads
+Développement web pour les modifications techniques
+Rédaction de contenu pour les sections manquantes
+Traduction professionnelle si option bilingue choisie
+Outils recommandés :
+Google Tag Manager et Google Analytics
+Outils d'audit SEO (Screaming Frog, SEMrush, etc.)
+Outils de test d'accessibilité (WAVE, axe, etc.)
+Outils de test de vitesse (PageSpeed Insights, GTmetrix)
+Conclusion
+La mise en œuvre de ces recommandations permettra à Natural Pure Academy d'améliorer significativement sa conformité avec les exigences du programme Google Ad Grant. Ces actions renforceront également la crédibilité de l'organisation en tant qu'association à but non lucratif aux États-Unis et optimiseront l'efficacité de ses campagnes publicitaires.
+Il est recommandé de procéder par étapes, en commençant par les éléments fondamentaux liés au statut juridique et à la structure du site, puis en progressant vers les optimisations techniques plus avancées. Un suivi régulier des performances et des ajustements continus seront nécessaires pour maintenir la conformité à long terme.

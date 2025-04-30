@@ -1,0 +1,56 @@
+The above error occurred in the <Checkbox> component:
+
+    at https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/@radix-ui_react-checkbox.js?v=b4e14847:44:7
+    at _c (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/components/ui/checkbox.tsx:14:57)
+    at div
+    at div
+    at div
+    at div
+    at SymptomsStep (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/components/quiz/SymptomsStep.tsx:25:25)
+    at div
+    at div
+    at MotionComponent (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/framer-motion.js?v=b4e14847:1785:40)
+    at div
+    at Container (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/components/ui/container.tsx:12:29)
+    at Quiz (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/pages/Quiz.tsx:47:43)
+    at RenderedRoute (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=b4e14847:4069:5)
+    at Routes (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=b4e14847:4508:5)
+    at Router (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=b4e14847:4451:15)
+    at BrowserRouter (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=b4e14847:5196:5)
+    at Provider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/chunk-XSIA5QXM.js?v=b4e14847:38:15)
+    at TooltipProvider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=b4e14847:61:5)
+    at QueryClientProvider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/@tanstack_react-query.js?v=b4e14847:2794:3)
+    at App (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/App.tsx:102:5)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+
+at https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/@radix-ui_react-checkbox.js?v=b4e14847:44:7
+at _c (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/components/ui/checkbox.tsx:14:57)
+at div
+at div
+at div
+at div
+at SymptomsStep (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/components/quiz/SymptomsStep.tsx:25:25)
+at div
+at div
+at MotionComponent (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/framer-motion.js?v=b4e14847:1785:40)
+at div
+at Container (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/components/ui/container.tsx:12:29)
+at Quiz (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/pages/Quiz.tsx:47:43)
+at RenderedRoute (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=b4e14847:4069:5)
+at Routes (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=b4e14847:4508:5)
+at Router (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=b4e14847:4451:15)
+at BrowserRouter (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=b4e14847:5196:5)
+at Provider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/chunk-XSIA5QXM.js?v=b4e14847:38:15)
+at TooltipProvider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=b4e14847:61:5)
+at QueryClientProvider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/@tanstack_react-query.js?v=b4e14847:2794:3)
+at App (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/App.tsx:102:5)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+at t.value (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+updateResponse is not a function

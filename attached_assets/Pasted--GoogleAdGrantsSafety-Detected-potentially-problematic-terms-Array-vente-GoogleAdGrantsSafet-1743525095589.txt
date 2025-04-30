@@ -1,0 +1,22 @@
+[GoogleAdGrantsSafety] Detected potentially problematic terms: 
+Array ["vente"]
+[GoogleAdGrantsSafety] Compliance audit: 
+Object {isCompliant: false, issuesCount: 2, details: Array(2)}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "NaturalPureAccueilArticlesQuiz NutritionProfil SantéLabo SolutionsNutritionÀ…", element: "DIV", path: "div#root"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "NaturalPureAccueilArticlesQuiz NutritionProfil SantéLabo SolutionsNutritionÀ…", element: "DIV", path: "div#root > div.min-h-screen.bg-white"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Contenu éducatif et scientifique uniquement - Aucune vente de produitRejoignez notre communauté…", element: "DIV", path: "div#root > div.min-h-screen.bg-white >…"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Contenu éducatif et scientifique uniquement - Aucune vente de produitRejoignez notre communauté…", element: "DIV", path: "div#root > div.min-h-screen.bg-white >…"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Contenu éducatif et scientifique uniquement - Aucune vente de produitRejoignez notre communauté…", element: "DIV", path: "div#root > div.min-h-screen.bg-white >…"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Contenu éducatif et scientifique uniquement - Aucune vente de produit", element: "P", path: "div#root > div.min-h-screen.bg-white >…"}
+Assertion failed:  COOKIE LEAK DETECTED
+at t.value (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+[GoogleAdGrantsSafety] First scan completed in 18230.50ms

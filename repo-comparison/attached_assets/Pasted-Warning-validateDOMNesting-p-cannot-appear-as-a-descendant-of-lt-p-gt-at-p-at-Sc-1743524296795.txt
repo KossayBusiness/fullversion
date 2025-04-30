@@ -1,0 +1,44 @@
+Warning: validateDOMNesting(...): <p> cannot appear as a descendant of &lt;p&gt;.
+    at p
+    at ScientificHighlightedText (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/components/ui/ScientificHighlightedText.tsx:24:49)
+    at p
+    at div
+    at div
+    at MotionComponent (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/framer-motion.js?v=a75adacc:1785:40)
+    at div
+    at div
+    at Quiz (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/pages/Quiz.tsx:41:43)
+    at RenderedRoute (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a75adacc:4069:5)
+    at Routes (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a75adacc:4508:5)
+    at Router (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a75adacc:4451:15)
+    at BrowserRouter (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=a75adacc:5196:5)
+    at Provider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/chunk-SH2BLAPC.js?v=a75adacc:38:15)
+    at TooltipProvider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=a75adacc:61:5)
+    at QueryClientProvider (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/node_modules/.vite/deps/@tanstack_react-query.js?v=a75adacc:2794:3)
+    at App (https://abb27bb7-9c93-442b-97c8-a9e40686c327-00-1scncadzfhh7r.kirk.replit.dev/src/App.tsx:99:5)
+Erreur lors du déchiffrement des données: 
+DOMException {}
+
+Erreur lors de la récupération du stockage sécurisé: 
+SyntaxError {}
+
+[GoogleAdGrantsSafety] Scanning for banned terms: achat, promo, commander, prix, offre, rabais, boutique, vente, acheter, soldes, discount, bon marché, économies, réduction, promotion, meilleur prix, tarif, €
+[GoogleAdGrantsSafety] Detected potentially problematic terms: 
+Array ["vente"]
+[GoogleAdGrantsSafety] Compliance audit: 
+Object {isCompliant: false, issuesCount: 2, details: Array(2)}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Laboratoire de NutritionAnalyse scientifique en cours d'initialisation...Laboratoire…", element: "DIV", path: "div#root"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Laboratoire de NutritionAnalyse scientifique en cours d'initialisation...Laboratoire…", element: "DIV", path: "div#root > div.min-h-screen.bg-white"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Laboratoire IndépendantContenu éducatif et scientifique uniquement - Aucune vente de produitDonnées…", element: "DIV", path: "div#root > div.min-h-screen.bg-white >…"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Laboratoire IndépendantContenu éducatif et scientifique uniquement - Aucune vente de produitDonnées…", element: "DIV", path: "div#root > div.min-h-screen.bg-white >…"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Laboratoire IndépendantContenu éducatif et scientifique uniquement - Aucune vente de produitDonnées…", element: "DIV", path: "div#root > div.min-h-screen.bg-white >…"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Contenu éducatif et scientifique uniquement - Aucune vente de produit", element: "P", path: "div#root > div.min-h-screen.bg-white >…"}
+Assertion failed:  COOKIE LEAK DETECTED
+[GoogleAdGrantsSafety] First scan completed in 53.60ms
+Données du quiz insuffisantes pour générer des recommandations

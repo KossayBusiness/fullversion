@@ -1,0 +1,61 @@
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Start free test", element: "DIV", path: "div#root > div.antialiased > div.min-h-screen.bg-background > main.overflow-hidden >…"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Start free test", element: "A", path: "div#root > div.antialiased > div.min-h-screen.bg-background > main.overflow-hidden >…"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Free test3 minutesImmediate results", element: "DIV", path: "div#root > div.antialiased > div.min-h-screen.bg-background > main.overflow-hidden >…"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Free test", element: "DIV", path: "div#root > div.antialiased > div.min-h-screen.bg-background > main.overflow-hidden >…"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Free test", element: "P", path: "div#root > div.antialiased > div.min-h-screen.bg-background > main.overflow-hidden >…"}
+[GoogleAdGrantsSafety] Storage check: Using secured session storage instead of localStorage
+[GoogleAdGrantsSafety] First scan completed in 120.60ms
+[GoogleAdGrantsSafety] Running automatic compliance check...
+[GoogleAdGrantsSafety] Compliance check complete. Found 0 issues.
+[ComplianceTracker] Detected banned terms: 
+Array ["free"]
+[ComplianceTracker] Detected banned terms: 
+Array ["free"]
+[ComplianceTracker] Detected banned terms: 
+Array ["free"]
+[GoogleAdGrantsMetric] 
+Object {event_name: "page_view", session_id: "session_1745145084061_a3uhc3y", page_path: "/quiz", page_view_count: 3}
+[GoogleAdGrantsTrack] 
+Object {event_name: "page_view", page_path: "/quiz", referrer: "https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/__replco/workspace_if…", source: "direct", campaign: "none"}
+onChange is not a function
+onChange is not a function
+at handleChange (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/components/quiz/DietaryHabitsStep.tsx:105:17)
+at Object.onCheckedChange [as current] (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/components/quiz/DietaryHabitsStep.tsx:237:70)
+at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-LSQNWB54.js?v=d5140d30:99:61
+at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-ZL42RGMA.js?v=d5140d30:38:30
+at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/@radix-ui_react-checkbox.js?v=d5140d30:91:13
+at handleEvent (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-ZL42RGMA.js?v=d5140d30:16:49)
+at HTMLUnknownElement.callCallback2 (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3674:22)
+at Object.invokeGuardedCallbackDev (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3699:24)
+at invokeGuardedCallback (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3733:39)
+at invokeGuardedCallbackAndCatchFirstError (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3736:33)
+onChange is not a function
+at handleChange (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/components/quiz/DietaryHabitsStep.tsx:105:17)
+at Object.onCheckedChange [as current] (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/components/quiz/DietaryHabitsStep.tsx:237:70)
+at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-LSQNWB54.js?v=d5140d30:99:61
+at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-ZL42RGMA.js?v=d5140d30:38:30
+at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/@radix-ui_react-checkbox.js?v=d5140d30:91:13
+at handleEvent (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-ZL42RGMA.js?v=d5140d30:16:49)
+at HTMLUnknownElement.callCallback2 (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3674:22)
+at Object.invokeGuardedCallbackDev (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3699:24)
+at invokeGuardedCallback (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3733:39)
+at invokeGuardedCallbackAndCatchFirstError (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3736:33)
+onChange is not a function
+onChange is not a function
+onChange is not a function
+onChange is not a function
+at handleChange (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/components/quiz/DietaryHabitsStep.tsx:105:17)
+at Object.onCheckedChange [as current] (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/components/quiz/DietaryHabitsStep.tsx:237:70)
+at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-LSQNWB54.js?v=d5140d30:99:61
+at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-ZL42RGMA.js?v=d5140d30:38:30
+at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/@radix-ui_react-checkbox.js?v=d5140d30:91:13
+at handleEvent (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-ZL42RGMA.js?v=d5140d30:16:49)
+at HTMLUnknownElement.callCallback2 (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3674:22)
+at Object.invokeGuardedCallbackDev (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3699:24)
+at invokeGuardedCallback (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3733:39)
+at invokeGuardedCallbackAndCatchFirstError (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-T2SWDQEL.js?v=d5140d30:3736:33)

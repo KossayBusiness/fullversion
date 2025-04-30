@@ -1,0 +1,542 @@
+[plugin:vite:react-swc] × the name `generateRecommendations` is defined multiple times
+     ╭─[/home/runner/workspace/src/pages/Quiz.tsx:18:1]
+  15 │ import QuizResults from "@/components/QuizResults";
+  16 │ import ScientificHighlightedText from "@/components/ui/ScientificHighlightedText";
+  17 │ import { useAdvancedRecommendations } from "@/hooks/useAdvancedRecommendations";
+  18 │ import { generateRecommendations } from "@/utils/recommenderSystem"; // Added import
+     ·          ───────────┬───────────
+     ·                     ╰── previous definition of `generateRecommendations` here
+  19 │ 
+  20 │ 
+  21 │ /**
+  22 │  * Génère un nombre stable de participants basé sur la date actuelle
+  23 │  * (augmente progressivement pour créer un effet de popularité croissante
+  24 │  * mais reste cohérent pour la session utilisateur))
+  25 │  */
+  26 │ function getStableParticipantNumber(): number {
+  27 │   const now = new Date();
+  28 │   const dayOfYear = Math.floor((now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86400000);
+  29 │   const baseNumber = 900; // Nombre de base
+  30 │   const dailyIncrease = 3; // Augmentation journalière
+  31 │ 
+  32 │   return baseNumber + (dayOfYear * dailyIncrease);
+  33 │ }
+  34 │ 
+  35 │ const Quiz = () => {
+  36 │   const [quizStarted, setQuizStarted] = useState(false);
+  37 │   const [quizCompleted, setQuizCompleted] = useState(false);
+  38 │   const [responses, setResponses] = useState<QuizResponse>({});
+  39 │   const [userLocation, setUserLocation] = useState<string>("");
+  40 │   const [personalizationFactors, setPersonalizationFactors] = useState<any>(null);
+  41 │   const [showIntroAnimation, setShowIntroAnimation] = useState(true);
+  42 │   const [pageLoaded, setPageLoaded] = useState(false);
+  43 │   const introDone = useRef(false);
+  44 │ 
+  45 │   // Métriques comportementales avec le hook personnalisé
+  46 │   const { 
+  47 │     metrics: behavioralData, 
+  48 │     startQuestionTracking,
+  49 │     trackAnswer,
+  50 │     trackHover,
+  51 │     trackFocus,
+  52 │     resetMetrics 
+  53 │   } = useBehavioralMetrics();
+  54 │ 
+  55 │   // Préparation des recommandations avancées
+  56 │   const {
+  57 │     recommendations: advancedRecommendations, // Rename to avoid conflict
+  58 │     explanation,
+  59 │     isLoading: recommendationsLoading,
+  60 │     isPrioritized,
+  61 │     recalculateRecommendations,
+  62 │     prioritizeByMetric
+  63 │   } = useAdvancedRecommendations({
+  64 │     quizResponses: responses,
+  65 │     behavioralMetrics: behavioralData,
+  66 │     neuroProfile: {
+  67 │       stressIndex: 68,
+  68 │       decisionConfidence: 73,
+  69 │       attentionScore: 81,
+  70 │       consistencyIndex: 85
+  71 │     }
+  72 │   });
+  73 │ 
+  74 │   // Détecter la localisation approximative (simulée pour l'exemple)
+  75 │   useEffect(() => {
+  76 │     const cities = ["Paris", "Lyon", "Marseille", "Bordeaux", "Lille", "Strasbourg", "Nantes", "Toulouse"];
+  77 │     const randomCity = cities[Math.floor(Math.random() * cities.length)];
+  78 │     setUserLocation(randomCity);
+  79 │ 
+  80 │     // Collecte des facteurs de personnalisation
+  81 │     const factors = collectPersonalizationFactors();
+  82 │     setPersonalizationFactors(factors);
+  83 │ 
+  84 │     // Marquer la page comme chargée après un court délai pour l'animation
+  85 │     setTimeout(() => {
+  86 │       setPageLoaded(true);
+  87 │     }, 500);
+  88 │ 
+  89 │     // Terminer l'animation d'introduction après un délai
+  90 │     setTimeout(() => {
+  91 │       setShowIntroAnimation(false);
+  92 │       introDone.current = true;
+  93 │     }, 3500);
+  94 │   }, []);
+  95 │ 
+  96 │   const startQuiz = () => {
+  97 │     setQuizStarted(true);
+  98 │     resetMetrics(); // Réinitialiser les métriques comportementales
+  99 │ 
+ 100 │     // Enregistrer le début du quiz
+ 101 │     localStorage.setItem('quizStartTime', Date.now().toString());
+ 102 │ 
+ 103 │     // Notification de début de quiz
+ 104 │     toast.success("Analyse nutritionnelle initiée", {
+ 105 │       description: "Notre système analyse vos réponses en temps réel",
+ 106 │       icon: <Beaker data-lov-id="src/pages/Quiz.tsx:106:12" data-lov-name="Beaker"  data-component-path="src/pages/Quiz.tsx" data-component-line="106" data-component-file="Quiz.tsx" data-component-name="Beaker" data-component-content="%7B%22className%22%3A%22h-5%20w-5%22%7D" className="h-5 w-5" />
+ 107 │     });
+ 108 │   };
+ 109 │ 
+ 110 │   const handleQuizComplete = (finalResponses: QuizResponse) => {
+ 111 │     setResponses(finalResponses);
+ 112 │     setQuizCompleted(true);
+ 113 │ 
+ 114 │     // Calcul du temps total passé dans le quiz
+ 115 │     const startTime = parseInt(localStorage.getItem('quizStartTime') || '0');
+ 116 │     const totalTime = startTime ? Math.floor((Date.now() - startTime) / 1000) : 0;
+ 117 │ 
+ 118 │     // Enregistrement des statistiques anonymisées
+ 119 │     localStorage.setItem('quizCompletionStats', JSON.stringify({
+ 120 │       timeToComplete: totalTime,
+ 121 │       questionsChanged: behavioralData.changedAnswers.length,
+ 122 │       date: new Date().toISOString()
+ 123 │     }));
+ 124 │ 
+ 125 │     // Notification de complétion
+ 126 │     toast.success("Analyse complétée avec succès", {
+ 127 │       description: "Vos recommandations personnalisées sont prêtes",
+ 128 │       icon: <CheckCircle data-lov-id="src/pages/Quiz.tsx:128:12" data-lov-name="CheckCircle"  data-component-path="src/pages/Quiz.tsx" data-component-line="128" data-component-file="Quiz.tsx" data-component-name="CheckCircle" data-component-content="%7B%22className%22%3A%22h-5%20w-5%22%7D" className="h-5 w-5" />
+ 129 │     });
+ 130 │   };
+ 131 │ 
+ 132 │   const handleUserInfoUpdate = (info: any) => {
+ 133 │     console.log("Mise à jour des informations utilisateur:", info);
+ 134 │     // Vous pouvez mettre à jour les facteurs de personnalisation ici si nécessaire
+ 135 │   };
+ 136 │ 
+ 137 │   // Valeur fixe pour le compteur d'analyses restantes
+ 138 │   const [analysesRestantes, setAnalysesRestantes] = useState<number>(98);
+ 139 │ 
+ 140 │   // Aucun effet de changement pour assurer la stabilité
+ 141 │   useEffect(() => {
+ 142 │     // Aucune mise à jour automatique pour éviter les fluctuations
+ 143 │   }, []);
+ 144 │ 
+ 145 │   return (
+ 146 │     <div data-lov-id="src/pages/Quiz.tsx:146:4" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="146" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22min-h-screen%20bg-white%22%7D" className="min-h-screen bg-white">
+ 147 │       <AnimatePresence data-lov-id="src/pages/Quiz.tsx:147:6" data-lov-name="AnimatePresence"  data-component-path="src/pages/Quiz.tsx" data-component-line="147" data-component-file="Quiz.tsx" data-component-name="AnimatePresence" data-component-content="%7B%7D">
+ 148 │         {/* Animation d'introduction scientifique */}
+ 149 │         {showIntroAnimation && (
+ 150 │           <motion.div data-lov-id="src/pages/Quiz.tsx:150:10" data-lov-name="motion.div"  data-component-path="src/pages/Quiz.tsx" data-component-line="150" data-component-file="Quiz.tsx" data-component-name="motion.div" data-component-content="%7B%22className%22%3A%22fixed%20inset-0%20flex%20items-center%20justify-center%20bg-white%20z-50%22%7D"
+ 151 │             className="fixed inset-0 flex items-center justify-center bg-white z-50"
+ 152 │             initial={{ opacity: 1 }}
+ 153 │             exit={{ opacity: 0 }}
+ 154 │             transition={{ duration: 0.5 }}
+ 155 │           >
+ 156 │             <div data-lov-id="src/pages/Quiz.tsx:156:12" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="156" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22text-center%20space-y-6%22%7D" className="text-center space-y-6">
+ 157 │               <motion.div data-lov-id="src/pages/Quiz.tsx:157:14" data-lov-name="motion.div"  data-component-path="src/pages/Quiz.tsx" data-component-line="157" data-component-file="Quiz.tsx" data-component-name="motion.div" data-component-content="%7B%22className%22%3A%22w-20%20h-20%20mx-auto%22%7D"
+ 158 │                 initial={{ scale: 0.8, opacity: 0 }}
+ 159 │                 animate={{ scale: 1, opacity: 1 }}
+ 160 │                 transition={{ duration: 0.5 }}
+ 161 │                 className="w-20 h-20 mx-auto"
+ 162 │               >
+ 163 │                 <Beaker data-lov-id="src/pages/Quiz.tsx:163:16" data-lov-name="Beaker"  data-component-path="src/pages/Quiz.tsx" data-component-line="163" data-component-file="Quiz.tsx" data-component-name="Beaker" data-component-content="%7B%22className%22%3A%22w-full%20h-full%20text-blue-600%22%7D" className="w-full h-full text-blue-600" />
+ 164 │               </motion.div>
+ 165 │ 
+ 166 │               <motion.div data-lov-id="src/pages/Quiz.tsx:166:14" data-lov-name="motion.div"  data-component-path="src/pages/Quiz.tsx" data-component-line="166" data-component-file="Quiz.tsx" data-component-name="motion.div" data-component-content="%7B%7D" 
+ 167 │                 initial={{ y: 20, opacity: 0 }}
+ 168 │                 animate={{ y: 0, opacity: 1 }}
+ 169 │                 transition={{ delay: 0.3, duration: 0.5 }}
+ 170 │               >
+ 171 │                 <h1 data-lov-id="src/pages/Quiz.tsx:171:16" data-lov-name="h1"  data-component-path="src/pages/Quiz.tsx" data-component-line="171" data-component-file="Quiz.tsx" data-component-name="h1" data-component-content="%7B%22text%22%3A%22Laboratoire%20de%20Nutrition%22%2C%22className%22%3A%22text-2xl%20font-bold%22%7D" className="text-2xl font-bold">Laboratoire de Nutrition</h1>
+ 172 │                 <p data-lov-id="src/pages/Quiz.tsx:172:16" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="172" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22text%22%3A%22Analyse%20scientifique%20en%20cours%20d'initialisation...%22%2C%22className%22%3A%22text-gray-600%20mt-2%22%7D" className="text-gray-600 mt-2">Analyse scientifique en cours d'initialisation...</p>
+ 173 │               </motion.div>
+ 174 │ 
+ 175 │               <motion.div data-lov-id="src/pages/Quiz.tsx:175:14" data-lov-name="motion.div"  data-component-path="src/pages/Quiz.tsx" data-component-line="175" data-component-file="Quiz.tsx" data-component-name="motion.div" data-component-content="%7B%22className%22%3A%22h-1%20bg-gradient-to-r%20from-blue-500%20to-green-500%20rounded-full%20max-w-md%20mx-auto%22%7D"
+ 176 │                 initial={{ width: 0 }}
+ 177 │                 animate={{ width: "100%" }}
+ 178 │                 transition={{ delay: 0.8, duration: 2 }}
+ 179 │                 className="h-1 bg-gradient-to-r from-blue-500 to-green-500 rounded-full max-w-md mx-auto"
+ 180 │               />
+ 181 │             </div>
+ 182 │           </motion.div>
+ 183 │         )}
+ 184 │       </AnimatePresence>
+ 185 │ 
+ 186 │       <motion.div data-lov-id="src/pages/Quiz.tsx:186:6" data-lov-name="motion.div"  data-component-path="src/pages/Quiz.tsx" data-component-line="186" data-component-file="Quiz.tsx" data-component-name="motion.div" data-component-content="%7B%22className%22%3A%22relative%20overflow-hidden%20bg-gradient-to-br%20from-natural-100%20via-natural-50%20to-white%20rounded-xl%22%7D"
+ 187 │         className="relative overflow-hidden bg-gradient-to-br from-natural-100 via-natural-50 to-white rounded-xl"
+ 188 │         initial={{ opacity: 0 }}
+ 189 │         animate={{ opacity: pageLoaded ? 1 : 0 }}
+ 190 │         transition={{ duration: 0.5 }}
+ 191 │       >
+ 192 │         {/* Effet de laboratoire en arrière-plan */}
+ 193 │         <div data-lov-id="src/pages/Quiz.tsx:193:8" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="193" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22absolute%20inset-0%20opacity-20%20pointer-events-none%22%7D" className="absolute inset-0 opacity-20 pointer-events-none">
+ 194 │           <LabEffects data-lov-id="src/pages/Quiz.tsx:194:10" data-lov-name="LabEffects"  data-component-path="src/pages/Quiz.tsx" data-component-line="194" data-component-file="Quiz.tsx" data-component-name="LabEffects" data-component-content="%7B%7D" intensity={0.5} />
+ 195 │         </div>
+ 196 │ 
+ 197 │         <div data-lov-id="src/pages/Quiz.tsx:197:8" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="197" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22relative%20container%20mx-auto%20px-4%20py-8%20md%3Apy-10%22%7D" className="relative container mx-auto px-4 py-8 md:py-10">
+ 198 │           <div data-lov-id="src/pages/Quiz.tsx:198:10" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="198" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22max-w-2xl%20mx-auto%20text-center%20space-y-3%22%7D" className="max-w-2xl mx-auto text-center space-y-3">
+ 199 │             <Badge data-lov-id="src/pages/Quiz.tsx:199:12" data-lov-name="Badge"  data-component-path="src/pages/Quiz.tsx" data-component-line="199" data-component-file="Quiz.tsx" data-component-name="Badge" data-component-content="%7B%22text%22%3A%22Laboratoire%20Ind%C3%A9pendant%22%2C%22className%22%3A%22bg-white%2F80%20backdrop-blur-sm%20px-3%20py-1%20text-xs%20font-medium%22%7D" variant="outline" className="bg-white/80 backdrop-blur-sm px-3 py-1 text-xs font-medium">
+ 200 │               Laboratoire Indépendant
+ 201 │             </Badge>
+ 202 │ 
+ 203 │             <p data-lov-id="src/pages/Quiz.tsx:203:12" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="203" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22text%22%3A%22Contenu%20%C3%A9ducatif%20et%20scientifique%20uniquement%20-%20Aucune%20vente%20de%20produit%22%2C%22className%22%3A%22text-xs%20text-natural-500%20mb-4%22%7D" className="text-xs text-natural-500 mb-4">
+ 204 │               Contenu éducatif et scientifique uniquement - Aucune vente de produit
+ 205 │             </p>
+ 206 │ 
+ 207 │             <div data-lov-id="src/pages/Quiz.tsx:207:12" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="207" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22flex%20justify-center%20space-x-4%20mb-6%22%7D" className="flex justify-center space-x-4 mb-6">
+ 208 │               <Button data-lov-id="src/pages/Quiz.tsx:208:14" data-lov-name="Button"  data-component-path="src/pages/Quiz.tsx" data-component-line="208" data-component-file="Quiz.tsx" data-component-name="Button" data-component-content="%7B%22text%22%3A%22Donn%C3%A9es%20scientifiques%22%2C%22className%22%3A%22text-xs%22%7D" variant="ghost" size="sm" className="text-xs">
+ 209 │                 Données scientifiques
+ 210 │               </Button>
+ 211 │               <Button data-lov-id="src/pages/Quiz.tsx:211:14" data-lov-name="Button"  data-component-path="src/pages/Quiz.tsx" data-component-line="211" data-component-file="Quiz.tsx" data-component-name="Button" data-component-content="%7B%22text%22%3A%22%C3%89tudes%20exclusives%22%2C%22className%22%3A%22text-xs%22%7D" variant="ghost" size="sm" className="text-xs">
+ 212 │                 Études exclusives
+ 213 │               </Button>
+ 214 │               <Button data-lov-id="src/pages/Quiz.tsx:214:14" data-lov-name="Button"  data-component-path="src/pages/Quiz.tsx" data-component-line="214" data-component-file="Quiz.tsx" data-component-name="Button" data-component-content="%7B%22text%22%3A%22Recherches%20avanc%C3%A9es%22%2C%22className%22%3A%22text-xs%22%7D" variant="ghost" size="sm" className="text-xs">
+ 215 │                 Recherches avancées
+ 216 │               </Button>
+ 217 │             </div>
+ 218 │ 
+ 219 │             <Button data-lov-id="src/pages/Quiz.tsx:219:12" data-lov-name="Button"  data-component-path="src/pages/Quiz.tsx" data-component-line="219" data-component-file="Quiz.tsx" data-component-name="Button" data-component-content="%7B%22text%22%3A%22Voir%20nos%20%C3%A9tudes%20scientifiques%22%2C%22className%22%3A%22text-xs%22%7D" variant="outline" size="sm" className="text-xs">
+ 220 │               Voir nos études scientifiques
+ 221 │             </Button>
+ 222 │ 
+ 223 │             <p data-lov-id="src/pages/Quiz.tsx:223:12" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="223" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22text%22%3A%22Plus%20de%2010%2C000%20personnes%20consultent%20d%C3%A9j%C3%A0%20nos%20ressources%20scientifiques%22%2C%22className%22%3A%22text-xs%20text-gray-500%20mt-2%22%7D" className="text-xs text-gray-500 mt-2">
+ 224 │               Plus de 10,000 personnes consultent déjà nos ressources scientifiques
+ 225 │             </p>
+ 226 │           </div>
+ 227 │         </div>
+ 228 │       </motion.div>
+ 229 │ 
+ 230 │       {/* Contenu principal conditionnel (Quiz ou Formulaire d'introduction) */}
+ 231 │       <div data-lov-id="src/pages/Quiz.tsx:231:6" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="231" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22container%20mx-auto%20px-4%20py-8%22%7D" className="container mx-auto px-4 py-8">
+ 232 │         {!quizStarted ? (
+ 233 │           /* Page d'introduction du quiz */
+ 234 │           <motion.div data-lov-id="src/pages/Quiz.tsx:234:10" data-lov-name="motion.div"  data-component-path="src/pages/Quiz.tsx" data-component-line="234" data-component-file="Quiz.tsx" data-component-name="motion.div" data-component-content="%7B%22className%22%3A%22max-w-4xl%20mx-auto%22%7D" 
+ 235 │             className="max-w-4xl mx-auto"
+ 236 │             initial={{ opacity: 0, y: 20 }}
+ 237 │             animate={{ opacity: introDone.current ? 1 : 0, y: introDone.current ? 0 : 20 }}
+ 238 │             transition={{ duration: 0.5, delay: 0.2 }}
+ 239 │           >
+ 240 │             <div data-lov-id="src/pages/Quiz.tsx:240:12" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="240" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22text-center%20mb-12%22%7D" className="text-center mb-12">
+ 241 │               <h1 data-lov-id="src/pages/Quiz.tsx:241:14" data-lov-name="h1"  data-component-path="src/pages/Quiz.tsx" data-component-line="241" data-component-file="Quiz.tsx" data-component-name="h1" data-component-content="%7B%22text%22%3A%22Identifiez%20vos%20besoins%20pr%C3%A9cis%20en%20micronutriments%22%2C%22className%22%3A%22text-3xl%20md%3Atext-4xl%20font-bold%20mb-4%20text-gradient%22%7D" className="text-3xl md:text-4xl font-bold mb-4 text-gradient">
+ 242 │                 Identifiez vos besoins précis en micronutriments
+ 243 │               </h1>
+ 244 │               <p data-lov-id="src/pages/Quiz.tsx:244:14" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="244" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22className%22%3A%22text-xl%20text-gray-700%20max-w-3xl%20mx-auto%22%7D" className="text-xl text-gray-700 max-w-3xl mx-auto">
+ 245 │                 <ScientificHighlightedText data-lov-id="src/pages/Quiz.tsx:245:16" data-lov-name="ScientificHighlightedText"  data-component-path="src/pages/Quiz.tsx" data-component-line="245" data-component-file="Quiz.tsx" data-component-name="ScientificHighlightedText" data-component-content="%7B%7D" text="Test personnalisé basé sur notre [[research-methodology:méthodologie exclusive]] développée par notre équipe de chercheurs." />
+ 246 │               </p>
+ 247 │             </div>
+ 248 │ 
+ 249 │             {/* Principaux problèmes de santé */}
+ 250 │             <div data-lov-id="src/pages/Quiz.tsx:250:12" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="250" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22grid%20grid-cols-1%20md%3Agrid-cols-3%20gap-6%20mb-12%22%7D" className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+ 251 │               <motion.div data-lov-id="src/pages/Quiz.tsx:251:14" data-lov-name="motion.div"  data-component-path="src/pages/Quiz.tsx" data-component-line="251" data-component-file="Quiz.tsx" data-component-name="motion.div" data-component-content="%7B%22className%22%3A%22bg-white%20rounded-xl%20p-6%20shadow-md%20border%20border-gray-100%22%7D" 
+ 252 │                 className="bg-white rounded-xl p-6 shadow-md border border-gray-100"
+ 253 │                 whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
+ 254 │                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
+ 255 │               >
+ 256 │                 <div data-lov-id="src/pages/Quiz.tsx:256:16" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="256" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22flex%20items-center%20mb-4%22%7D" className="flex items-center mb-4">
+ 257 │                   <div data-lov-id="src/pages/Quiz.tsx:257:18" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="257" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22w-12%20h-12%20rounded-full%20bg-red-100%20flex%20items-center%20justify-center%20mr-4%22%7D" className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mr-4">
+ 258 │                     <Sparkles className="h-6 w-6 text-red-500" />
+ 259 │                   </div>
+ 260 │                   <h3 data-lov-id="src/pages/Quiz.tsx:260:18" data-lov-name="h3"  data-component-path="src/pages/Quiz.tsx" data-component-line="260" data-component-file="Quiz.tsx" data-component-name="h3" data-component-content="%7B%22text%22%3A%22Stress%20et%20Fatigue%22%2C%22className%22%3A%22text-lg%20font-semibold%22%7D" className="text-lg font-semibold">Stress et Fatigue</h3>
+ 261 │                 </div>
+ 262 │                 <p data-lov-id="src/pages/Quiz.tsx:262:16" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="262" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22className%22%3A%22text-gray-600%20mb-4%22%7D" className="text-gray-600 mb-4">
+ 263 │                   <ScientificHighlightedText data-lov-id="src/pages/Quiz.tsx:263:18" data-lov-name="ScientificHighlightedText"  data-component-path="src/pages/Quiz.tsx" data-component-line="263" data-component-file="Quiz.tsx" data-component-name="ScientificHighlightedText" data-component-content="%7B%7D" text="Identifiez les micronutriments qui vous manquent réellement" />
+ 264 │                 </p>
+ 265 │               </motion.div>
+ 266 │ 
+ 267 │               <motion.div data-lov-id="src/pages/Quiz.tsx:267:14" data-lov-name="motion.div"  data-component-path="src/pages/Quiz.tsx" data-component-line="267" data-component-file="Quiz.tsx" data-component-name="motion.div" data-component-content="%7B%22className%22%3A%22bg-white%20rounded-xl%20p-6%20shadow-md%20border%20border-gray-100%22%7D" 
+ 268 │                 className="bg-white rounded-xl p-6 shadow-md border border-gray-100"
+ 269 │                 whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
+ 270 │                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
+ 271 │               >
+ 272 │                 <div data-lov-id="src/pages/Quiz.tsx:272:16" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="272" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22flex%20items-center%20mb-4%22%7D" className="flex items-center mb-4">
+ 273 │                   <div data-lov-id="src/pages/Quiz.tsx:273:18" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="273" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22w-12%20h-12%20rounded-full%20bg-blue-100%20flex%20items-center%20justify-center%20mr-4%22%7D" className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+ 274 │                     <Brain data-lov-id="src/pages/Quiz.tsx:274:20" data-lov-name="Brain"  data-component-path="src/pages/Quiz.tsx" data-component-line="274" data-component-file="Quiz.tsx" data-component-name="Brain" data-component-content="%7B%22className%22%3A%22h-6%20w-6%20text-blue-500%22%7D" className="h-6 w-6 text-blue-500" />
+ 275 │                   </div>
+ 276 │                   <h3 data-lov-id="src/pages/Quiz.tsx:276:18" data-lov-name="h3"  data-component-path="src/pages/Quiz.tsx" data-component-line="276" data-component-file="Quiz.tsx" data-component-name="h3" data-component-content="%7B%22text%22%3A%22Sommeil%20Perturb%C3%A9%22%2C%22className%22%3A%22text-lg%20font-semibold%22%7D" className="text-lg font-semibold">Sommeil Perturbé</h3>
+ 277 │                 </div>
+ 278 │                 <p data-lov-id="src/pages/Quiz.tsx:278:16" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="278" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22className%22%3A%22text-gray-600%20mb-4%22%7D" className="text-gray-600 mb-4">
+ 279 │                   <ScientificHighlightedText data-lov-id="src/pages/Quiz.tsx:279:18" data-lov-name="ScientificHighlightedText"  data-component-path="src/pages/Quiz.tsx" data-component-line="279" data-component-file="Quiz.tsx" data-component-name="ScientificHighlightedText" data-component-content="%7B%7D" text="Découvrez les solutions naturelles validées scientifiquement" />
+ 280 │                 </p>
+ 281 │               </motion.div>
+ 282 │ 
+ 283 │               <motion.div data-lov-id="src/pages/Quiz.tsx:283:14" data-lov-name="motion.div"  data-component-path="src/pages/Quiz.tsx" data-component-line="283" data-component-file="Quiz.tsx" data-component-name="motion.div" data-component-content="%7B%22className%22%3A%22bg-white%20rounded-xl%20p-6%20shadow-md%20border%20border-gray-100%22%7D" 
+ 284 │                 className="bg-white rounded-xl p-6 shadow-md border border-gray-100"
+ 285 │                 whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
+ 286 │                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
+ 287 │               >
+ 288 │                 <div data-lov-id="src/pages/Quiz.tsx:288:16" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="288" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22flex%20items-center%20mb-4%22%7D" className="flex items-center mb-4">
+ 289 │                   <div data-lov-id="src/pages/Quiz.tsx:289:18" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="289" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22w-12%20h-12%20rounded-full%20bg-green-100%20flex%20items-center%20justify-center%20mr-4%22%7D" className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mr-4">
+ 290 │                     <BarChart data-lov-id="src/pages/Quiz.tsx:290:20" data-lov-name="BarChart"  data-component-path="src/pages/Quiz.tsx" data-component-line="290" data-component-file="Quiz.tsx" data-component-name="BarChart" data-component-content="%7B%22className%22%3A%22h-6%20w-6%20text-green-500%22%7D" className="h-6 w-6 text-green-500" />
+ 291 │                   </div>
+ 292 │                   <h3 data-lov-id="src/pages/Quiz.tsx:292:18" data-lov-name="h3"  data-component-path="src/pages/Quiz.tsx" data-component-line="292" data-component-file="Quiz.tsx" data-component-name="h3" data-component-content="%7B%22text%22%3A%22Probl%C3%A8mes%20Digestifs%22%2C%22className%22%3A%22text-lg%20font-semibold%22%7D" className="text-lg font-semibold">Problèmes Digestifs</h3>
+ 293 │                 </div>
+ 294 │                 <p data-lov-id="src/pages/Quiz.tsx:294:16" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="294" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22className%22%3A%22text-gray-600%20mb-4%22%7D" className="text-gray-600 mb-4">
+ 295 │                   <ScientificHighlightedText data-lov-id="src/pages/Quiz.tsx:295:18" data-lov-name="ScientificHighlightedText"  data-component-path="src/pages/Quiz.tsx" data-component-line="295" data-component-file="Quiz.tsx" data-component-name="ScientificHighlightedText" data-component-content="%7B%7D" text="Révélez les causes profondes validées par notre laboratoire" />
+ 296 │                 </p>
+ 297 │               </motion.div>
+ 298 │             </div>
+ 299 │ 
+ 300 │             {/* Bannière d'information */}
+ 301 │             <div data-lov-id="src/pages/Quiz.tsx:301:12" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="301" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22bg-blue-50%20rounded-xl%20p-6%20md%3Ap-8%20mb-10%20text-center%22%7D" className="bg-blue-50 rounded-xl p-6 md:p-8 mb-10 text-center">
+ 302 │               <p data-lov-id="src/pages/Quiz.tsx:302:14" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="302" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22text%22%3A%22Bas%C3%A9%20sur%20une%20%C3%A9tude%20exclusive%20men%C3%A9e%20sur%20243%20participants.%22%2C%22className%22%3A%22text-gray-700%20font-medium%20mb-3%22%7D" className="text-gray-700 font-medium mb-3">
+ 303 │                 Basé sur une étude exclusive menée sur 243 participants.
+ 304 │               </p>
+ 305 │               <h2 data-lov-id="src/pages/Quiz.tsx:305:14" data-lov-name="h2"  data-component-path="src/pages/Quiz.tsx" data-component-line="305" data-component-file="Quiz.tsx" data-component-name="h2" data-component-content="%7B%22className%22%3A%22text-2xl%20font-semibold%20mb-4%22%7D" className="text-2xl font-semibold mb-4">
+ 306 │                 <ScientificHighlightedText data-lov-id="src/pages/Quiz.tsx:306:16" data-lov-name="ScientificHighlightedText"  data-component-path="src/pages/Quiz.tsx" data-component-line="306" data-component-file="Quiz.tsx" data-component-name="ScientificHighlightedText" data-component-content="%7B%7D" text="Identifiez vos besoins réels en [[micronutrient-balance:micronutriments]]." />
+ 307 │               </h2>
+ 308 │ 
+ 309 │               <Button data-lov-id="src/pages/Quiz.tsx:309:14" data-lov-name="Button"  data-component-path="src/pages/Quiz.tsx" data-component-line="309" data-component-file="Quiz.tsx" data-component-name="Button" data-component-content="%7B%22className%22%3A%22w-full%20md%3Aw-auto%20text-lg%20py-6%20px-8%20group%20bg-gradient-to-r%20from-indigo-600%20to-blue-600%20hover%3Afrom-indigo-700%20hover%3Ato-blue-700%20shadow-md%20hover%3Ashadow-lg%20quiz-cta%22%7D" 
+ 310 │                 size="lg" 
+ 311 │                 className="w-full md:w-auto text-lg py-6 px-8 group bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 shadow-md hover:shadow-lg quiz-cta" 
+ 312 │                 onClick={startQuiz}
+ 313 │                 aria-label="Commencer mon bilan nutritionnel personnalisé"
+ 314 │               >
+ 315 │                 <span data-lov-id="src/pages/Quiz.tsx:315:16" data-lov-name="span"  data-component-path="src/pages/Quiz.tsx" data-component-line="315" data-component-file="Quiz.tsx" data-component-name="span" data-component-content="%7B%22text%22%3A%22%F0%9F%A7%AA%20D%C3%A9marrer%20Mon%20Test%20Gratuit%22%7D">🧪 Démarrer Mon Test Gratuit</span>
+ 316 │                 <ChevronRight data-lov-id="src/pages/Quiz.tsx:316:16" data-lov-name="ChevronRight"  data-component-path="src/pages/Quiz.tsx" data-component-line="316" data-component-file="Quiz.tsx" data-component-name="ChevronRight" data-component-content="%7B%22className%22%3A%22ml-2%20h-5%20w-5%20group-hover%3Atranslate-x-1%20transition-transform%22%7D" className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+ 317 │               </Button>
+ 318 │ 
+ 319 │               <div data-lov-id="src/pages/Quiz.tsx:319:14" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="319" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22mt-4%22%7D" className="mt-4">
+ 320 │                 <Button data-lov-id="src/pages/Quiz.tsx:320:16" data-lov-name="Button"  data-component-path="src/pages/Quiz.tsx" data-component-line="320" data-component-file="Quiz.tsx" data-component-name="Button" data-component-content="%7B%22text%22%3A%22Voir%20les%20%C3%89tudes%20Scientifiques%22%2C%22className%22%3A%22text-sm%20text-gray-600%22%7D" variant="ghost" className="text-sm text-gray-600">
+ 321 │                   Voir les Études Scientifiques
+ 322 │                 </Button>
+ 323 │               </div>
+ 324 │             </div>
+ 325 │ 
+ 326 │             {/* Statistiques et social proof */}
+ 327 │             <div data-lov-id="src/pages/Quiz.tsx:327:12" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="327" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22grid%20grid-cols-2%20md%3Agrid-cols-4%20gap-4%20mb-8%20text-center%22%7D" className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 text-center">
+ 328 │               <div data-lov-id="src/pages/Quiz.tsx:328:14" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="328" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22bg-white%20p-4%20rounded-lg%20shadow-sm%22%7D" className="bg-white p-4 rounded-lg shadow-sm">
+ 329 │                 <p data-lov-id="src/pages/Quiz.tsx:329:16" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="329" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22className%22%3A%22text-2xl%20font-bold%20text-gray-900%22%7D" className="text-2xl font-bold text-gray-900">{getStableParticipantNumber()}</p>
+ 330 │                 <p data-lov-id="src/pages/Quiz.tsx:330:16" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="330" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22text%22%3A%22profils%20analys%C3%A9s%22%2C%22className%22%3A%22text-sm%20text-gray-600%22%7D" className="text-sm text-gray-600">profils analysés</p>
+ 331 │               </div>
+ 332 │ 
+ 333 │               <div data-lov-id="src/pages/Quiz.tsx:333:14" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="333" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22bg-white%20p-4%20rounded-lg%20shadow-sm%22%7D" className="bg-white p-4 rounded-lg shadow-sm">
+ 334 │                 <p data-lov-id="src/pages/Quiz.tsx:334:16" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="334" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22text%22%3A%2272%25%22%2C%22className%22%3A%22text-2xl%20font-bold%20text-gray-900%22%7D" className="text-2xl font-bold text-gray-900">72%</p>
+ 335 │                 <p data-lov-id="src/pages/Quiz.tsx:335:16" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="335" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22text%22%3A%22d'efficacit%C3%A9%20prouv%C3%A9e%22%2C%22className%22%3A%22text-sm%20text-gray-600%22%7D" className="text-sm text-gray-600">d'efficacité prouvée</p>
+ 336 │               </div>
+ 337 │ 
+ 338 │               <div data-lov-id="src/pages/Quiz.tsx:338:14" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="338" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22bg-white%20p-4%20rounded-lg%20shadow-sm%22%7D" className="bg-white p-4 rounded-lg shadow-sm">
+ 339 │                 <p data-lov-id="src/pages/Quiz.tsx:339:16" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="339" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22text%22%3A%223%22%2C%22className%22%3A%22text-2xl%20font-bold%20text-gray-900%22%7D" className="text-2xl font-bold text-gray-900">3</p>
+ 340 │                 <p data-lov-id="src/pages/Quiz.tsx:340:16" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="340" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22text%22%3A%22universit%C3%A9s%20partenaires%22%2C%22className%22%3A%22text-sm%20text-gray-600%22%7D" className="text-sm text-gray-600">universités partenaires</p>
+ 341 │               </div>
+ 342 │ 
+ 343 │               <div data-lov-id="src/pages/Quiz.tsx:343:14" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="343" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22bg-white%20p-4%20rounded-lg%20shadow-sm%22%7D" className="bg-white p-4 rounded-lg shadow-sm">
+ 344 │                 <div data-lov-id="src/pages/Quiz.tsx:344:16" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="344" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22text-2xl%20font-bold%20text-gray-900%20flex%20items-center%20justify-center%22%7D" className="text-2xl font-bold text-gray-900 flex items-center justify-center">
+ 345 │                   <span data-lov-id="src/pages/Quiz.tsx:345:18" data-lov-name="span"  data-component-path="src/pages/Quiz.tsx" data-component-line="345" data-component-file="Quiz.tsx" data-component-name="span" data-component-content="%7B%22text%22%3A%22Analyses%20restantes%20aujourd'hui%3A%22%7D">Analyses restantes aujourd'hui: </span>
+ 346 │                   <span data-lov-id="src/pages/Quiz.tsx:346:18" data-lov-name="span"  data-component-path="src/pages/Quiz.tsx" data-component-line="346" data-component-file="Quiz.tsx" data-component-name="span" data-component-content="%7B%22className%22%3A%22text-indigo-600%20ml-1%22%7D" className="text-indigo-600 ml-1">{analysesRestantes}</span>
+ 347 │                   <span data-lov-id="src/pages/Quiz.tsx:347:18" data-lov-name="span"  data-component-path="src/pages/Quiz.tsx" data-component-line="347" data-component-file="Quiz.tsx" data-component-name="span" data-component-content="%7B%22text%22%3A%22%2F100%22%2C%22className%22%3A%22text-gray-400%22%7D" className="text-gray-400">/100</span>
+ 348 │                 </div>
+ 349 │               </div>
+ 350 │             </div>
+ 351 │ 
+ 352 │             {/* Badge de validation */}
+ 353 │             <div data-lov-id="src/pages/Quiz.tsx:353:12" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="353" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22flex%20justify-center%20mb-12%22%7D" className="flex justify-center mb-12">
+ 354 │               <div data-lov-id="src/pages/Quiz.tsx:354:14" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="354" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22inline-flex%20items-center%20gap-2%20px-4%20py-2%20bg-green-50%20text-green-700%20rounded-full%22%7D" className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-full">
+ 355 │                 <Award data-lov-id="src/pages/Quiz.tsx:355:16" data-lov-name="Award"  data-component-path="src/pages/Quiz.tsx" data-component-line="355" data-component-file="Quiz.tsx" data-component-name="Award" data-component-content="%7B%22className%22%3A%22h-5%20w-5%22%7D" className="h-5 w-5" />
+ 356 │                 <span data-lov-id="src/pages/Quiz.tsx:356:16" data-lov-name="span"  data-component-path="src/pages/Quiz.tsx" data-component-line="356" data-component-file="Quiz.tsx" data-component-name="span" data-component-content="%7B%22text%22%3A%22Valid%C3%A9%20Scientifiquement%22%2C%22className%22%3A%22font-medium%22%7D" className="font-medium">Validé Scientifiquement</span>
+ 357 │               </div>
+ 358 │             </div>
+ 359 │ 
+ 360 │             {/* Section de problèmes de santé courants */}
+ 361 │             <div data-lov-id="src/pages/Quiz.tsx:361:12" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="361" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22mb-16%22%7D" className="mb-16">
+ 362 │               <h2 data-lov-id="src/pages/Quiz.tsx:362:14" data-lov-name="h2"  data-component-path="src/pages/Quiz.tsx" data-component-line="362" data-component-file="Quiz.tsx" data-component-name="h2" data-component-content="%7B%22text%22%3A%22Probl%C3%A8mes%20de%20Sant%C3%A9%20Courants%22%2C%22className%22%3A%22text-2xl%20font-bold%20text-center%20mb-8%22%7D" className="text-2xl font-bold text-center mb-8">Problèmes de Santé Courants</h2>
+ 363 │               <p data-lov-id="src/pages/Quiz.tsx:363:14" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="363" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22text%22%3A%22Nous%20avons%20identifi%C3%A9%20les%20solutions%20scientifiques%20%C3%A0%20vos%20probl%C3%A8mes%20les%20plus%20courants%20gr%C3%A2ce%20%C3%A0%20notre%20%C3%A9quipe%20de%20chercheurs.%22%2C%22className%22%3A%22text-center%20text-gray-600%20mb-8%20max-w-3xl%20mx-auto%22%7D" className="text-center text-gray-600 mb-8 max-w-3xl mx-auto">
+ 364 │                 Nous avons identifié les solutions scientifiques à vos problèmes les plus courants grâce à notre équipe de chercheurs.
+ 365 │               </p>
+ 366 │ 
+ 367 │               <div data-lov-id="src/pages/Quiz.tsx:367:14" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="367" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22grid%20grid-cols-1%20md%3Agrid-cols-2%20gap-8%22%7D" className="grid grid-cols-1 md:grid-cols-2 gap-8">
+ 368 │                 <div data-lov-id="src/pages/Quiz.tsx:368:16" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="368" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22bg-white%20rounded-xl%20shadow-md%20overflow-hidden%20border%20border-gray-100%22%7D" className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+ 369 │                   <div data-lov-id="src/pages/Quiz.tsx:369:18" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="369" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22p-6%22%7D" className="p-6">
+ 370 │                     <h3 data-lov-id="src/pages/Quiz.tsx:370:20" data-lov-name="h3"  data-component-path="src/pages/Quiz.tsx" data-component-line="370" data-component-file="Quiz.tsx" data-component-name="h3" data-component-content="%7B%22text%22%3A%22Stress%20Chronique%22%2C%22className%22%3A%22text-xl%20font-semibold%20mb-3%22%7D" className="text-xl font-semibold mb-3">Stress Chronique</h3>
+ 371 │                     <p data-lov-id="src/pages/Quiz.tsx:371:20" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="371" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22className%22%3A%22text-gray-600%20mb-4%22%7D" className="text-gray-600 mb-4">
+ 372 │                       <ScientificHighlightedText data-lov-id="src/pages/Quiz.tsx:372:22" data-lov-name="ScientificHighlightedText"  data-component-path="src/pages/Quiz.tsx" data-component-line="372" data-component-file="Quiz.tsx" data-component-name="ScientificHighlightedText" data-component-content="%7B%7D" text="La science a identifié les nutriments exacts pour réduire vos [[cortisol-levels:hormones de stress]]" />
+ 373 │                     </p>
+ 374 │                     <div data-lov-id="src/pages/Quiz.tsx:374:20" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="374" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22flex%20items-center%20text-green-600%20gap-1%22%7D" className="flex items-center text-green-600 gap-1">
+ 375 │                       <CheckCircle data-lov-id="src/pages/Quiz.tsx:375:22" data-lov-name="CheckCircle"  data-component-path="src/pages/Quiz.tsx" data-component-line="375" data-component-file="Quiz.tsx" data-component-name="CheckCircle" data-component-content="%7B%22className%22%3A%22h-5%20w-5%22%7D" className="h-5 w-5" />
+ 376 │                       <span data-lov-id="src/pages/Quiz.tsx:376:22" data-lov-name="span"  data-component-path="src/pages/Quiz.tsx" data-component-line="376" data-component-file="Quiz.tsx" data-component-name="span" data-component-content="%7B%22text%22%3A%2272%25%20d'efficacit%C3%A9%20prouv%C3%A9e%22%2C%22className%22%3A%22font-medium%22%7D" className="font-medium">72% d'efficacité prouvée</span>
+ 377 │                     </div>
+ 378 │                   </div>
+ 379 │                 </div>
+ 380 │ 
+ 381 │                 <div data-lov-id="src/pages/Quiz.tsx:381:16" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="381" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22bg-white%20rounded-xl%20shadow-md%20overflow-hidden%20border%20border-gray-100%22%7D" className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+ 382 │                   <div data-lov-id="src/pages/Quiz.tsx:382:18" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="382" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22p-6%22%7D" className="p-6">
+ 383 │                     <h3 data-lov-id="src/pages/Quiz.tsx:383:20" data-lov-name="h3"  data-component-path="src/pages/Quiz.tsx" data-component-line="383" data-component-file="Quiz.tsx" data-component-name="h3" data-component-content="%7B%22text%22%3A%22Solution%20Troubles%20du%20Sommeil%22%2C%22className%22%3A%22text-xl%20font-semibold%20mb-3%22%7D" className="text-xl font-semibold mb-3">Solution Troubles du Sommeil</h3>
+ 384 │                     <p data-lov-id="src/pages/Quiz.tsx:384:20" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="384" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22className%22%3A%22text-gray-600%20mb-4%22%7D" className="text-gray-600 mb-4">
+ 385 │                       <ScientificHighlightedText data-lov-id="src/pages/Quiz.tsx:385:22" data-lov-name="ScientificHighlightedText"  data-component-path="src/pages/Quiz.tsx" data-component-line="385" data-component-file="Quiz.tsx" data-component-name="ScientificHighlightedText" data-component-content="%7B%7D" text="Des composés naturels peuvent améliorer votre sommeil de 71% sans [[side-effects:effets secondaires]]" />
+ 386 │                     </p>
+ 387 │                     <div data-lov-id="src/pages/Quiz.tsx:387:20" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="387" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22flex%20items-center%20text-green-600%20gap-1%22%7D" className="flex items-center text-green-600 gap-1">
+ 388 │                       <CheckCircle data-lov-id="src/pages/Quiz.tsx:388:22" data-lov-name="CheckCircle"  data-component-path="src/pages/Quiz.tsx" data-component-line="388" data-component-file="Quiz.tsx" data-component-name="CheckCircle" data-component-content="%7B%22className%22%3A%22h-5%20w-5%22%7D" className="h-5 w-5" />
+ 389 │                       <span data-lov-id="src/pages/Quiz.tsx:389:22" data-lov-name="span"  data-component-path="src/pages/Quiz.tsx" data-component-line="389" data-component-file="Quiz.tsx" data-component-name="span" data-component-content="%7B%22text%22%3A%2285%25%20des%20participants%20ont%20vu%20des%20r%C3%A9sultats%22%2C%22className%22%3A%22font-medium%22%7D" className="font-medium">85% des participants ont vu des résultats</span>
+ 390 │                     </div>
+ 391 │                   </div>
+ 392 │                 </div>
+ 393 │               </div>
+ 394 │             </div>
+ 395 │ 
+ 396 │             {/* Indicateurs de confiance fixes */}
+ 397 │             <div data-lov-id="src/pages/Quiz.tsx:397:12" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="397" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22mt-8%20mb-12%20grid%20grid-cols-1%20md%3Agrid-cols-3%20gap-4%22%7D" className="mt-8 mb-12 grid grid-cols-1 md:grid-cols-3 gap-4">
+ 398 │               <div data-lov-id="src/pages/Quiz.tsx:398:14" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="398" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22bg-white%20rounded-lg%20p-4%20border%20border-gray-200%20flex%20items-center%20gap-3%22%7D" className="bg-white rounded-lg p-4 border border-gray-200 flex items-center gap-3">
+ 399 │                 <div data-lov-id="src/pages/Quiz.tsx:399:16" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="399" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22bg-blue-50%20p-2%20rounded-full%20flex-shrink-0%22%7D" className="bg-blue-50 p-2 rounded-full flex-shrink-0">
+ 400 │                   <Activity data-lov-id="src/pages/Quiz.tsx:400:18" data-lov-name="Activity"  data-component-path="src/pages/Quiz.tsx" data-component-line="400" data-component-file="Quiz.tsx" data-component-name="Activity" data-component-content="%7B%22className%22%3A%22h-5%20w-5%20text-blue-600%22%7D" className="h-5 w-5 text-blue-600" />
+ 401 │                 </div>
+ 402 │                 <div data-lov-id="src/pages/Quiz.tsx:402:16" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="402" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%7D">
+ 403 │                   <div data-lov-id="src/pages/Quiz.tsx:403:18" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="403" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22text%22%3A%22Analyses%20restantes%20aujourd'hui%22%2C%22className%22%3A%22text-sm%20font-medium%22%7D" className="text-sm font-medium">Analyses restantes aujourd'hui</div>
+ 404 │                   <div data-lov-id="src/pages/Quiz.tsx:404:18" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="404" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22text%22%3A%2298%2F100%22%2C%22className%22%3A%22text-lg%20font-semibold%22%7D" className="text-lg font-semibold">98/100</div>
+ 405 │                 </div>
+ 406 │               </div>
+ 407 │ 
+ 408 │               <div data-lov-id="src/pages/Quiz.tsx:408:14" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="408" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22bg-white%20rounded-lg%20p-4%20border%20border-gray-200%20flex%20items-center%20gap-3%22%7D" className="bg-white rounded-lg p-4 border border-gray-200 flex items-center gap-3">
+ 409 │                 <div data-lov-id="src/pages/Quiz.tsx:409:16" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="409" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22bg-amber-50%20p-2%20rounded-full%20flex-shrink-0%22%7D" className="bg-amber-50 p-2 rounded-full flex-shrink-0">
+ 410 │                   <Clock data-lov-id="src/pages/Quiz.tsx:410:18" data-lov-name="Clock"  data-component-path="src/pages/Quiz.tsx" data-component-line="410" data-component-file="Quiz.tsx" data-component-name="Clock" data-component-content="%7B%22className%22%3A%22h-5%20w-5%20text-amber-600%22%7D" className="h-5 w-5 text-amber-600" />
+ 411 │                 </div>
+ 412 │                 <div data-lov-id="src/pages/Quiz.tsx:412:16" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="412" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%7D">
+ 413 │                   <div data-lov-id="src/pages/Quiz.tsx:413:18" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="413" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22text%22%3A%22Derni%C3%A8re%20participation%22%2C%22className%22%3A%22text-sm%20font-medium%22%7D" className="text-sm font-medium">Dernière participation</div>
+ 414 │                   <div data-lov-id="src/pages/Quiz.tsx:414:18" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="414" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22text%22%3A%22Il%20y%20a%204%20min%22%2C%22className%22%3A%22text-lg%20font-semibold%22%7D" className="text-lg font-semibold">Il y a 4 min</div>
+ 415 │                 </div>
+ 416 │               </div>
+ 417 │ 
+ 418 │               <div data-lov-id="src/pages/Quiz.tsx:418:14" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="418" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22bg-white%20rounded-lg%20p-4%20border%20border-gray-200%20flex%20items-center%20gap-3%22%7D" className="bg-white rounded-lg p-4 border border-gray-200 flex items-center gap-3">
+ 419 │                 <div data-lov-id="src/pages/Quiz.tsx:419:16" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="419" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22bg-green-50%20p-2%20rounded-full%20flex-shrink-0%22%7D" className="bg-green-50 p-2 rounded-full flex-shrink-0">
+ 420 │                   <LucideUsers data-lov-id="src/pages/Quiz.tsx:420:18" data-lov-name="LucideUsers"  data-component-path="src/pages/Quiz.tsx" data-component-line="420" data-component-file="Quiz.tsx" data-component-name="LucideUsers" data-component-content="%7B%22className%22%3A%22h-5%20w-5%20text-green-600%22%7D" className="h-5 w-5 text-green-600" />
+ 421 │                 </div>
+ 422 │                 <div data-lov-id="src/pages/Quiz.tsx:422:16" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="422" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%7D">
+ 423 │                   <div data-lov-id="src/pages/Quiz.tsx:423:18" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="423" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22text%22%3A%22Places%20disponibles%22%2C%22className%22%3A%22text-sm%20font-medium%22%7D" className="text-sm font-medium">Places disponibles</div>
+ 424 │                   <div data-lov-id="src/pages/Quiz.tsx:424:18" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="424" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22text%22%3A%226%20places%20restantes%22%2C%22className%22%3A%22text-lg%20font-semibold%22%7D" className="text-lg font-semibold">6 places restantes</div>
+ 425 │                 </div>
+ 426 │               </div>
+ 427 │             </div>
+ 428 │ 
+ 429 │             {/* CTA Final */}
+ 430 │             <div data-lov-id="src/pages/Quiz.tsx:430:12" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="430" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22text-center%22%7D" className="text-center">
+ 431 │               <Button data-lov-id="src/pages/Quiz.tsx:431:14" data-lov-name="Button"  data-component-path="src/pages/Quiz.tsx" data-component-line="431" data-component-file="Quiz.tsx" data-component-name="Button" data-component-content="%7B%22className%22%3A%22w-full%20md%3Aw-auto%20text-lg%20py-6%20px-8%20group%20bg-gradient-to-r%20from-indigo-600%20to-blue-600%20hover%3Afrom-indigo-700%20hover%3Ato-blue-700%20shadow-md%20hover%3Ashadow-lg%20quiz-cta%22%7D" 
+ 432 │                 size="lg" 
+ 433 │                 className="w-full md:w-auto text-lg py-6 px-8 group bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 shadow-md hover:shadow-lg quiz-cta" 
+ 434 │                 onClick={startQuiz}
+ 435 │                 aria-label="Commencer mon bilan nutritionnel personnalisé"
+ 436 │               >
+ 437 │                 <span data-lov-id="src/pages/Quiz.tsx:437:16" data-lov-name="span"  data-component-path="src/pages/Quiz.tsx" data-component-line="437" data-component-file="Quiz.tsx" data-component-name="span" data-component-content="%7B%22text%22%3A%22Commencer%20mon%20bilan%22%7D">Commencer mon bilan</span>
+ 438 │                 <ChevronRight data-lov-id="src/pages/Quiz.tsx:438:16" data-lov-name="ChevronRight"  data-component-path="src/pages/Quiz.tsx" data-component-line="438" data-component-file="Quiz.tsx" data-component-name="ChevronRight" data-component-content="%7B%22className%22%3A%22ml-2%20h-5%20w-5%20group-hover%3Atranslate-x-1%20transition-transform%22%7D" className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+ 439 │               </Button>
+ 440 │ 
+ 441 │               <p data-lov-id="src/pages/Quiz.tsx:441:14" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="441" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22text%22%3A%22Environ%205%20minutes%20%E2%80%A2%20100%25%20confidentiel%20%E2%80%A2%20Utilis%C3%A9%20par%20membres%22%2C%22className%22%3A%22text-sm%20text-center%20text-muted-foreground%20mt-6%22%7D" className="text-sm text-center text-muted-foreground mt-6">
+ 442 │                 Environ 5 minutes • 100% confidentiel • Utilisé par {getStableParticipantNumber()} membres
+ 443 │               </p>
+ 444 │ 
+ 445 │               {/* Urgency countdown */}
+ 446 │               <div data-lov-id="src/pages/Quiz.tsx:446:14" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="446" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22mt-8%22%7D" className="mt-8">
+ 447 │                 <UrgencyCountdown data-lov-id="src/pages/Quiz.tsx:447:16" data-lov-name="UrgencyCountdown"  data-component-path="src/pages/Quiz.tsx" data-component-line="447" data-component-file="Quiz.tsx" data-component-name="UrgencyCountdown" data-component-content="%7B%7D" 
+ 448 │                   initialMinutes={30}
+ 449 │                   message={personalizationFactors ? getPersonalizedMessage(personalizationFactors, 'urgency') : "Dernière session d'analyse disponible aujourd'hui"}
+ 450 │                   variant="featured"
+ 451 │                 />
+ 452 │               </div>
+ 453 │ 
+ 454 │               {/* Social proof */}
+ 455 │               <div data-lov-id="src/pages/Quiz.tsx:455:14" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="455" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22mt-8%22%7D" className="mt-8">
+ 456 │                 <SocialProofIndicator data-lov-id="src/pages/Quiz.tsx:456:16" data-lov-name="SocialProofIndicator"  data-component-path="src/pages/Quiz.tsx" data-component-line="456" data-component-file="Quiz.tsx" data-component-name="SocialProofIndicator" data-component-content="%7B%7D"
+ 457 │                   baseText={personalizationFactors ? getPersonalizedMessage(personalizationFactors, 'social') : undefined}
+ 458 │                   location={userLocation}
+ 459 │                   variant="detailed"
+ 460 │                 />
+ 461 │               </div>
+ 462 │             </div>
+ 463 │           </motion.div>
+ 464 │         ) : (
+ 465 │           /* Quiz ou résultats */
+ 466 │           <div data-lov-id="src/pages/Quiz.tsx:466:10" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="466" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22max-w-4xl%20mx-auto%22%7D" className="max-w-4xl mx-auto">
+ 467 │             {!quizCompleted ? (
+ 468 │               /* Questionnaire nutritionnel */
+ 469 │               <NutritionalQuiz data-lov-id="src/pages/Quiz.tsx:469:14" data-lov-name="NutritionalQuiz"  data-component-path="src/pages/Quiz.tsx" data-component-line="469" data-component-file="Quiz.tsx" data-component-name="NutritionalQuiz" data-component-content="%7B%7D" 
+ 470 │                 onComplete={handleQuizComplete} 
+ 471 │                 onUserInfoUpdate={handleUserInfoUpdate}
+ 472 │                 behavioralTracking={{
+ 473 │                   startQuestionTracking,
+ 474 │                   trackAnswer,
+ 475 │                   trackHover,
+ 476 │                   trackFocus
+ 477 │                 }}
+ 478 │               />
+ 479 │             ) : (
+ 480 │               /* Résultats du quiz */
+ 481 │               <QuizResults data-lov-id="src/pages/Quiz.tsx:481:14" data-lov-name="QuizResults"  data-component-path="src/pages/Quiz.tsx" data-component-line="481" data-component-file="Quiz.tsx" data-component-name="QuizResults" data-component-content="%7B%7D"
+ 482 │                 recommendations={generateRecommendations(responses)} // Using generateRecommendations
+ 483 │                 quizResponses={responses}
+ 484 │                 behavioralMetrics={behavioralData}
+ 485 │                 neuroProfile={{
+ 486 │                   stressIndex: 68,
+ 487 │                   decisionConfidence: 73,
+ 488 │                   attentionScore: 81,
+ 489 │                   consistencyIndex: 85
+ 490 │                 }}
+ 491 │                 onSaveProfile={() => {
+ 492 │                   // Sauvegarde du profil (simulation)
+ 493 │                   toast.success('Votre profil a été sauvegardé avec succès!');
+ 494 │                 }}
+ 495 │                 onViewArticles={() => {
+ 496 │                   // Navigation vers les articles recommandés
+ 497 │                   toast.info('Découvrez nos articles scientifiques recommandés...');
+ 498 │                   // Redirection vers la page d'articles serait implémentée ici
+ 499 │                 }}
+ 500 │               />
+ 501 │             )}
+ 502 │           </div>
+ 503 │         )}
+ 504 │       </div>
+ 505 │ 
+ 506 │       {/* Pied de page avec informations légales */}
+ 507 │       <div data-lov-id="src/pages/Quiz.tsx:507:6" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="507" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22bg-gray-50%20py-8%20mt-12%22%7D" className="bg-gray-50 py-8 mt-12">
+ 508 │         <div data-lov-id="src/pages/Quiz.tsx:508:8" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="508" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22container%20mx-auto%20px-4%20text-center%20text-xs%20text-gray-500%22%7D" className="container mx-auto px-4 text-center text-xs text-gray-500">
+ 509 │           <p data-lov-id="src/pages/Quiz.tsx:509:10" data-lov-name="p"  data-component-path="src/pages/Quiz.tsx" data-component-line="509" data-component-file="Quiz.tsx" data-component-name="p" data-component-content="%7B%22text%22%3A%22Les%20informations%20fournies%20sont%20%C3%A0%20titre%20%C3%A9ducatif%20et%20ne%20remplacent%20pas%20un%20avis%20m%C3%A9dical%20professionnel.%5Cn%20%20%20%20%20%20%20%20%20%20%20%20Ce%20site%20ne%20commercialise%20aucun%20produit.%22%2C%22className%22%3A%22mb-2%22%7D" className="mb-2">
+ 510 │             Les informations fournies sont à titre éducatif et ne remplacent pas un avis médical professionnel.
+ 511 │             Ce site ne commercialise aucun produit.
+ 512 │           </p>
+ 513 │           <div data-lov-id="src/pages/Quiz.tsx:513:10" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="513" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22flex%20justify-center%20space-x-4%20mt-2%22%7D" className="flex justify-center space-x-4 mt-2">
+ 514 │             <Button data-lov-id="src/pages/Quiz.tsx:514:12" data-lov-name="Button"  data-component-path="src/pages/Quiz.tsx" data-component-line="514" data-component-file="Quiz.tsx" data-component-name="Button" data-component-content="%7B%22text%22%3A%22Mentions%20l%C3%A9gales%22%2C%22className%22%3A%22text-xs%20text-gray-500%22%7D" variant="link" size="sm" className="text-xs text-gray-500">
+ 515 │               Mentions légales
+ 516 │             </Button>
+ 517 │             <Button data-lov-id="src/pages/Quiz.tsx:517:12" data-lov-name="Button"  data-component-path="src/pages/Quiz.tsx" data-component-line="517" data-component-file="Quiz.tsx" data-component-name="Button" data-component-content="%7B%22text%22%3A%22Politique%20de%20confidentialit%C3%A9%22%2C%22className%22%3A%22text-xs%20text-gray-500%22%7D" variant="link" size="sm" className="text-xs text-gray-500">
+ 518 │               Politique de confidentialité
+ 519 │             </Button>
+ 520 │             <Button data-lov-id="src/pages/Quiz.tsx:520:12" data-lov-name="Button"  data-component-path="src/pages/Quiz.tsx" data-component-line="520" data-component-file="Quiz.tsx" data-component-name="Button" data-component-content="%7B%22text%22%3A%22Contact%22%2C%22className%22%3A%22text-xs%20text-gray-500%22%7D" variant="link" size="sm" className="text-xs text-gray-500">
+ 521 │               Contact
+ 522 │             </Button>
+ 523 │           </div>
+ 524 │         </div>
+ 525 │       </div>
+ 526 │ 
+ 527 │       {/* Bannière RGPD */}
+ 528 │       <GDPRCompliance data-lov-id="src/pages/Quiz.tsx:528:6" data-lov-name="GDPRCompliance"  data-component-path="src/pages/Quiz.tsx" data-component-line="528" data-component-file="Quiz.tsx" data-component-name="GDPRCompliance" data-component-content="%7B%7D" />
+ 529 │     </div>
+ 530 │   );
+ 531 │ };
+ 532 │ 
+ 533 │ export default Quiz;
+ 534 │ 
+ 535 │ 
+ 536 │ // Placeholder for generateRecommendations function.  Replace with actual implementation.
+ 537 │ function generateRecommendations(responses: QuizResponse): any {
+     ·          ───────────┬───────────
+     ·                     ╰── `generateRecommendations` redefined here
+ 538 │   // Implement your recommendation logic here based on quizResponses
+ 539 │   console.log("Generating recommendations based on:", responses);
+ 540 │   return [{ recommendation: "Eat more vegetables", reason: "You answered..." }, { recommendation: "Drink more water", reason: "You chose..." }];
+     ╰────
+/home/runner/workspace/src/pages/Quiz.tsx:18:1
+192|          {/* Effet de laboratoire en arrière-plan */}
+193|          <div data-lov-id="src/pages/Quiz.tsx:193:8" data-lov-name="div"  data-component-path="src/pages/Quiz.tsx" data-component-line="193" data-component-file="Quiz.tsx" data-component-name="div" data-component-content="%7B%22className%22%3A%22absolute%20inset-0%20opacity-20%20pointer-events-none%22%7D" className="absolute inset-0 opacity-20 pointer-events-none">
+194|            <LabEffects data-lov-id="src/pages/Quiz.tsx:194:10" data-lov-name="LabEffects"  data-component-path="src/pages/Quiz.tsx" data-component-line="194" data-component-file="Quiz.tsx" data-component-name="LabEffects" data-component-content="%7B%7D" intensity={0.5} />
+   |                                                    ^
+195|          </div>
+196|
+Click outside, press Esc key, or fix the code to dismiss.
+You can also disable this overlay by setting server.hmr.overlay to false in vite.config.ts.

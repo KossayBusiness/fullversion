@@ -1,0 +1,506 @@
+[plugin:vite:react-swc] × the name `trainAIModel` is defined multiple times
+     ╭─[/home/runner/workspace/src/utils/aiLearning.ts:253:1]
+ 250 │ /**
+ 251 │  * Effectue un entraînement complet du modèle AI avec toutes les données disponibles
+ 252 │  */
+ 253 │ export const trainAIModel = (): void => {
+     ·              ──────┬─────
+     ·                    ╰── previous definition of `trainAIModel` here
+ 254 │   try {
+ 255 │     console.log("Début de l'entraînement du modèle AI...");
+ 256 │     
+ 257 │     // Récupérer toutes les données
+ 258 │     const learningData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+ 259 │     const userFeedback: UserFeedback[] = secureStorageService.getItem('userFeedback') || [];
+ 260 │     
+ 261 │     if (learningData.length === 0) {
+ 262 │       console.log("Pas de données d'apprentissage disponibles");
+ 263 │       return;
+ 264 │     }
+ 265 │     
+ 266 │     // Réinitialiser le modèle avec les valeurs de base
+ 267 │     let aiModel: AIModel = { ...initialAIModel };
+ 268 │     
+ 269 │     // Pré-remplir les scores de suppléments depuis le catalogue
+ 270 │     const supplementScores: Record<string, any> = {};
+ 271 │     Object.keys(SUPPLEMENT_CATALOG).forEach(supplementId => {
+ 272 │       const supplement = SUPPLEMENT_CATALOG[supplementId];
+ 273 │       
+ 274 │       supplementScores[supplementId] = {
+ 275 │         effectivenessScore: supplement.scienceScore * 10,
+ 276 │         confidenceScore: 0.5,
+ 277 │         feedbackCount: 0,
+ 278 │         lastUpdated: new Date().toISOString()
+ 279 │       };
+ 280 │     });
+ 281 │     
+ 282 │     aiModel.supplementScores = supplementScores;
+ 283 │     
+ 284 │     // Analyser les retours utilisateurs pour construire un index d'efficacité
+ 285 │     const feedbackBySupplementId: Record<string, number[]> = {};
+ 286 │     
+ 287 │     userFeedback.forEach(feedback => {
+ 288 │       if (!feedbackBySupplementId[feedback.recommendationId]) {
+ 289 │         feedbackBySupplementId[feedback.recommendationId] = [];
+ 290 │       }
+ 291 │       
+ 292 │       feedbackBySupplementId[feedback.recommendationId].push(feedback.rating);
+ 293 │     });
+ 294 │     
+ 295 │     // Appliquer les retours au modèle
+ 296 │     Object.entries(feedbackBySupplementId).forEach(([supplementId, ratings]) => {
+ 297 │       if (ratings.length > 0 && aiModel.supplementScores[supplementId]) {
+ 298 │         const avgRating = ratings.reduce((sum, r) => sum + r, 0) / ratings.length;
+ 299 │         const ratingNormalized = (avgRating - 3) / 2; // -1 à +1
+ 300 │         
+ 301 │         aiModel.supplementScores[supplementId].effectivenessScore = Math.max(10, Math.min(100,
+ 302 │           aiModel.supplementScores[supplementId].effectivenessScore + (ratingNormalized * 20)
+ 303 │         ));
+ 304 │         
+ 305 │         aiModel.supplementScores[supplementId].confidenceScore = Math.min(0.95,
+ 306 │           0.5 + (0.05 * Math.min(ratings.length, 10)) // Max +0.5 pour 10 ratings
+ 307 │         );
+ 308 │         
+ 309 │         aiModel.supplementScores[supplementId].feedbackCount = ratings.length;
+ 310 │       }
+ 311 │     });
+ 312 │     
+ 313 │     // Analyser les profils utilisateurs pour ajuster les poids des symptômes et objectifs
+ 314 │     const symptomCounts: Record<string, number> = {};
+ 315 │     const goalCounts: Record<string, number> = {};
+ 316 │     
+ 317 │     learningData.forEach(data => {
+ 318 │       if (data.userProfile && data.userProfile.activeSymptoms) {
+ 319 │         data.userProfile.activeSymptoms.forEach(symptomId => {
+ 320 │           symptomCounts[symptomId] = (symptomCounts[symptomId] || 0) + 1;
+ 321 │         });
+ 322 │       }
+ 323 │       
+ 324 │       if (data.userProfile && data.userProfile.activeGoals) {
+ 325 │         data.userProfile.activeGoals.forEach(goalId => {
+ 326 │           goalCounts[goalId] = (goalCounts[goalId] || 0) + 1;
+ 327 │         });
+ 328 │       }
+ 329 │     });
+ 330 │     
+ 331 │     // Ajuster les poids des symptômes en fonction de leur fréquence
+ 332 │     const totalSymptomCount = Object.values(symptomCounts).reduce((sum, count) => sum + count, 0) || 1;
+ 333 │     Object.entries(symptomCounts).forEach(([symptomId, count]) => {
+ 334 │       // Calculer l'importance relative (fréquence normalisée)
+ 335 │       const relativeImportance = count / totalSymptomCount;
+ 336 │       
+ 337 │       // Ajuster le poids (entre 0.8 et 1.2 en fonction de la fréquence)
+ 338 │       aiModel.symptomWeights[symptomId] = Math.max(0.8, Math.min(1.2, 
+ 339 │         1.0 + (relativeImportance - 0.125) * 2 // 0.125 est la fréquence moyenne pour 8 symptômes
+ 340 │       ));
+ 341 │     });
+ 342 │     
+ 343 │     // Ajuster les poids des objectifs en fonction de leur fréquence
+ 344 │     const totalGoalCount = Object.values(goalCounts).reduce((sum, count) => sum + count, 0) || 1;
+ 345 │     Object.entries(goalCounts).forEach(([goalId, count]) => {
+ 346 │       const relativeImportance = count / totalGoalCount;
+ 347 │       
+ 348 │       aiModel.goalWeights[goalId] = Math.max(0.8, Math.min(1.2,
+ 349 │         1.0 + (relativeImportance - 0.143) * 2 // 0.143 est la fréquence moyenne pour 7 objectifs
+ 350 │       ));
+ 351 │     });
+ 352 │     
+ 353 │     // Collecter les profils utilisateurs
+ 354 │     const userProfiles: UserProfile[] = [];
+ 355 │     learningData.forEach(data => {
+ 356 │       if (data.userProfile) {
+ 357 │         // Vérifier si un profil similaire existe déjà
+ 358 │         const similarProfileExists = userProfiles.some(profile => 
+ 359 │           calculateProfileSimilarity(profile, data.userProfile) > 0.85
+ 360 │         );
+ 361 │         
+ 362 │         if (!similarProfileExists && userProfiles.length < 100) {
+ 363 │           userProfiles.push({
+ 364 │             ...data.userProfile,
+ 365 │             lastUpdated: data.timestamp
+ 366 │           });
+ 367 │         }
+ 368 │       }
+ 369 │     });
+ 370 │     
+ 371 │     aiModel.userProfiles = userProfiles;
+ 372 │     aiModel.trainingIterations = learningData.length;
+ 373 │     aiModel.version = Math.floor(Date.now() / 1000); // Version timestamp
+ 374 │     
+ 375 │     // Sauvegarder le modèle entraîné
+ 376 │     secureStorageService.setItem('aiModel', aiModel);
+ 377 │     
+ 378 │     console.log("Entraînement du modèle AI terminé:", {
+ 379 │       supplements: Object.keys(aiModel.supplementScores).length,
+ 380 │       profiles: aiModel.userProfiles.length,
+ 381 │       iterations: aiModel.trainingIterations,
+ 382 │       version: aiModel.version
+ 383 │     });
+ 384 │     
+ 385 │   } catch (error) {
+ 386 │     console.error("Erreur lors de l'entraînement du modèle AI:", error);
+ 387 │   }
+ 388 │ };
+ 389 │ 
+ 390 │ /**
+ 391 │  * Génère des recommandations personnalisées en fonction du profil utilisateur
+ 392 │  * en utilisant le modèle AI entraîné avec des mécanismes avancés d'analyse
+ 393 │  */
+ 394 │ export const generateAIPersonalizedRecommendations = (
+ 395 │   quizResponses: QuizResponse
+ 396 │ ): Recommendation[] => {
+ 397 │   try {
+ 398 │     // S'assurer que le modèle AI est initialisé
+ 399 │     initializeAIModel();
+ 400 │     
+ 401 │     // Récupérer le modèle AI
+ 402 │     const aiModel: AIModel = secureStorageService.getItem('aiModel') || initialAIModel;
+ 403 │     
+ 404 │     // Extraire les informations pertinentes du quiz
+ 405 │     const {
+ 406 │       stressLevel = 0,
+ 407 │       sleepQuality = 0,
+ 408 │       energyLevel = 0,
+ 409 │       concentration = 0,
+ 410 │       digestion = 0,
+ 411 │       immuneFunction = 0,
+ 412 │       jointHealth = 0,
+ 413 │       skinHealth = 0,
+ 414 │       personalGoals = [],
+ 415 │       dietaryRestrictions = {},
+ 416 │       ageRange = '',
+ 417 │       gender = '',
+ 418 │       activityLevel = 0,
+ 419 │       medicalConditions = []
+ 420 │     } = quizResponses;
+ 421 │     
+ 422 │     // Créer un profil utilisateur plus détaillé pour l'analyse
+ 423 │     const userProfile = {
+ 424 │       demographics: {
+ 425 │         ageRange,
+ 426 │         gender,
+ 427 │         activityLevel
+ 428 │       },
+ 429 │       activeSymptoms: [],
+ 430 │       activeGoals: personalGoals,
+ 431 │       dietaryRestrictions,
+ 432 │       medicalConditions: medicalConditions || [],
+ 433 │       intensityLevels: {
+ 434 │         stress: stressLevel,
+ 435 │         sleep: sleepQuality,
+ 436 │         energy: energyLevel,
+ 437 │         focus: concentration,
+ 438 │         digestion: digestion,
+ 439 │         immune: immuneFunction,
+ 440 │         joints: jointHealth,
+ 441 │         skin: skinHealth
+ 442 │       }
+ 443 │     };
+ 444 │     
+ 445 │     // Analyse avancée des symptômes avec gestion de l'intensité
+ 446 │     const symptomIntensityThreshold = 5; // Seuil configurable
+ 447 │     
+ 448 │     // Déterminer les symptômes actifs avec priorité basée sur l'intensité
+ 449 │     const symptomMapping = [
+ 450 │       { key: 'stress', value: stressLevel, threshold: symptomIntensityThreshold, priority: 1 },
+ 451 │       { key: 'sleep', value: sleepQuality, condition: 'lte', threshold: symptomIntensityThreshold, priority: 2 },
+ 452 │       { key: 'energy', value: energyLevel, condition: 'lte', threshold: symptomIntensityThreshold, priority: 3 },
+ 453 │       { key: 'focus', value: concentration, condition: 'lte', threshold: symptomIntensityThreshold, priority: 4 },
+ 454 │       { key: 'digestion', value: digestion, condition: 'lte', threshold: symptomIntensityThreshold, priority: 5 },
+ 455 │       { key: 'immune', value: immuneFunction, condition: 'lte', threshold: symptomIntensityThreshold, priority: 6 },
+ 456 │       { key: 'joints', value: jointHealth, condition: 'lte', threshold: symptomIntensityThreshold, priority: 7 },
+ 457 │       { key: 'skin', value: skinHealth, condition: 'lte', threshold: symptomIntensityThreshold, priority: 8 }
+ 458 │     ];
+ 459 │     
+ 460 │     // Déterminer les symptômes actifs avec gestion de seuils configurables
+ 461 │     symptomMapping.forEach(symptom => {
+ 462 │       const { key, value, condition = 'gte', threshold, priority } = symptom;
+ 463 │       const isActive = condition === 'lte' 
+ 464 │         ? value <= threshold 
+ 465 │         : value >= threshold;
+ 466 │         
+ 467 │       if (isActive) {
+ 468 │         userProfile.activeSymptoms.push({
+ 469 │           id: key,
+ 470 │           intensity: Math.abs(value - threshold) + 1,
+ 471 │           priority
+ 472 │         });
+ 473 │       }
+ 474 │     });
+ 475 │     
+ 476 │     // Trier les symptômes par priorité et intensité
+ 477 │     userProfile.activeSymptoms.sort((a, b) => {
+ 478 │       // D'abord par priorité (plus petit nombre = plus haute priorité)
+ 479 │       if (a.priority !== b.priority) return a.priority - b.priority;
+ 480 │       // Ensuite par intensité (plus grande intensité = plus haute priorité)
+ 481 │       return b.intensity - a.intensity;
+ 482 │     });
+ 483 │     
+ 484 │     // Extraire uniquement les IDs des symptômes pour la compatibilité avec le reste du code
+ 485 │     const activeSymptomIds = userProfile.activeSymptoms.map(s => s.id);
+ 486 │     
+ 487 │     // Recherche de profils similaires pour affiner les recommandations
+ 488 │     const similarProfiles = aiModel.userProfiles
+ 489 │       .map(profile => ({
+ 490 │         profile,
+ 491 │         similarity: calculateProfileSimilarity(profile, userProfile)
+ 492 │       }))
+ 493 │       .filter(item => item.similarity > 0.7) // Seuil de similarité configurable
+ 494 │       .sort((a, b) => b.similarity - a.similarity)
+ 495 │       .slice(0, 5); // Top 5 des profils les plus similaires
+ 496 │     
+ 497 │     // Calculer les scores des suppléments pour ce profil avec l'influence des profils similaires
+ 498 │     const supplementScores: Record<string, number> = {};
+ 499 │     
+ 500 │     // 1. Scores basés sur les symptômes
+ 501 │     userProfile.activeSymptoms.forEach(symptomId => {
+ 502 │       const symptomWeight = aiModel.symptomWeights[symptomId] || 1.0;
+ 503 │       
+ 504 │       // Récupérer les recommandations pour ce symptôme
+ 505 │       const recommendations = SYMPTOM_RECOMMENDATIONS[symptomId] || [];
+ 506 │       
+ 507 │       recommendations.forEach(rec => {
+ 508 │         const baseScore = rec.priority * 10;
+ 509 │         const modelScore = aiModel.supplementScores[rec.id]?.effectivenessScore || 50;
+ 510 │         const weightedScore = baseScore * symptomWeight * (modelScore / 50);
+ 511 │         
+ 512 │         supplementScores[rec.id] = (supplementScores[rec.id] || 0) + weightedScore;
+ 513 │       });
+ 514 │     });
+ 515 │     
+ 516 │     // 2. Scores basés sur les objectifs
+ 517 │     userProfile.activeGoals.forEach(goalId => {
+ 518 │       const goalWeight = aiModel.goalWeights[goalId] || 1.0;
+ 519 │       
+ 520 │       // Récupérer les recommandations pour cet objectif
+ 521 │       const recommendations = GOAL_RECOMMENDATIONS[goalId] || [];
+ 522 │       
+ 523 │       recommendations.forEach(rec => {
+ 524 │         const baseScore = rec.priority * 8; // Légèrement inférieur aux symptômes
+ 525 │         const modelScore = aiModel.supplementScores[rec.id]?.effectivenessScore || 50;
+ 526 │         const weightedScore = baseScore * goalWeight * (modelScore / 50);
+ 527 │         
+ 528 │         supplementScores[rec.id] = (supplementScores[rec.id] || 0) + weightedScore;
+ 529 │       });
+ 530 │     });
+ 531 │     
+ 532 │     // 3. Filtrer selon les restrictions alimentaires
+ 533 │     const isVegetarian = dietaryRestrictions.vegetarian || false;
+ 534 │     const isVegan = dietaryRestrictions.vegan || false;
+ 535 │     const isGlutenFree = dietaryRestrictions.glutenFree || false;
+ 536 │     const isDairyFree = dietaryRestrictions.dairyFree || false;
+ 537 │     
+ 538 │     // Construire la liste des suppléments à exclure
+ 539 │     const excludedSupplements = new Set<string>();
+ 540 │     
+ 541 │     Object.entries(SUPPLEMENT_CATALOG).forEach(([id, supplement]) => {
+ 542 │       if ((isVegan && !supplement.vegan) ||
+ 543 │           (isVegetarian && !supplement.vegetarian) ||
+ 544 │           (isGlutenFree && !supplement.glutenFree) ||
+ 545 │           (isDairyFree && !supplement.dairyFree)) {
+ 546 │         excludedSupplements.add(id);
+ 547 │       }
+ 548 │     });
+ 549 │     
+ 550 │     // 4. Appliquer les exclusions et créer les recommandations finales
+ 551 │     const finalRecommendations: Recommendation[] = [];
+ 552 │     
+ 553 │     Object.entries(supplementScores)
+ 554 │       .filter(([id]) => !excludedSupplements.has(id))
+ 555 │       .sort((a, b) => b[1] - a[1])
+ 556 │       .slice(0, 3) // Top 3 recommendations
+ 557 │       .forEach(([id, score]) => {
+ 558 │         const supplement = SUPPLEMENT_CATALOG[id];
+ 559 │         const modelData = aiModel.supplementScores[id] || {
+ 560 │           effectivenessScore: 50,
+ 561 │           confidenceScore: 0.5
+ 562 │         };
+ 563 │         
+ 564 │         // Déterminer la dose appropriée
+ 565 │         const dose = isVegetarian ? 
+ 566 │           findDoseForSupplement(id, 'vegetarian') : 
+ 567 │           findDoseForSupplement(id, 'standard');
+ 568 │         
+ 569 │         if (supplement && dose) {
+ 570 │           // Construire les raisons de la recommandation
+ 571 │           const reasons = [];
+ 572 │           
+ 573 │           userProfile.activeSymptoms.forEach(symptomId => {
+ 574 │             const categoryData = SYMPTOM_CATEGORIES.find(c => c.id === symptomId);
+ 575 │             if (SYMPTOM_RECOMMENDATIONS[symptomId]?.some(r => r.id === id)) {
+ 576 │               reasons.push(categoryData?.name || symptomId);
+ 577 │             }
+ 578 │           });
+ 579 │           
+ 580 │           userProfile.activeGoals.forEach(goalId => {
+ 581 │             if (GOAL_RECOMMENDATIONS[goalId]?.some(r => r.id === id)) {
+ 582 │               reasons.push(`objectif: ${goalId.replace(/_/g, ' ')}`);
+ 583 │             }
+ 584 │           });
+ 585 │           
+ 586 │           const reasonText = reasons.length > 0 
+ 587 │             ? `Recommandé pour ${reasons.join(' et ')}` 
+ 588 │             : 'Recommandation basée sur votre profil global';
+ 589 │           
+ 590 │           finalRecommendations.push({
+ 591 │             id,
+ 592 │             name: supplement.name,
+ 593 │             description: `${supplement.name} (${supplement.scientificName})`,
+ 594 │             priority: Math.round(score / 20), // Convertir le score en priorité (1-10)
+ 595 │             matchScore: score,
+ 596 │             benefits: supplement.benefits,
+ 597 │             recommendedDose: dose,
+ 598 │             timeToEffect: supplement.timeToEffect,
+ 599 │             scientificBasis: supplement.scientificBasis,
+ 600 │             confidence: modelData.confidenceScore,
+ 601 │             reason: reasonText
+ 602 │           });
+ 603 │         }
+ 604 │       });
+ 605 │     
+ 606 │     // Enregistrer ces données pour l'apprentissage
+ 607 │     recordLearningData({
+ 608 │       quizResponses,
+ 609 │       generatedRecommendations: finalRecommendations,
+ 610 │       userProfile: {
+ 611 │         dietaryRestrictions,
+ 612 │         activeSymptoms: userProfile.activeSymptoms,
+ 613 │         activeGoals: personalGoals
+ 614 │       },
+ 615 │       timestamp: new Date().toISOString()
+ 616 │     });
+ 617 │     
+ 618 │     return finalRecommendations;
+ 619 │     
+ 620 │   } catch (error) {
+ 621 │     console.error("Erreur lors de la génération des recommandations personnalisées:", error);
+ 622 │     return [];
+ 623 │   }
+ 624 │ };
+ 625 │ 
+ 626 │ /**
+ 627 │  * Fonction utilitaire pour trouver la dose appropriée d'un supplément
+ 628 │  */
+ 629 │ const findDoseForSupplement = (
+ 630 │   supplementId: string,
+ 631 │   doseType: 'standard' | 'vegetarian'
+ 632 │ ): string | null => {
+ 633 │   // Rechercher dans les recommandations de symptômes
+ 634 │   for (const symptomId in SYMPTOM_RECOMMENDATIONS) {
+ 635 │     const recommendations = SYMPTOM_RECOMMENDATIONS[symptomId];
+ 636 │     const rec = recommendations.find(r => r.id === supplementId);
+ 637 │     
+ 638 │     if (rec) {
+ 639 │       return doseType === 'vegetarian' && rec.doseVegetarian 
+ 640 │         ? rec.doseVegetarian 
+ 641 │         : rec.doseStandard;
+ 642 │     }
+ 643 │   }
+ 644 │   
+ 645 │   // Rechercher dans les recommandations d'objectifs
+ 646 │   for (const goalId in GOAL_RECOMMENDATIONS) {
+ 647 │     const recommendations = GOAL_RECOMMENDATIONS[goalId];
+ 648 │     const rec = recommendations.find(r => r.id === supplementId);
+ 649 │     
+ 650 │     if (rec) {
+ 651 │       return doseType === 'vegetarian' && rec.doseVegetarian 
+ 652 │         ? rec.doseVegetarian 
+ 653 │         : rec.doseStandard;
+ 654 │     }
+ 655 │   }
+ 656 │   
+ 657 │   // Par défaut, utiliser les informations du catalogue
+ 658 │   const supplement = SUPPLEMENT_CATALOG[supplementId];
+ 659 │   if (supplement) {
+ 660 │     return doseType === 'vegetarian' && supplement.dosageVegetarian
+ 661 │       ? supplement.dosageVegetarian
+ 662 │       : supplement.dosageStandard;
+ 663 │   }
+ 664 │   
+ 665 │   return null;
+ 666 │ };
+ 667 │ 
+ 668 │ /**
+ 669 │  * Trouve des profils utilisateurs similaires pour affiner les recommandations
+ 670 │  */
+ 671 │ export const findSimilarUserProfiles = (
+ 672 │   currentProfile: any,
+ 673 │   limit: number = 5
+ 674 │ ): UserProfile[] => {
+ 675 │   try {
+ 676 │     // Récupérer le modèle AI
+ 677 │     const aiModel: AIModel = secureStorageService.getItem('aiModel') || initialAIModel;
+ 678 │     
+ 679 │     if (aiModel.userProfiles.length === 0) {
+ 680 │       return [];
+ 681 │     }
+ 682 │     
+ 683 │     // Calculer la similarité pour chaque profil
+ 684 │     const profilesWithSimilarity = aiModel.userProfiles.map(profile => ({
+ 685 │       profile,
+ 686 │       similarity: calculateProfileSimilarity(currentProfile, profile)
+ 687 │     }));
+ 688 │     
+ 689 │     // Trier par similarité et retourner les plus similaires
+ 690 │     return profilesWithSimilarity
+ 691 │       .sort((a, b) => b.similarity - a.similarity)
+ 692 │       .slice(0, limit)
+ 693 │       .map(entry => entry.profile);
+ 694 │     
+ 695 │   } catch (error) {
+ 696 │     console.error("Erreur lors de la recherche de profils similaires:", error);
+ 697 │     return [];
+ 698 │   }
+ 699 │ };
+ 700 │ 
+ 701 │ /**
+ 702 │  * Réinitialise le modèle AI aux valeurs par défaut
+ 703 │  * (utile pour le développement ou si le modèle devient problématique)
+ 704 │  */
+ 705 │ export const resetAIModel = (): void => {
+ 706 │   try {
+ 707 │     // Réinitialiser le modèle avec les valeurs initiales
+ 708 │     secureStorageService.setItem('aiModel', initialAIModel);
+ 709 │     console.log("Modèle AI réinitialisé aux valeurs par défaut");
+ 710 │   } catch (error) {
+ 711 │     console.error("Erreur lors de la réinitialisation du modèle AI:", error);
+ 712 │   }
+ 713 │ };
+ 714 │ 
+ 715 │ /**
+ 716 │  * Obtient l'état actuel du modèle AI
+ 717 │  */
+ 718 │ export const getAIModelState = (): AIModelState => {
+ 719 │   try {
+ 720 │     const aiModel: AIModel = secureStorageService.getItem('aiModel') || initialAIModel;
+ 721 │     
+ 722 │     return {
+ 723 │       version: aiModel.version,
+ 724 │       trainingIterations: aiModel.trainingIterations,
+ 725 │       profileCount: aiModel.userProfiles.length,
+ 726 │       supplementCount: Object.keys(aiModel.supplementScores).length,
+ 727 │       lastUpdated: new Date().toISOString()
+ 728 │     };
+ 729 │   } catch (error) {
+ 730 │     console.error("Erreur lors de la récupération de l'état du modèle AI:", error);
+ 731 │     return {
+ 732 │       version: 0,
+ 733 │       trainingIterations: 0,
+ 734 │       profileCount: 0,
+ 735 │       supplementCount: 0,
+ 736 │       lastUpdated: new Date().toISOString()
+ 737 │     };
+ 738 │   }
+ 739 │ };
+ 740 │ // Fonction simulant l'entraînement d'un modèle d'IA
+ 741 │ // Cette fonction retourne une promesse qui se résout après un délai simulant un entraînement
+ 742 │ export const trainAIModel = async (): Promise<void> => {
+     ·              ──────┬─────
+     ·                    ╰── `trainAIModel` redefined here
+ 743 │   return new Promise((resolve) => {
+ 744 │     // Simulation d'un processus d'entraînement qui prend du temps
+ 745 │     setTimeout(() => {
+     ╰────
+/home/runner/workspace/src/utils/aiLearning.ts:253:1
+Click outside, press Esc key, or fix the code to dismiss.
+You can also disable this overlay by setting server.hmr.overlay to false in vite.config.ts.

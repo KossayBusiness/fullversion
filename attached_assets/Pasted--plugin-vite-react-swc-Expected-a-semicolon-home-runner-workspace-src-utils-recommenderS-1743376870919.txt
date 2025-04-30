@@ -1,0 +1,68 @@
+[plugin:vite:react-swc] × Expected a semicolon
+     ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:767:1]
+ 764 │     }
+ 765 │ 
+ 766 │     // Construire et retourner l'état complet du modèle
+ 767 │     return {
+     ·     ▲
+ 768 │       isActive: aiLearningStatus.isActive,
+ 769 │       modelVersion: aiLearningStatus.modelVersion,
+ 770 │       lastTrainingDate: aiLearningStatus.lastTrainingDate,
+     ╰────
+  × Expected a semicolon
+     ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:790:1]
+ 787 │       recommendationEfficiency: 92,
+ 788 │       lastUpdate: new Date().toLocaleDateString(),
+ 789 │     };
+ 790 │   } catch (error) {
+     ·     ─────
+ 791 │     console.error("Erreur lors de la récupération du statut du modèle d'IA:", error);
+ 792 │ 
+ 793 │     // Fournir des valeurs par défaut en cas d'erreur
+     ╰────
+  × Return statement is not allowed here
+     ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:794:1]
+ 791 │         console.error("Erreur lors de la récupération du statut du modèle d'IA:", error);
+ 792 │     
+ 793 │         // Fournir des valeurs par défaut en cas d'erreur
+ 794 │ ╭─▶     return {
+ 795 │ │         isActive: true,
+ 796 │ │         modelVersion: '1.0.0',
+ 797 │ │         lastTrainingDate: new Date().toISOString(),
+ 798 │ │         accuracy: 0.87,
+ 799 │ │         dataPointsAnalyzed: 1250,
+ 800 │ │         improvements: [
+ 801 │ │           "Amélioration de la détection des profils à risque",
+ 802 │ │           "Meilleure personnalisation par âge et sexe",
+ 803 │ │           "Intégration des dernières recherches scientifiques"
+ 804 │ │         ],
+ 805 │ │         knowledgeBase: 2500,
+ 806 │ │         accuracyImprovement: 2.3,
+ 807 │ │         processingTime: 234,
+ 808 │ │         userSatisfaction: 94,
+ 809 │ │         useCaseCoverage: 87,
+ 810 │ │         recommendationEfficiency: 92,
+ 811 │ │         lastUpdate: new Date().toLocaleDateString(),
+ 812 │ │         topPerformingRecommendations: []
+ 813 │ ╰─▶     };
+ 814 │       }
+ 815 │     }
+     ╰────
+  × Expression expected
+     ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:815:1]
+ 812 │       topPerformingRecommendations: []
+ 813 │     };
+ 814 │   }
+ 815 │ }
+     · ─
+ 816 │ 
+ 817 │ // Placeholder functions -  replace with actual implementations
+ 818 │ const processBehavioralData = (behavioralMetrics: BehavioralMetrics) => ({
+     ╰────
+
+
+Caused by:
+    Syntax Error
+/home/runner/workspace/src/utils/recommenderSystem.ts:767:1
+Click outside, press Esc key, or fix the code to dismiss.
+You can also disable this overlay by setting server.hmr.overlay to false in vite.config.ts.

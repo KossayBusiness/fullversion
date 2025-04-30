@@ -1,0 +1,67 @@
+[plugin:vite:react-swc] × Expected a semicolon
+     ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:669:1]
+ 666 │       improvements.push(`Taux de satisfaction utilisateur global de ${satisfactionPercentage}%`);
+ 667 │     }    }
+ 668 │ 
+ 669 │     if (Object.keys(patternCorrelations.ageCorrelations).length > 0) {
+     ·     ▲
+ 670 │       improvements.push(`Corrélations d'âge identifiées (${Object.keys(patternCorrelations.ageCorrelations).length} segments)`);
+ 671 │     }
+     ╰────
+  × Expected a semicolon
+     ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:701:1]
+ 698 │       recommendationEfficiency: 92,
+ 699 │       lastUpdate: new Date().toLocaleDateString(),
+ 700 │     };
+ 701 │   } catch (error) {
+     ·     ─────
+ 702 │     console.error("Erreur lors de la récupération du statut du modèle d'IA:", error);
+ 703 │ 
+ 704 │     // Fournir des valeurs par défaut en cas d'erreur
+     ╰────
+  × Return statement is not allowed here
+     ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:705:1]
+ 702 │         console.error("Erreur lors de la récupération du statut du modèle d'IA:", error);
+ 703 │     
+ 704 │         // Fournir des valeurs par défaut en cas d'erreur
+ 705 │ ╭─▶     return {
+ 706 │ │         isActive: true,
+ 707 │ │         modelVersion: '1.0.0',
+ 708 │ │         lastTrainingDate: new Date().toISOString(),
+ 709 │ │         accuracy: 0.87,
+ 710 │ │         dataPointsAnalyzed: 1250,
+ 711 │ │         improvements: [
+ 712 │ │           "Amélioration de la détection des profils à risque",
+ 713 │ │           "Meilleure personnalisation par âge et sexe",
+ 714 │ │           "Intégration des dernières recherches scientifiques"
+ 715 │ │         ],
+ 716 │ │         knowledgeBase: 2500,
+ 717 │ │         accuracyImprovement: 2.3,
+ 718 │ │         processingTime: 234, 
+ 719 │ │         userSatisfaction: 94,
+ 720 │ │         useCaseCoverage: 87,
+ 721 │ │         recommendationEfficiency: 92,
+ 722 │ │         lastUpdate: new Date().toLocaleDateString(),
+ 723 │ │         topPerformingRecommendations: []
+ 724 │ ╰─▶     };
+ 725 │       }
+ 726 │     }
+     ╰────
+  × Expression expected
+     ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:726:1]
+ 723 │       topPerformingRecommendations: []
+ 724 │     };
+ 725 │   }
+ 726 │ }
+     · ─
+ 727 │ 
+ 728 │ // Exportation des fonctions principales
+ 729 │ const recommenderSystemUtils = {
+     ╰────
+
+
+Caused by:
+    Syntax Error
+/home/runner/workspace/src/utils/recommenderSystem.ts
+Click outside, press Esc key, or fix the code to dismiss.
+You can also disable this overlay by setting server.hmr.overlay to false in vite.config.ts.

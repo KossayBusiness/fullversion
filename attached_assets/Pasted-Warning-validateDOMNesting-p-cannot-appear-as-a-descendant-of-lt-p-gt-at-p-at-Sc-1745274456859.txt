@@ -1,0 +1,56 @@
+Warning: validateDOMNesting(...): <p> cannot appear as a descendant of &lt;p&gt;.
+    at p
+    at ScientificHighlightedText (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/components/ui/scientific-highlighted-text.tsx:22:45)
+    at p
+    at div
+    at div
+    at QuizForm (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/components/quiz/QuizForm.tsx:39:22)
+    at div
+    at div
+    at div
+    at Quiz (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/pages/Quiz.tsx:28:22)
+    at RenderedRoute (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=b9e9b7f4:4069:5)
+    at Outlet (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=b9e9b7f4:4444:26)
+    at div
+    at Provider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/chunk-XSIA5QXM.js?v=b9e9b7f4:38:15)
+    at TooltipProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=b9e9b7f4:61:5)
+    at div
+    at LanguageProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/components/LanguageProvider.tsx:24:36)
+    at QueryClientProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/@tanstack_react-query.js?v=b9e9b7f4:2794:3)
+    at App (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/App.tsx:98:47)
+    at RenderedRoute (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=b9e9b7f4:4069:5)
+    at RenderErrorBoundary (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=b9e9b7f4:4029:5)
+    at DataRoutes (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=b9e9b7f4:5188:5)
+    at Router (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=b9e9b7f4:4451:15)
+    at RouterProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=b9e9b7f4:5003:5)
+    at _a (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-helmet-async.js?v=b9e9b7f4:624:5)
+at p
+at ScientificHighlightedText (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/components/ui/scientific-highlighted-text.tsx:22:45)
+at p
+at div
+at div
+at QuizForm (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/components/quiz/QuizForm.tsx:39:22)
+at div
+at div
+at div
+at Quiz (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/pages/Quiz.tsx:28:22)
+at RenderedRoute (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=b9e9b7f4:4069:5)
+at Outlet (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=b9e9b7f4:4444:26)
+at div
+at Provider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/chunk-XSIA5QXM.js?v=b9e9b7f4:38:15)
+at TooltipProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=b9e9b7f4:61:5)
+at div
+at LanguageProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/components/LanguageProvider.tsx:24:36)
+at QueryClientProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/@tanstack_react-query.js?v=b9e9b7f4:2794:3)
+at App (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/App.tsx:98:47)
+at RenderedRoute (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=b9e9b7f4:4069:5)
+at RenderErrorBoundary (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=b9e9b7f4:4029:5)
+at DataRoutes (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=b9e9b7f4:5188:5)
+at Router (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=b9e9b7f4:4451:15)
+at RouterProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=b9e9b7f4:5003:5)
+at _a (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-helmet-async.js?v=b9e9b7f4:624:5)
+at t.value (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+[GoogleAdGrantsMetric] 

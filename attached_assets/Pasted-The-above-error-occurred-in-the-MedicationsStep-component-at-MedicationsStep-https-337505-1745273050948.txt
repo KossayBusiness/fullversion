@@ -1,0 +1,53 @@
+The above error occurred in the <MedicationsStep> component:
+
+    at MedicationsStep (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/components/quiz/MedicationsStep.tsx:103:35)
+    at div
+    at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/chunk-TYVSKZ6B.js?v=e322b55a:41:13
+    at Presence (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/chunk-L3XNQTIF.js?v=e322b55a:24:11)
+    at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/@radix-ui_react-tabs.js?v=e322b55a:173:13
+    at _c4 (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/components/ui/tabs.tsx:61:61)
+    at div
+    at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/chunk-TYVSKZ6B.js?v=e322b55a:41:13
+    at Provider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/chunk-XSIA5QXM.js?v=e322b55a:38:15)
+    at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/@radix-ui_react-tabs.js?v=e322b55a:51:7
+    at div
+    at _c8 (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/components/ui/card.tsx:95:61)
+    at div
+    at _c (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/components/ui/card.tsx:23:53)
+    at div
+    at QuizForm (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/components/quiz/QuizForm.tsx:39:22)
+    at div
+    at div
+    at div
+    at Quiz (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/pages/Quiz.tsx:28:22)
+    at RenderedRoute (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=e322b55a:4069:5)
+    at Outlet (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=e322b55a:4444:26)
+    at div
+    at Provider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/chunk-XSIA5QXM.js?v=e322b55a:38:15)
+    at TooltipProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=e322b55a:61:5)
+    at div
+    at LanguageProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/components/LanguageProvider.tsx:24:36)
+    at QueryClientProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/@tanstack_react-query.js?v=e322b55a:2794:3)
+    at App (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/src/App.tsx:98:47)
+    at RenderedRoute (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=e322b55a:4069:5)
+    at RenderErrorBoundary (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=e322b55a:4029:5)
+    at DataRoutes (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=e322b55a:5188:5)
+    at Router (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=e322b55a:4451:15)
+    at RouterProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-router-dom.js?v=e322b55a:5003:5)
+    at _a (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/node_modules/.vite/deps/react-helmet-async.js?v=e322b55a:624:5)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, RenderErrorBoundary.
+React Router caught the following error during render 
+TypeError {}
+ 
+Object {componentStack: "↵    at MedicationsStep…"}
+
+at t.value (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+404 Error: User attempted to access non-existent route: /quiz
+at t.value (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev:3000/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400

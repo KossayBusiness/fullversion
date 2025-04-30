@@ -1,0 +1,283 @@
+[plugin:vite:react-swc] × the name `Card` is defined multiple times
+    ╭─[/home/runner/workspace/src/components/QuizResults.tsx:2:1]
+  1 │ import React, { useEffect, useState } from 'react';
+  2 │ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+    ·          ──┬─
+    ·            ╰── previous definition of `Card` here
+  3 │ import { Button } from "@/components/ui/button";
+  4 │ import { useNavigate } from 'react-router-dom';
+  5 │ import { secureStorageService as secureStorage } from '@/utils/secureStorage';
+  6 │ import { 
+  7 │   generateRecommendations, 
+  8 │   generateRecommendationExplanation,
+  9 │   getAIModelStatus,
+ 10 │   generateAdvancedRecommendations
+ 11 │ } from '@/utils/recommenderSystem';
+ 12 │ import { QuizResponse, Recommendation, BehavioralMetrics, NeuroProfile } from '@/utils/types';
+ 13 │ import { motion } from "framer-motion";
+ 14 │ import ScientificHighlightedText from './ui/ScientificHighlightedText';
+ 15 │ import { Brain, TrendingUp, Award, CheckCircle2, ThumbsUp, AlertCircle } from 'lucide-react';
+ 16 │ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+ 17 │ import { Badge } from '@/components/ui/badge';
+ 18 │ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+ 19 │ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+    ·          ──┬─
+    ·            ╰── `Card` redefined here
+ 20 │ import { Badge } from "@/components/ui/badge";
+ 21 │ import { AlertCircle, ArrowRight, Check, Info } from "lucide-react";
+ 22 │ import { useNavigate } from "react-router-dom";
+    ╰────
+  × the name `CardContent` is defined multiple times
+    ╭─[/home/runner/workspace/src/components/QuizResults.tsx:2:1]
+  1 │ import React, { useEffect, useState } from 'react';
+  2 │ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+    ·                ─────┬─────
+    ·                     ╰── previous definition of `CardContent` here
+  3 │ import { Button } from "@/components/ui/button";
+  4 │ import { useNavigate } from 'react-router-dom';
+  5 │ import { secureStorageService as secureStorage } from '@/utils/secureStorage';
+  6 │ import { 
+  7 │   generateRecommendations, 
+  8 │   generateRecommendationExplanation,
+  9 │   getAIModelStatus,
+ 10 │   generateAdvancedRecommendations
+ 11 │ } from '@/utils/recommenderSystem';
+ 12 │ import { QuizResponse, Recommendation, BehavioralMetrics, NeuroProfile } from '@/utils/types';
+ 13 │ import { motion } from "framer-motion";
+ 14 │ import ScientificHighlightedText from './ui/ScientificHighlightedText';
+ 15 │ import { Brain, TrendingUp, Award, CheckCircle2, ThumbsUp, AlertCircle } from 'lucide-react';
+ 16 │ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+ 17 │ import { Badge } from '@/components/ui/badge';
+ 18 │ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+ 19 │ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+    ·                ─────┬─────
+    ·                     ╰── `CardContent` redefined here
+ 20 │ import { Badge } from "@/components/ui/badge";
+ 21 │ import { AlertCircle, ArrowRight, Check, Info } from "lucide-react";
+ 22 │ import { useNavigate } from "react-router-dom";
+    ╰────
+  × the name `CardHeader` is defined multiple times
+    ╭─[/home/runner/workspace/src/components/QuizResults.tsx:2:1]
+  1 │ import React, { useEffect, useState } from 'react';
+  2 │ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+    ·                             ─────┬────
+    ·                                  ╰── previous definition of `CardHeader` here
+  3 │ import { Button } from "@/components/ui/button";
+  4 │ import { useNavigate } from 'react-router-dom';
+  5 │ import { secureStorageService as secureStorage } from '@/utils/secureStorage';
+  6 │ import { 
+  7 │   generateRecommendations, 
+  8 │   generateRecommendationExplanation,
+  9 │   getAIModelStatus,
+ 10 │   generateAdvancedRecommendations
+ 11 │ } from '@/utils/recommenderSystem';
+ 12 │ import { QuizResponse, Recommendation, BehavioralMetrics, NeuroProfile } from '@/utils/types';
+ 13 │ import { motion } from "framer-motion";
+ 14 │ import ScientificHighlightedText from './ui/ScientificHighlightedText';
+ 15 │ import { Brain, TrendingUp, Award, CheckCircle2, ThumbsUp, AlertCircle } from 'lucide-react';
+ 16 │ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+ 17 │ import { Badge } from '@/components/ui/badge';
+ 18 │ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+ 19 │ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+    ·                             ─────┬────
+    ·                                  ╰── `CardHeader` redefined here
+ 20 │ import { Badge } from "@/components/ui/badge";
+ 21 │ import { AlertCircle, ArrowRight, Check, Info } from "lucide-react";
+ 22 │ import { useNavigate } from "react-router-dom";
+    ╰────
+  × the name `CardTitle` is defined multiple times
+    ╭─[/home/runner/workspace/src/components/QuizResults.tsx:2:1]
+  1 │ import React, { useEffect, useState } from 'react';
+  2 │ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+    ·                                         ────┬────
+    ·                                             ╰── previous definition of `CardTitle` here
+  3 │ import { Button } from "@/components/ui/button";
+  4 │ import { useNavigate } from 'react-router-dom';
+  5 │ import { secureStorageService as secureStorage } from '@/utils/secureStorage';
+  6 │ import { 
+  7 │   generateRecommendations, 
+  8 │   generateRecommendationExplanation,
+  9 │   getAIModelStatus,
+ 10 │   generateAdvancedRecommendations
+ 11 │ } from '@/utils/recommenderSystem';
+ 12 │ import { QuizResponse, Recommendation, BehavioralMetrics, NeuroProfile } from '@/utils/types';
+ 13 │ import { motion } from "framer-motion";
+ 14 │ import ScientificHighlightedText from './ui/ScientificHighlightedText';
+ 15 │ import { Brain, TrendingUp, Award, CheckCircle2, ThumbsUp, AlertCircle } from 'lucide-react';
+ 16 │ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+ 17 │ import { Badge } from '@/components/ui/badge';
+ 18 │ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+ 19 │ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+    ·                                         ────┬────
+    ·                                             ╰── `CardTitle` redefined here
+ 20 │ import { Badge } from "@/components/ui/badge";
+ 21 │ import { AlertCircle, ArrowRight, Check, Info } from "lucide-react";
+ 22 │ import { useNavigate } from "react-router-dom";
+    ╰────
+  × the name `Badge` is defined multiple times
+    ╭─[/home/runner/workspace/src/components/QuizResults.tsx:17:1]
+ 14 │ import ScientificHighlightedText from './ui/ScientificHighlightedText';
+ 15 │ import { Brain, TrendingUp, Award, CheckCircle2, ThumbsUp, AlertCircle } from 'lucide-react';
+ 16 │ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+ 17 │ import { Badge } from '@/components/ui/badge';
+    ·          ──┬──
+    ·            ╰── previous definition of `Badge` here
+ 18 │ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+ 19 │ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+ 20 │ import { Badge } from "@/components/ui/badge";
+    ·          ──┬──
+    ·            ╰── `Badge` redefined here
+ 21 │ import { AlertCircle, ArrowRight, Check, Info } from "lucide-react";
+ 22 │ import { useNavigate } from "react-router-dom";
+ 23 │ import { useState, useEffect } from "react";
+    ╰────
+  × the name `AlertCircle` is defined multiple times
+    ╭─[/home/runner/workspace/src/components/QuizResults.tsx:15:1]
+ 12 │ import { QuizResponse, Recommendation, BehavioralMetrics, NeuroProfile } from '@/utils/types';
+ 13 │ import { motion } from "framer-motion";
+ 14 │ import ScientificHighlightedText from './ui/ScientificHighlightedText';
+ 15 │ import { Brain, TrendingUp, Award, CheckCircle2, ThumbsUp, AlertCircle } from 'lucide-react';
+    ·                                                            ─────┬─────
+    ·                                                                 ╰── previous definition of `AlertCircle` here
+ 16 │ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+ 17 │ import { Badge } from '@/components/ui/badge';
+ 18 │ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+ 19 │ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+ 20 │ import { Badge } from "@/components/ui/badge";
+ 21 │ import { AlertCircle, ArrowRight, Check, Info } from "lucide-react";
+    ·          ─────┬─────
+    ·               ╰── `AlertCircle` redefined here
+ 22 │ import { useNavigate } from "react-router-dom";
+ 23 │ import { useState, useEffect } from "react";
+ 24 │ import { motion } from "framer-motion";
+    ╰────
+  × the name `useNavigate` is defined multiple times
+    ╭─[/home/runner/workspace/src/components/QuizResults.tsx:4:1]
+  1 │ import React, { useEffect, useState } from 'react';
+  2 │ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+  3 │ import { Button } from "@/components/ui/button";
+  4 │ import { useNavigate } from 'react-router-dom';
+    ·          ─────┬─────
+    ·               ╰── previous definition of `useNavigate` here
+  5 │ import { secureStorageService as secureStorage } from '@/utils/secureStorage';
+  6 │ import { 
+  7 │   generateRecommendations, 
+  8 │   generateRecommendationExplanation,
+  9 │   getAIModelStatus,
+ 10 │   generateAdvancedRecommendations
+ 11 │ } from '@/utils/recommenderSystem';
+ 12 │ import { QuizResponse, Recommendation, BehavioralMetrics, NeuroProfile } from '@/utils/types';
+ 13 │ import { motion } from "framer-motion";
+ 14 │ import ScientificHighlightedText from './ui/ScientificHighlightedText';
+ 15 │ import { Brain, TrendingUp, Award, CheckCircle2, ThumbsUp, AlertCircle } from 'lucide-react';
+ 16 │ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+ 17 │ import { Badge } from '@/components/ui/badge';
+ 18 │ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+ 19 │ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+ 20 │ import { Badge } from "@/components/ui/badge";
+ 21 │ import { AlertCircle, ArrowRight, Check, Info } from "lucide-react";
+ 22 │ import { useNavigate } from "react-router-dom";
+    ·          ─────┬─────
+    ·               ╰── `useNavigate` redefined here
+ 23 │ import { useState, useEffect } from "react";
+ 24 │ import { motion } from "framer-motion";
+ 25 │ import { Recommendation, QuizResponse, BehavioralMetrics, NeuroProfile } from "@/utils/types";
+    ╰────
+  × the name `useState` is defined multiple times
+    ╭─[/home/runner/workspace/src/components/QuizResults.tsx:1:1]
+  1 │ import React, { useEffect, useState } from 'react';
+    ·                            ────┬───
+    ·                                ╰── previous definition of `useState` here
+  2 │ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+  3 │ import { Button } from "@/components/ui/button";
+  4 │ import { useNavigate } from 'react-router-dom';
+  5 │ import { secureStorageService as secureStorage } from '@/utils/secureStorage';
+  6 │ import { 
+  7 │   generateRecommendations, 
+  8 │   generateRecommendationExplanation,
+  9 │   getAIModelStatus,
+ 10 │   generateAdvancedRecommendations
+ 11 │ } from '@/utils/recommenderSystem';
+ 12 │ import { QuizResponse, Recommendation, BehavioralMetrics, NeuroProfile } from '@/utils/types';
+ 13 │ import { motion } from "framer-motion";
+ 14 │ import ScientificHighlightedText from './ui/ScientificHighlightedText';
+ 15 │ import { Brain, TrendingUp, Award, CheckCircle2, ThumbsUp, AlertCircle } from 'lucide-react';
+ 16 │ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+ 17 │ import { Badge } from '@/components/ui/badge';
+ 18 │ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+ 19 │ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+ 20 │ import { Badge } from "@/components/ui/badge";
+ 21 │ import { AlertCircle, ArrowRight, Check, Info } from "lucide-react";
+ 22 │ import { useNavigate } from "react-router-dom";
+ 23 │ import { useState, useEffect } from "react";
+    ·          ────┬───
+    ·              ╰── `useState` redefined here
+ 24 │ import { motion } from "framer-motion";
+ 25 │ import { Recommendation, QuizResponse, BehavioralMetrics, NeuroProfile } from "@/utils/types";
+    ╰────
+  × the name `useEffect` is defined multiple times
+    ╭─[/home/runner/workspace/src/components/QuizResults.tsx:1:1]
+  1 │ import React, { useEffect, useState } from 'react';
+    ·                 ────┬────
+    ·                     ╰── previous definition of `useEffect` here
+  2 │ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+  3 │ import { Button } from "@/components/ui/button";
+  4 │ import { useNavigate } from 'react-router-dom';
+  5 │ import { secureStorageService as secureStorage } from '@/utils/secureStorage';
+  6 │ import { 
+  7 │   generateRecommendations, 
+  8 │   generateRecommendationExplanation,
+  9 │   getAIModelStatus,
+ 10 │   generateAdvancedRecommendations
+ 11 │ } from '@/utils/recommenderSystem';
+ 12 │ import { QuizResponse, Recommendation, BehavioralMetrics, NeuroProfile } from '@/utils/types';
+ 13 │ import { motion } from "framer-motion";
+ 14 │ import ScientificHighlightedText from './ui/ScientificHighlightedText';
+ 15 │ import { Brain, TrendingUp, Award, CheckCircle2, ThumbsUp, AlertCircle } from 'lucide-react';
+ 16 │ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+ 17 │ import { Badge } from '@/components/ui/badge';
+ 18 │ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+ 19 │ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+ 20 │ import { Badge } from "@/components/ui/badge";
+ 21 │ import { AlertCircle, ArrowRight, Check, Info } from "lucide-react";
+ 22 │ import { useNavigate } from "react-router-dom";
+ 23 │ import { useState, useEffect } from "react";
+    ·                    ────┬────
+    ·                        ╰── `useEffect` redefined here
+ 24 │ import { motion } from "framer-motion";
+ 25 │ import { Recommendation, QuizResponse, BehavioralMetrics, NeuroProfile } from "@/utils/types";
+    ╰────
+  × the name `motion` is defined multiple times
+    ╭─[/home/runner/workspace/src/components/QuizResults.tsx:13:1]
+ 10 │   generateAdvancedRecommendations
+ 11 │ } from '@/utils/recommenderSystem';
+ 12 │ import { QuizResponse, Recommendation, BehavioralMetrics, NeuroProfile } from '@/utils/types';
+ 13 │ import { motion } from "framer-motion";
+    ·          ───┬──
+    ·             ╰── previous definition of `motion` here
+ 14 │ import ScientificHighlightedText from './ui/ScientificHighlightedText';
+ 15 │ import { Brain, TrendingUp, Award, CheckCircle2, ThumbsUp, AlertCircle } from 'lucide-react';
+ 16 │ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+ 17 │ import { Badge } from '@/components/ui/badge';
+ 18 │ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+ 19 │ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+ 20 │ import { Badge } from "@/components/ui/badge";
+ 21 │ import { AlertCircle, ArrowRight, Check, Info } from "lucide-react";
+ 22 │ import { useNavigate } from "react-router-dom";
+ 23 │ import { useState, useEffect } from "react";
+ 24 │ import { motion } from "framer-motion";
+    ·          ───┬──
+    ·             ╰── `motion` redefined here
+ 25 │ import { Recommendation, QuizResponse, BehavioralMetrics, NeuroProfile } from "@/utils/types";
+ 26 │ 
+ 27 │ // Fonction utilitaire pour identifier les priorités des problèmes de santé
+    ╰────
+/home/runner/workspace/src/components/QuizResults.tsx:2:1
+10 |    generateAdvancedRecommendations
+11 |  } from '@/utils/recommenderSystem';
+12 |  import { QuizResponse, Recommendation, BehavioralMetrics, NeuroProfile } from '@/utils/types';
+   |                                ^
+13 |  import { motion } from "framer-motion";
+14 |  import ScientificHighlightedText from './ui/ScientificHighlightedText';
+Click outside, press Esc key, or fix the code to dismiss.
+You can also disable this overlay by setting server.hmr.overlay to false in vite.config.ts.

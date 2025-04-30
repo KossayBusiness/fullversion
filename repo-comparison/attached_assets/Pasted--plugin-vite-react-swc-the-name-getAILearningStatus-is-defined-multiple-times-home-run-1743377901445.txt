@@ -1,0 +1,3072 @@
+[plugin:vite:react-swc] × the name `getAILearningStatus` is defined multiple times
+     ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:26:1]
+  23 │ import { 
+  24 │   adjustRecommendationsWithLearning,
+  25 │   saveLearningData,
+  26 │   getAILearningStatus,
+     ·   ─────────┬─────────
+     ·            ╰── previous definition of `getAILearningStatus` here
+  27 │   evaluateDataQuality
+  28 │ } from './aiLearningEngine';
+  29 │ 
+  30 │ /**
+  31 │  * Génère des recommandations en utilisant l'algorithme principal et l'apprentissage IA
+  32 │  */
+  33 │ export const generateRecommendations = (
+  34 │   quizResponses: QuizResponse,
+  35 │   behavioralMetrics?: BehavioralMetrics,
+  36 │   neuroProfile?: NeuroProfile
+  37 │ ): Recommendation[] => {
+  38 │   try {
+  39 │     // Vérifier si les données du quiz sont valides
+  40 │     if (!quizResponses || !quizResponses.healthConcerns || !quizResponses.goals) {
+  41 │       console.error("Données du quiz insuffisantes pour générer des recommandations");
+  42 │       return [];
+  43 │     }
+  44 │ 
+  45 │     const recommendations: Recommendation[] = [];
+  46 │ 
+  47 │     // === SANTÉ MENTALE & STRESS ===
+  48 │     if (quizResponses.healthConcerns.stressLevel === 'high' || 
+  49 │         quizResponses.healthConcerns.stressLevel === 'very_high' || 
+  50 │         quizResponses.goals.reduceStress) {
+  51 │ 
+  52 │       recommendations.push({
+  53 │         id: "rec_magnesium",
+  54 │         name: "Magnésium bisglycinate",
+  55 │         description: "Forme hautement biodisponible du magnésium qui aide à réduire le stress et l'anxiété",
+  56 │         priority: 1,
+  57 │         matchScore: 90,
+  58 │         benefits: ["Réduction de l'anxiété", "Amélioration du sommeil", "Relaxation musculaire"],
+  59 │         recommendedDose: "300-400mg par jour, de préférence le soir",
+  60 │         timeToEffect: "2-4 semaines pour un effet optimal",
+  61 │         scientificBasis: "Études cliniques démontrant l'efficacité du magnésium sur les niveaux de stress et d'anxiété",
+  62 │         reason: "Votre niveau de stress élevé indique un besoin en magnésium"
+  63 │       });
+  64 │ 
+  65 │       recommendations.push({
+  66 │         id: "rec_ashwagandha",
+  67 │         name: "Ashwagandha KSM-66",
+  68 │         description: "Adaptogène puissant aidant à réduire le cortisol et à équilibrer la réponse au stress",
+  69 │         priority: 2,
+  70 │         matchScore: 85,
+  71 │         benefits: ["Réduction du cortisol", "Adaptation au stress", "Amélioration de la résistance"],
+  72 │         recommendedDose: "300-600mg par jour, extrait standardisé",
+  73 │         timeToEffect: "4-6 semaines pour un effet optimal",
+  74 │         scientificBasis: "Multiples études cliniques confirmant son effet adaptogène",
+  75 │         reason: "Votre profil indique un besoin d'adaptogènes pour la gestion du stress chronique"
+  76 │       });
+  77 │     }
+  78 │ 
+  79 │     // === ÉNERGIE & FATIGUE ===
+  80 │     if (quizResponses.healthConcerns.energyLevel === 'low' || 
+  81 │         quizResponses.goals.increaseEnergy) {
+  82 │ 
+  83 │       recommendations.push({
+  84 │         id: "rec_b_complex",
+  85 │         name: "Complexe Vitamines B actives",
+  86 │         description: "Vitamines B sous formes méthylées pour une absorption optimale et un soutien énergétique",
+  87 │         priority: 1,
+  88 │         matchScore: 88,
+  89 │         benefits: ["Production d'énergie cellulaire", "Soutien au métabolisme", "Fonction cognitive"],
+  90 │         recommendedDose: "1 gélule par jour avec le petit-déjeuner",
+  91 │         timeToEffect: "2-3 semaines",
+  92 │         scientificBasis: "Rôle essentiel des vitamines B dans le cycle de Krebs et la production d'ATP",
+  93 │         reason: "Votre niveau d'énergie bas suggère un besoin en vitamines B"
+  94 │       });
+  95 │ 
+  96 │       recommendations.push({
+  97 │         id: "rec_coq10",
+  98 │         name: "Coenzyme Q10",
+  99 │         description: "Cofacteur essentiel pour la production d'énergie dans les mitochondries",
+ 100 │         priority: 2,
+ 101 │         matchScore: 80,
+ 102 │         benefits: ["Production d'ATP", "Protection antioxydante", "Santé mitochondriale"],
+ 103 │         recommendedDose: "100-200mg par jour avec un repas contenant des graisses",
+ 104 │         timeToEffect: "2-4 semaines",
+ 105 │         scientificBasis: "Études démontrant l'amélioration des niveaux d'énergie chez les personnes fatiguées",
+ 106 │         reason: "La CoQ10 peut aider à restaurer la production d'énergie cellulaire"
+ 107 │       });
+ 108 │     }
+ 109 │ 
+ 110 │     // === SOMMEIL ===
+ 111 │     if (quizResponses.healthConcerns.sleepIssues === 'yes' || 
+ 112 │         quizResponses.healthConcerns.sleepIssues === 'sometimes') {
+ 113 │ 
+ 114 │       recommendations.push({
+ 115 │         id: "rec_magnesium_glycinate",
+ 116 │         name: "Magnésium Glycinate",
+ 117 │         description: "Forme de magnésium hautement absorbable ayant un effet relaxant",
+ 118 │         priority: 1,
+ 119 │         matchScore: 85,
+ 120 │         benefits: ["Relaxation musculaire", "Calme mental", "Régulation du GABA"],
+ 121 │         recommendedDose: "300-400mg avant le coucher",
+ 122 │         timeToEffect: "1-2 semaines",
+ 123 │         scientificBasis: "Le magnésium active les récepteurs GABA impliqués dans la relaxation",
+ 124 │         reason: "Vos problèmes de sommeil peuvent être améliorés par le magnésium"
+ 125 │       });
+ 126 │ 
+ 127 │       recommendations.push({
+ 128 │         id: "rec_theanine",
+ 129 │         name: "L-Théanine",
+ 130 │         description: "Acide aminé naturellement présent dans le thé vert qui favorise la détente sans somnolence",
+ 131 │         priority: 2,
+ 132 │         matchScore: 80,
+ 133 │         benefits: ["Relaxation sans somnolence", "Amélioration de la qualité du sommeil", "Réduction des ruminations mentales"],
+ 134 │         recommendedDose: "200-400mg avant le coucher",
+ 135 │         timeToEffect: "30 minutes à 1 heure",
+ 136 │         scientificBasis: "Augmente les ondes alpha dans le cerveau, associées à un état de relaxation",
+ 137 │         reason: "La L-Théanine peut aider à calmer votre esprit avant le sommeil"
+ 138 │       });
+ 139 │     }
+ 140 │ 
+ 141 │     // === CONCENTRATION & COGNITION ===
+ 142 │     if (quizResponses.healthConcerns.focusIssues === 'yes' || 
+ 143 │         quizResponses.goals.improveFocus) {
+ 144 │ 
+ 145 │       recommendations.push({
+ 146 │         id: "rec_bacopa",
+ 147 │         name: "Bacopa Monnieri",
+ 148 │         description: "Plante adaptogène qui améliore la mémoire et les fonctions cognitives",
+ 149 │         priority: 1,
+ 150 │         matchScore: 82,
+ 151 │         benefits: ["Mémoire", "Concentration", "Réduction du stress cognitif"],
+ 152 │         recommendedDose: "300-500mg par jour, extrait standardisé à 50% de bacosides",
+ 153 │         timeToEffect: "8-12 semaines pour des résultats optimaux",
+ 154 │         scientificBasis: "Multiples études cliniques montrant des améliorations cognitives",
+ 155 │         reason: "Vos problèmes de concentration peuvent bénéficier des effets neuroprotecteurs du Bacopa"
+ 156 │       });
+ 157 │ 
+ 158 │       recommendations.push({
+ 159 │         id: "rec_rhodiola",
+ 160 │         name: "Rhodiola Rosea",
+ 161 │         description: "Adaptogène qui réduit la fatigue mentale et améliore les performances cognitives",
+ 162 │         priority: 2,
+ 163 │         matchScore: 75,
+ 164 │         benefits: ["Réduction de la fatigue mentale", "Amélioration de la vigilance", "Résistance au stress"],
+ 165 │         recommendedDose: "200-400mg par jour, extrait standardisé à 3% de rosavines",
+ 166 │         timeToEffect: "1-3 semaines",
+ 167 │         scientificBasis: "Études montrant une amélioration des performances cognitives en situation de stress",
+ 168 │         reason: "La Rhodiola peut améliorer votre concentration en conditions de stress"
+ 169 │       });
+ 170 │     }
+ 171 │ 
+ 172 │     // === DIGESTION ===
+ 173 │     if (quizResponses.healthConcerns.digestiveIssues === 'yes' || 
+ 174 │         quizResponses.goals.improveDigestion) {
+ 175 │ 
+ 176 │       recommendations.push({
+ 177 │         id: "rec_probiotics",
+ 178 │         name: "Probiotiques multi-souches",
+ 179 │         description: "Combinaison de souches probiotiques scientifiquement validées pour la santé digestive",
+ 180 │         priority: 1,
+ 181 │         matchScore: 88,
+ 182 │         benefits: ["Équilibre du microbiome", "Réduction des ballonnements", "Soutien immunitaire intestinal"],
+ 183 │         recommendedDose: "10-30 milliards d'UFC par jour, avec 5+ souches différentes",
+ 184 │         timeToEffect: "2-4 semaines",
+ 185 │         scientificBasis: "Études cliniques sur diverses souches et leur impact sur la santé digestive",
+ 186 │         reason: "Vos problèmes digestifs suggèrent un déséquilibre du microbiome intestinal"
+ 187 │       });
+ 188 │ 
+ 189 │       recommendations.push({
+ 190 │         id: "rec_glutamine",
+ 191 │         name: "L-Glutamine",
+ 192 │         description: "Acide aminé essentiel pour la santé et la réparation de la muqueuse intestinale",
+ 193 │         priority: 2,
+ 194 │         matchScore: 75,
+ 195 │         benefits: ["Intégrité de la barrière intestinale", "Réduction de l'inflammation", "Soutien immunitaire"],
+ 196 │         recommendedDose: "5-10g par jour, à jeun",
+ 197 │         timeToEffect: "2-4 semaines",
+ 198 │         scientificBasis: "Principal carburant des entérocytes (cellules intestinales)",
+ 199 │         reason: "Votre profil digestif suggère un besoin de soutien pour la muqueuse intestinale"
+ 200 │       });
+ 201 │     }
+ 202 │ 
+ 203 │     // Appliquer l'apprentissage IA pour ajuster les recommandations
+ 204 │     const aiEnhancedRecommendations = adjustRecommendationsWithLearning(recommendations, quizResponses);
+ 205 │ 
+ 206 │     // Enregistrer les données pour apprentissage futur (sans feedback pour le moment)
+ 207 │     saveLearningData(quizResponses, aiEnhancedRecommendations);
+ 208 │ 
+ 209 │     return aiEnhancedRecommendations;
+ 210 │   } catch (error) {
+ 211 │     console.error("Erreur lors de la génération des recommandations:", error);
+ 212 │     return [];
+ 213 │   }
+ 214 │ };
+ 215 │ 
+ 216 │ /**
+ 217 │  * Génère une explication détaillée pour une recommandation spécifique
+ 218 │  */
+ 219 │ export const generateRecommendationExplanation = (
+ 220 │   recommendation: Recommendation,
+ 221 │   quizResponses: QuizResponse
+ 222 │ ): string => {
+ 223 │   try {
+ 224 │     const supplement = SUPPLEMENT_CATALOG[recommendation.id];
+ 225 │ 
+ 226 │     if (!supplement) {
+ 227 │       return "Information détaillée non disponible pour ce complément.";
+ 228 │     }
+ 229 │ 
+ 230 │     // Construire une explication scientifique personnalisée
+ 231 │     let explanation = `**${supplement.name} (${supplement.scientificName})** : ${supplement.description}\n\n`;
+ 232 │ 
+ 233 │     // Bénéfices spécifiques
+ 234 │     explanation += "**Bénéfices ciblés pour votre profil :**\n";
+ 235 │     explanation += supplement.benefits.map(b => `- ${b}`).join('\n');
+ 236 │ 
+ 237 │     // Base scientifique
+ 238 │     explanation += `\n\n**Base scientifique :** ${supplement.scientificBasis}`;
+ 239 │ 
+ 240 │     // Dosage personnalisé
+ 241 │     explanation += `\n\n**Dosage recommandé pour vous :** ${recommendation.recommendedDose}`;
+ 242 │ 
+ 243 │     // Délai d'efficacité
+ 244 │     explanation += `\n\n**Délai d'efficacité typique :** ${supplement.timeToEffect}`;
+ 245 │ 
+ 246 │     // Précautions
+ 247 │     if (supplement.contraindications.length > 0) {
+ 248 │       explanation += "\n\n**Précautions :** ";
+ 249 │       explanation += supplement.contraindications.map(c => c).join(', ');
+ 250 │     }
+ 251 │ 
+ 252 │     return explanation;
+ 253 │   } catch (error) {
+ 254 │     console.error("Erreur lors de la génération de l'explication:", error);
+ 255 │     return "Désolé, nous ne pouvons pas générer d'explication détaillée pour cette recommandation.";
+ 256 │   }
+ 257 │ };
+ 258 │ 
+ 259 │ /**
+ 260 │  * Enregistre les données pour l'apprentissage du système IA
+ 261 │  */
+ 262 │ export const recordLearningData = (data: LearningData): void => {
+ 263 │   try {
+ 264 │     // Récupérer les données existantes
+ 265 │     const existingData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+ 266 │ 
+ 267 │     // Ajouter les nouvelles données
+ 268 │     existingData.push(data);
+ 269 │ 
+ 270 │     // Limiter la taille des données stockées (garder les 1000 plus récentes)
+ 271 │     const trimmedData = existingData.slice(-1000);
+ 272 │ 
+ 273 │     // Sauvegarder les données
+ 274 │     secureStorageService.setItem('aiLearningData', trimmedData);
+ 275 │ 
+ 276 │   } catch (error) {
+ 277 │     console.error("Erreur lors de l'enregistrement des données d'apprentissage:", error);
+ 278 │   }
+ 279 │ };
+ 280 │ 
+ 281 │ /**
+ 282 │  * Calcule le score de similarité entre deux profils utilisateurs
+ 283 │  */
+ 284 │ export const calculateProfileSimilarity = (
+ 285 │   profile1: any,
+ 286 │   profile2: any
+ 287 │ ): number => {
+ 288 │   try {
+ 289 │     let similarityScore = 0;
+ 290 │     let totalFactors = 0;
+ 291 │ 
+ 292 │     // Comparer les symptômes actifs
+ 293 │     if (profile1.activeSymptoms && profile2.activeSymptoms) {
+ 294 │       const commonSymptoms = profile1.activeSymptoms.filter((s: string) => 
+ 295 │         profile2.activeSymptoms.includes(s)
+ 296 │       ).length;
+ 297 │ 
+ 298 │       const totalSymptoms = new Set([
+ 299 │         ...profile1.activeSymptoms,
+ 300 │         ...profile2.activeSymptoms
+ 301 │       ]).size;
+ 302 │ 
+ 303 │       if (totalSymptoms > 0) {
+ 304 │         similarityScore += (commonSymptoms / totalSymptoms) * 50; // Poids plus élevé pour les symptômes
+ 305 │         totalFactors += 1;
+ 306 │       }
+ 307 │     }
+ 308 │ 
+ 309 │     // Comparer les objectifs
+ 310 │     if (profile1.activeGoals && profile2.activeGoals) {
+ 311 │       const commonGoals = profile1.activeGoals.filter((g: string) => 
+ 312 │         profile2.activeGoals.includes(g)
+ 313 │       ).length;
+ 314 │ 
+ 315 │       const totalGoals = new Set([
+ 316 │         ...profile1.activeGoals,
+ 317 │         ...profile2.activeGoals
+ 318 │       ]).size;
+ 319 │ 
+ 320 │       if (totalGoals > 0) {
+ 321 │         similarityScore += (commonGoals / totalGoals) * 30;
+ 322 │         totalFactors += 1;
+ 323 │       }
+ 324 │     }
+ 325 │ 
+ 326 │     // Comparer les restrictions alimentaires
+ 327 │     if (profile1.dietaryRestrictions && profile2.dietaryRestrictions) {
+ 328 │       let matchingRestrictions = 0;
+ 329 │       let totalRestrictions = 0;
+ 330 │ 
+ 331 │       for (const key in profile1.dietaryRestrictions) {
+ 332 │         if (profile2.dietaryRestrictions[key] === profile1.dietaryRestrictions[key]) {
+ 333 │           matchingRestrictions++;
+ 334 │         }
+ 335 │         totalRestrictions++;
+ 336 │       }
+ 337 │ 
+ 338 │       if (totalRestrictions > 0) {
+ 339 │         similarityScore += (matchingRestrictions / totalRestrictions) * 20;
+ 340 │         totalFactors += 1;
+ 341 │       }
+ 342 │     }
+ 343 │ 
+ 344 │     // Normaliser le score
+ 345 │     return totalFactors > 0 ? similarityScore / totalFactors : 0;
+ 346 │ 
+ 347 │   } catch (error) {
+ 348 │     console.error("Erreur lors du calcul de la similarité:", error);
+ 349 │     return 0;
+ 350 │   }
+ 351 │ };
+ 352 │ 
+ 353 │ /**
+ 354 │  * Enrichit les recommandations en utilisant l'IA externe via API (ChatGPT)
+ 355 │  */
+ 356 │ export const enrichRecommendationsWithExternalAI = async (
+ 357 │   recommendations: Recommendation[],
+ 358 │   quizResponses: QuizResponse
+ 359 │ ): Promise<Recommendation[]> => {
+ 360 │   try {
+ 361 │     // Vérifier si la clé API est configurée
+ 362 │     const apiKey = secureStorageService.getItem('openai_api_key');
+ 363 │ 
+ 364 │     if (!apiKey) {
+ 365 │       console.log("Clé API OpenAI non configurée, impossible d'enrichir les recommandations");
+ 366 │       return recommendations;
+ 367 │     }
+ 368 │ 
+ 369 │     // Préparer les données à envoyer à l'API
+ 370 │     const requestData = {
+ 371 │       model: "gpt-4",
+ 372 │       messages: [
+ 373 │         {
+ 374 │           role: "system",
+ 375 │           content: `Vous êtes un expert en nutrition et suppléments nutritionnels. 
+ 376 │           Vous allez analyser les recommandations générées par notre système et les enrichir 
+ 377 │           avec des conseils plus personnalisés, des explications scientifiques, et des ajustements 
+ 378 │           de dosage si nécessaire. Restez factuel et basez vos recommandations sur la science.`
+ 379 │         },
+ 380 │         {
+ 381 │           role: "user",
+ 382 │           content: `Voici les recommandations générées par notre système et les réponses au quiz de l'utilisateur.
+ 383 │           Veuillez enrichir ces recommandations avec des détails supplémentaires sur l'efficacité, d'éventuelles 
+ 384 │           synergies entre les compléments, et affiner les dosages en fonction du profil spécifique.
+ 385 │ 
+ 386 │           RÉPONSES AU QUIZ:
+ 387 │           ${JSON.stringify(quizResponses, null, 2)}
+ 388 │ 
+ 389 │           RECOMMANDATIONS GÉNÉRÉES:
+ 390 │           ${JSON.stringify(recommendations, null, 2)}
+ 391 │ 
+ 392 │           Répondez au format JSON avec les recommandations enrichies.`
+ 393 │         }
+ 394 │       ],
+ 395 │       temperature: 0.7,
+ 396 │       max_tokens: 1500
+ 397 │     };
+ 398 │ 
+ 399 │     // Appeler l'API OpenAI
+ 400 │     const response = await fetch('https://api.openai.com/v1/chat/completions', {
+ 401 │       method: 'POST',
+ 402 │       headers: {
+ 403 │         'Content-Type': 'application/json',
+ 404 │         'Authorization': `Bearer ${apiKey}`
+ 405 │       },
+ 406 │       body: JSON.stringify(requestData)
+ 407 │     });
+ 408 │ 
+ 409 │     if (!response.ok) {
+ 410 │       throw new Error(`Erreur API: ${response.status}`);
+ 411 │     }
+ 412 │ 
+ 413 │     const data = await response.json();
+ 414 │ 
+ 415 │     // Extraire et parser la réponse
+ 416 │     try {
+ 417 │       const content = data.choices[0].message.content;
+ 418 │       const enrichedRecommendations = JSON.parse(content);
+ 419 │ 
+ 420 │       // Fusionner avec les recommandations originales
+ 421 │       return enrichedRecommendations.map((enriched: any, index: number) => ({
+ 422 │         ...recommendations[index],
+ 423 │         ...enriched,
+ 424 │         aiEnriched: true
+ 425 │       }));
+ 426 │ 
+ 427 │     } catch (parseError) {
+ 428 │       console.error("Erreur lors du parsing de la réponse AI:", parseError);
+ 429 │       return recommendations;
+ 430 │     }
+ 431 │ 
+ 432 │   } catch (error) {
+ 433 │     console.error("Erreur lors de l'enrichissement des recommandations par IA:", error);
+ 434 │     return recommendations;
+ 435 │   }
+ 436 │ };
+ 437 │ 
+ 438 │ /**
+ 439 │  * Met à jour le modèle d'apprentissage en fonction des retours utilisateurs
+ 440 │  */
+ 441 │ export const updateAiModel = (): void => {
+ 442 │   try {
+ 443 │     // Récupérer toutes les données d'apprentissage
+ 444 │     const learningData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+ 445 │ 
+ 446 │     // Récupérer les retours utilisateurs
+ 447 │     const userFeedback: UserFeedback[] = secureStorageService.getItem('userFeedback') || [];
+ 448 │ 
+ 449 │     if (learningData.length === 0 || userFeedback.length === 0) {
+ 450 │       console.log("Pas assez de données pour mettre à jour le modèle");
+ 451 │       return;
+ 452 │     }
+ 453 │ 
+ 454 │     // Traiter les données pour améliorer les recommandations
+ 455 │     processLearningDataAndFeedback(learningData, userFeedback);
+ 456 │ 
+ 457 │   } catch (error) {
+ 458 │     console.error("Erreur lors de la mise à jour du modèle IA:", error);
+ 459 │   }
+ 460 │ };
+ 461 │ 
+ 462 │ /**
+ 463 │  * Traite les données d'apprentissage et les retours utilisateurs pour améliorer le modèle
+ 464 │  */
+ 465 │ const processLearningDataAndFeedback = (
+ 466 │   learningData: LearningData[],
+ 467 │   userFeedback: UserFeedback[]
+ 468 │ ): void => {
+ 469 │   try {
+ 470 │     // Construire un index pour associer les recommandations à leur feedback
+ 471 │     const feedbackIndex = new Map<string, number[]>();
+ 472 │ 
+ 473 │     userFeedback.forEach(feedback => {
+ 474 │       if (!feedbackIndex.has(feedback.recommendationId)) {
+ 475 │         feedbackIndex.set(feedback.recommendationId, []);
+ 476 │       }
+ 477 │ 
+ 478 │       feedbackIndex.get(feedback.recommendationId)?.push(feedback.rating);
+ 479 │     });
+ 480 │ 
+ 481 │     // Ajuster les priorités des recommandations en fonction des retours
+ 482 │     const supplementAdjustments = new Map<string, { 
+ 483 │       totalPositive: number;
+ 484 │       totalNegative: number;
+ 485 │       count: number;
+ 486 │     }>();
+ 487 │ 
+ 488 │     // Parcourir les données d'apprentissage
+ 489 │     learningData.forEach(data => {
+ 490 │       data.generatedRecommendations.forEach(rec => {
+ 491 │         const feedback = feedbackIndex.get(rec.id);
+ 492 │ 
+ 493 │         if (feedback && feedback.length > 0) {
+ 494 │           // Calculer le score moyen
+ 495 │           const avgRating = feedback.reduce((sum, rating) => sum + rating, 0) / feedback.length;
+ 496 │ 
+ 497 │           if (!supplementAdjustments.has(rec.id)) {
+ 498 │             supplementAdjustments.set(rec.id, {
+ 499 │               totalPositive: 0,
+ 500 │               totalNegative: 0,
+ 501 │               count: 0
+ 502 │             });
+ 503 │           }
+ 504 │ 
+ 505 │           const adjustment = supplementAdjustments.get(rec.id)!;
+ 506 │ 
+ 507 │           if (avgRating >= 3.5) {
+ 508 │             adjustment.totalPositive++;
+ 509 │           } else {
+ 510 │             adjustment.totalNegative++;
+ 511 │           }
+ 512 │ 
+ 513 │           adjustment.count++;
+ 514 │         }
+ 515 │       });
+ 516 │     });
+ 517 │ 
+ 518 │     // Appliquer les ajustements au modèle
+ 519 │     supplementAdjustments.forEach((adjustmentData, supplementId) => {
+ 520 │       if (adjustmentData.count >= 5) { // Au moins 5 retours pour être significatif
+ 521 │         const positiveRatio = adjustmentData.totalPositive / adjustmentData.count;
+ 522 │ 
+ 523 │         // Ajuster les symptômes associés
+ 524 │         for (const symptomKey in SYMPTOM_RECOMMENDATIONS) {
+ 525 │           const recommendations = SYMPTOM_RECOMMENDATIONS[symptomKey];
+ 526 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 527 │ 
+ 528 │           if (recIndex >= 0) {
+ 529 │             const currentPriority = recommendations[recIndex].priority;
+ 530 │ 
+ 531 │             // Courbe d'ajustement plus fine basée sur les retours
+ 532 │             if (positiveRatio > 0.8) { // Plus de 80% de retours positifs
+ 533 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 2);
+ 534 │             } else if (positiveRatio > 0.6) { // Entre 60% et 80% de retours positifs
+ 535 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 536 │             } else if (positiveRatio < 0.3) { // Moins de 30% de retours positifs
+ 537 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 2);
+ 538 │             } else if (positiveRatio < 0.5) { // Entre 30% et 50% de retours positifs
+ 539 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 540 │             }
+ 541 │           }
+ 542 │         }
+ 543 │ 
+ 544 │         // Ajuster également les objectifs associés
+ 545 │         for (const goalKey in GOAL_RECOMMENDATIONS) {
+ 546 │           const recommendations = GOAL_RECOMMENDATIONS[goalKey];
+ 547 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 548 │ 
+ 549 │           if (recIndex >= 0) {
+ 550 │             const currentPriority = recommendations[recIndex].priority;
+ 551 │ 
+ 552 │             // Augmenter ou diminuer la priorité selon les retours
+ 553 │             if (positiveRatio > 0.7) {
+ 554 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 555 │             } else if (positiveRatio < 0.3) {
+ 556 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 557 │             }
+ 558 │           }
+ 559 │         }
+ 560 │       }
+ 561 │     });
+ 562 │ 
+ 563 │     // Sauvegarder les données modifiées
+ 564 │     // Note: Dans une implémentation réelle, nous sauvegarderions ces changements dans une base de données
+ 565 │     // Pour cette démonstration, nous utilisons le stockage sécurisé local
+ 566 │     secureStorageService.setItem('symptomRecommendationsUpdated', SYMPTOM_RECOMMENDATIONS);
+ 567 │     secureStorageService.setItem('goalRecommendationsUpdated', GOAL_RECOMMENDATIONS);
+ 568 │ 
+ 569 │     console.log("Modèle IA mis à jour avec succès");
+ 570 │ 
+ 571 │   } catch (error) {
+ 572 │     console.error("Erreur lors du traitement des données d'apprentissage:", error);
+ 573 │   }
+ 574 │ };
+ 575 │ 
+ 576 │ 
+ 577 │ /**
+ 578 │  * Génère des recommandations personnalisées avancées avec analyse comportementale et IA
+ 579 │  */
+ 580 │ export const generateAdvancedRecommendations = (
+ 581 │   quizResponses: QuizResponse,
+ 582 │   behavioralMetrics?: BehavioralMetrics,
+ 583 │   neuroProfile?: NeuroProfile
+ 584 │ ): Recommendation[] => {
+ 585 │   try {
+ 586 │     // Générer les recommandations de base
+ 587 │     const baseRecommendations = generateRecommendations(quizResponses, behavioralMetrics, neuroProfile);
+ 588 │ 
+ 589 │     // Appliquer l'ajustement d'apprentissage IA
+ 590 │     const aiEnhancedRecommendations = adjustRecommendationsWithLearning(baseRecommendations, quizResponses);
+ 591 │ 
+ 592 │     // Si des métriques comportementales sont disponibles, les utiliser pour affiner davantage
+ 593 │     if (behavioralMetrics) {
+ 594 │       const behavioralInsights = processBehavioralData(behavioralMetrics);
+ 595 │ 
+ 596 │       // Ajuster les priorités en fonction des domaines d'intérêt comportementaux
+ 597 │       aiEnhancedRecommendations.forEach(rec => {
+ 598 │         // Vérifier si cette recommandation correspond à un domaine d'intérêt
+ 599 │         behavioralInsights.interestAreas.forEach(area => {
+ 600 │           if (
+ 601 │             (area === 'Stress' && (rec.id.includes('magnes') || rec.id.includes('ashwagandha') || rec.id.includes('theanine'))) ||
+ 602 │             (area === 'Sommeil' && (rec.id.includes('melatonin') || rec.id.includes('magnes') || rec.id.includes('valerian'))) ||
+ 603 │             (area === 'Énergie' && (rec.id.includes('vitaminb') || rec.id.includes('iron') || rec.id.includes('coq10'))) ||
+ 604 │             (area === 'Digestion' && (rec.id.includes('probio') || rec.id.includes('enzymes') || rec.id.includes('fiber'))) ||
+ 605 │             (area === 'Immunité' && (rec.id.includes('vitaminc') || rec.id.includes('vitd') || rec.id.includes('zinc')))
+ 606 │           ) {
+ 607 │             // Augmenter le score pour les recommandations correspondant aux intérêts
+ 608 │             rec.matchScore = Math.min(100, rec.matchScore + 5);
+ 609 │ 
+ 610 │             // Ajouter une explication IA
+ 611 │             if (!rec.aiExplanations) {
+ 612 │               rec.aiExplanations = [];
+ 613 │             }
+ 614 │             rec.aiExplanations.push(`Cette recommandation est particulièrement adaptée à votre intérêt pour ${area.toLowerCase()}`);
+ 615 │           }
+ 616 │         });
+ 617 │ 
+ 618 │         // Ajuster en fonction du niveau d'incertitude
+ 619 │         if (behavioralInsights.uncertaintyLevel > 0.6 && rec.scientificBasis) {
+ 620 │           // Pour les utilisateurs incertains, ajouter plus d'explications scientifiques
+ 621 │           if (!rec.aiExplanations) {
+ 622 │             rec.aiExplanations = [];
+ 623 │           }
+ 624 │           rec.aiExplanations.push("Nous avons constaté que vous recherchiez des informations détaillées, c'est pourquoi nous avons priorisé cette recommandation bien documentée scientifiquement");
+ 625 │         }
+ 626 │ 
+ 627 │         // Ajuster en fonction du niveau d'attention
+ 628 │         if (behavioralInsights.attentionLevel < 0.4) {
+ 629 │           // Pour les utilisateurs à faible attention, donner une explication courte et directe
+ 630 │           rec.shortExplanation = `Recommandé pour: ${rec.benefits.slice(0, 2).join(', ')}`;
+ 631 │         }
+ 632 │       });
+ 633 │     }
+ 634 │ 
+ 635 │     // Enrichir avec des données de neuroProfile si disponibles
+ 636 │     if (neuroProfile) {
+ 637 │       aiEnhancedRecommendations.forEach(rec => {
+ 638 │         if (neuroProfile.decisionStyle === 'analytical' && rec.scientificBasis) {
+ 639 │           rec.matchScore = Math.min(100, rec.matchScore + 3);
+ 640 │ 
+ 641 │           if (!rec.aiExplanations) {
+ 642 │             rec.aiExplanations = [];
+ 643 │           }
+ 644 │           rec.aiExplanations.push("Cette recommandation correspond à votre approche analytique, avec une base scientifique solide");
+ 645 │         }
+ 646 │ 
+ 647 │         if (neuroProfile.decisionStyle === 'intuitive' && rec.timeToEffect === 'rapid') {
+ 648 │           rec.matchScore = Math.min(100, rec.matchScore + 3);
+ 649 │ 
+ 650 │           if (!rec.aiExplanations) {
+ 651 │             rec.aiExplanations = [];
+ 652 │           }
+ 653 │           rec.aiExplanations.push("Cette solution à action rapide correspond à votre préférence pour des résultats immédiats");
+ 654 │         }
+ 655 │ 
+ 656 │         if (neuroProfile.riskTolerance === 'low' && rec.safetyProfile === 'excellent') {
+ 657 │           rec.matchScore = Math.min(100, rec.matchScore + 5);
+ 658 │ 
+ 659 │           if (!rec.aiExplanations) {
+ 660 │             rec.aiExplanations = [];
+ 661 │           }
+ 662 │           rec.aiExplanations.push("Cette option présente un excellent profil de sécurité, idéal pour votre préférence pour les solutions éprouvées");
+ 663 │         }
+ 664 │       });
+ 665 │     }
+ 666 │ 
+ 667 │     // Réordonner les recommandations en fonction des scores ajustés
+ 668 │     aiEnhancedRecommendations.sort((a, b) => {
+ 669 │       if (a.priority !== b.priority) {
+ 670 │         return a.priority - b.priority;
+ 671 │       }
+ 672 │       return b.matchScore - a.matchScore;
+ 673 │     });
+ 674 │ 
+ 675 │     // Optimiser les recommandations avec l'algorithme avancé
+ 676 │     const optimizedRecommendations = optimizeRecommendations(
+ 677 │       aiEnhancedRecommendations,
+ 678 │       quizResponses,
+ 679 │       behavioralMetrics,
+ 680 │       neuroProfile
+ 681 │     );
+ 682 │ 
+ 683 │     // Enregistrer les données pour apprentissage futur
+ 684 │     saveLearningData(quizResponses, optimizedRecommendations, behavioralMetrics, neuroProfile);
+ 685 │ 
+ 686 │     return optimizedRecommendations;
+ 687 │   } catch (error) {
+ 688 │     console.error("Erreur lors de la génération des recommandations avancées:", error);
+ 689 │     return generateRecommendations(quizResponses, behavioralMetrics, neuroProfile);
+ 690 │   }
+ 691 │ };
+ 692 │ 
+ 693 │ // Importations nécessaires
+ 694 │ import { optimizeRecommendations } from './optimizedRecommendation';
+ 695 │ import { getAILearningStatus } from './aiLearningEngine';
+     ·          ─────────┬─────────
+     ·                   ╰── `getAILearningStatus` redefined here
+ 696 │ import { secureStorageService } from '../lib/secureStorage';
+ 697 │ 
+     ╰────
+  × the name `secureStorageService` is defined multiple times
+     ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:14:1]
+  11 │   LearningData
+  12 │ } from './types';
+  13 │ 
+  14 │ import { secureStorageService } from './secureStorage';
+     ·          ──────────┬─────────
+     ·                    ╰── previous definition of `secureStorageService` here
+  15 │ import { findSimilarProfiles } from './userSimilarity';
+  16 │ import { 
+  17 │   SYMPTOM_MAPPING, 
+  18 │   SYMPTOM_CATEGORIES, 
+  19 │   SYMPTOM_RECOMMENDATIONS,
+  20 │   GOAL_RECOMMENDATIONS
+  21 │ } from '../data/recommendationMappings';
+  22 │ import { SUPPLEMENT_CATALOG } from '../data/supplementCatalog';
+  23 │ import { 
+  24 │   adjustRecommendationsWithLearning,
+  25 │   saveLearningData,
+  26 │   getAILearningStatus,
+  27 │   evaluateDataQuality
+  28 │ } from './aiLearningEngine';
+  29 │ 
+  30 │ /**
+  31 │  * Génère des recommandations en utilisant l'algorithme principal et l'apprentissage IA
+  32 │  */
+  33 │ export const generateRecommendations = (
+  34 │   quizResponses: QuizResponse,
+  35 │   behavioralMetrics?: BehavioralMetrics,
+  36 │   neuroProfile?: NeuroProfile
+  37 │ ): Recommendation[] => {
+  38 │   try {
+  39 │     // Vérifier si les données du quiz sont valides
+  40 │     if (!quizResponses || !quizResponses.healthConcerns || !quizResponses.goals) {
+  41 │       console.error("Données du quiz insuffisantes pour générer des recommandations");
+  42 │       return [];
+  43 │     }
+  44 │ 
+  45 │     const recommendations: Recommendation[] = [];
+  46 │ 
+  47 │     // === SANTÉ MENTALE & STRESS ===
+  48 │     if (quizResponses.healthConcerns.stressLevel === 'high' || 
+  49 │         quizResponses.healthConcerns.stressLevel === 'very_high' || 
+  50 │         quizResponses.goals.reduceStress) {
+  51 │ 
+  52 │       recommendations.push({
+  53 │         id: "rec_magnesium",
+  54 │         name: "Magnésium bisglycinate",
+  55 │         description: "Forme hautement biodisponible du magnésium qui aide à réduire le stress et l'anxiété",
+  56 │         priority: 1,
+  57 │         matchScore: 90,
+  58 │         benefits: ["Réduction de l'anxiété", "Amélioration du sommeil", "Relaxation musculaire"],
+  59 │         recommendedDose: "300-400mg par jour, de préférence le soir",
+  60 │         timeToEffect: "2-4 semaines pour un effet optimal",
+  61 │         scientificBasis: "Études cliniques démontrant l'efficacité du magnésium sur les niveaux de stress et d'anxiété",
+  62 │         reason: "Votre niveau de stress élevé indique un besoin en magnésium"
+  63 │       });
+  64 │ 
+  65 │       recommendations.push({
+  66 │         id: "rec_ashwagandha",
+  67 │         name: "Ashwagandha KSM-66",
+  68 │         description: "Adaptogène puissant aidant à réduire le cortisol et à équilibrer la réponse au stress",
+  69 │         priority: 2,
+  70 │         matchScore: 85,
+  71 │         benefits: ["Réduction du cortisol", "Adaptation au stress", "Amélioration de la résistance"],
+  72 │         recommendedDose: "300-600mg par jour, extrait standardisé",
+  73 │         timeToEffect: "4-6 semaines pour un effet optimal",
+  74 │         scientificBasis: "Multiples études cliniques confirmant son effet adaptogène",
+  75 │         reason: "Votre profil indique un besoin d'adaptogènes pour la gestion du stress chronique"
+  76 │       });
+  77 │     }
+  78 │ 
+  79 │     // === ÉNERGIE & FATIGUE ===
+  80 │     if (quizResponses.healthConcerns.energyLevel === 'low' || 
+  81 │         quizResponses.goals.increaseEnergy) {
+  82 │ 
+  83 │       recommendations.push({
+  84 │         id: "rec_b_complex",
+  85 │         name: "Complexe Vitamines B actives",
+  86 │         description: "Vitamines B sous formes méthylées pour une absorption optimale et un soutien énergétique",
+  87 │         priority: 1,
+  88 │         matchScore: 88,
+  89 │         benefits: ["Production d'énergie cellulaire", "Soutien au métabolisme", "Fonction cognitive"],
+  90 │         recommendedDose: "1 gélule par jour avec le petit-déjeuner",
+  91 │         timeToEffect: "2-3 semaines",
+  92 │         scientificBasis: "Rôle essentiel des vitamines B dans le cycle de Krebs et la production d'ATP",
+  93 │         reason: "Votre niveau d'énergie bas suggère un besoin en vitamines B"
+  94 │       });
+  95 │ 
+  96 │       recommendations.push({
+  97 │         id: "rec_coq10",
+  98 │         name: "Coenzyme Q10",
+  99 │         description: "Cofacteur essentiel pour la production d'énergie dans les mitochondries",
+ 100 │         priority: 2,
+ 101 │         matchScore: 80,
+ 102 │         benefits: ["Production d'ATP", "Protection antioxydante", "Santé mitochondriale"],
+ 103 │         recommendedDose: "100-200mg par jour avec un repas contenant des graisses",
+ 104 │         timeToEffect: "2-4 semaines",
+ 105 │         scientificBasis: "Études démontrant l'amélioration des niveaux d'énergie chez les personnes fatiguées",
+ 106 │         reason: "La CoQ10 peut aider à restaurer la production d'énergie cellulaire"
+ 107 │       });
+ 108 │     }
+ 109 │ 
+ 110 │     // === SOMMEIL ===
+ 111 │     if (quizResponses.healthConcerns.sleepIssues === 'yes' || 
+ 112 │         quizResponses.healthConcerns.sleepIssues === 'sometimes') {
+ 113 │ 
+ 114 │       recommendations.push({
+ 115 │         id: "rec_magnesium_glycinate",
+ 116 │         name: "Magnésium Glycinate",
+ 117 │         description: "Forme de magnésium hautement absorbable ayant un effet relaxant",
+ 118 │         priority: 1,
+ 119 │         matchScore: 85,
+ 120 │         benefits: ["Relaxation musculaire", "Calme mental", "Régulation du GABA"],
+ 121 │         recommendedDose: "300-400mg avant le coucher",
+ 122 │         timeToEffect: "1-2 semaines",
+ 123 │         scientificBasis: "Le magnésium active les récepteurs GABA impliqués dans la relaxation",
+ 124 │         reason: "Vos problèmes de sommeil peuvent être améliorés par le magnésium"
+ 125 │       });
+ 126 │ 
+ 127 │       recommendations.push({
+ 128 │         id: "rec_theanine",
+ 129 │         name: "L-Théanine",
+ 130 │         description: "Acide aminé naturellement présent dans le thé vert qui favorise la détente sans somnolence",
+ 131 │         priority: 2,
+ 132 │         matchScore: 80,
+ 133 │         benefits: ["Relaxation sans somnolence", "Amélioration de la qualité du sommeil", "Réduction des ruminations mentales"],
+ 134 │         recommendedDose: "200-400mg avant le coucher",
+ 135 │         timeToEffect: "30 minutes à 1 heure",
+ 136 │         scientificBasis: "Augmente les ondes alpha dans le cerveau, associées à un état de relaxation",
+ 137 │         reason: "La L-Théanine peut aider à calmer votre esprit avant le sommeil"
+ 138 │       });
+ 139 │     }
+ 140 │ 
+ 141 │     // === CONCENTRATION & COGNITION ===
+ 142 │     if (quizResponses.healthConcerns.focusIssues === 'yes' || 
+ 143 │         quizResponses.goals.improveFocus) {
+ 144 │ 
+ 145 │       recommendations.push({
+ 146 │         id: "rec_bacopa",
+ 147 │         name: "Bacopa Monnieri",
+ 148 │         description: "Plante adaptogène qui améliore la mémoire et les fonctions cognitives",
+ 149 │         priority: 1,
+ 150 │         matchScore: 82,
+ 151 │         benefits: ["Mémoire", "Concentration", "Réduction du stress cognitif"],
+ 152 │         recommendedDose: "300-500mg par jour, extrait standardisé à 50% de bacosides",
+ 153 │         timeToEffect: "8-12 semaines pour des résultats optimaux",
+ 154 │         scientificBasis: "Multiples études cliniques montrant des améliorations cognitives",
+ 155 │         reason: "Vos problèmes de concentration peuvent bénéficier des effets neuroprotecteurs du Bacopa"
+ 156 │       });
+ 157 │ 
+ 158 │       recommendations.push({
+ 159 │         id: "rec_rhodiola",
+ 160 │         name: "Rhodiola Rosea",
+ 161 │         description: "Adaptogène qui réduit la fatigue mentale et améliore les performances cognitives",
+ 162 │         priority: 2,
+ 163 │         matchScore: 75,
+ 164 │         benefits: ["Réduction de la fatigue mentale", "Amélioration de la vigilance", "Résistance au stress"],
+ 165 │         recommendedDose: "200-400mg par jour, extrait standardisé à 3% de rosavines",
+ 166 │         timeToEffect: "1-3 semaines",
+ 167 │         scientificBasis: "Études montrant une amélioration des performances cognitives en situation de stress",
+ 168 │         reason: "La Rhodiola peut améliorer votre concentration en conditions de stress"
+ 169 │       });
+ 170 │     }
+ 171 │ 
+ 172 │     // === DIGESTION ===
+ 173 │     if (quizResponses.healthConcerns.digestiveIssues === 'yes' || 
+ 174 │         quizResponses.goals.improveDigestion) {
+ 175 │ 
+ 176 │       recommendations.push({
+ 177 │         id: "rec_probiotics",
+ 178 │         name: "Probiotiques multi-souches",
+ 179 │         description: "Combinaison de souches probiotiques scientifiquement validées pour la santé digestive",
+ 180 │         priority: 1,
+ 181 │         matchScore: 88,
+ 182 │         benefits: ["Équilibre du microbiome", "Réduction des ballonnements", "Soutien immunitaire intestinal"],
+ 183 │         recommendedDose: "10-30 milliards d'UFC par jour, avec 5+ souches différentes",
+ 184 │         timeToEffect: "2-4 semaines",
+ 185 │         scientificBasis: "Études cliniques sur diverses souches et leur impact sur la santé digestive",
+ 186 │         reason: "Vos problèmes digestifs suggèrent un déséquilibre du microbiome intestinal"
+ 187 │       });
+ 188 │ 
+ 189 │       recommendations.push({
+ 190 │         id: "rec_glutamine",
+ 191 │         name: "L-Glutamine",
+ 192 │         description: "Acide aminé essentiel pour la santé et la réparation de la muqueuse intestinale",
+ 193 │         priority: 2,
+ 194 │         matchScore: 75,
+ 195 │         benefits: ["Intégrité de la barrière intestinale", "Réduction de l'inflammation", "Soutien immunitaire"],
+ 196 │         recommendedDose: "5-10g par jour, à jeun",
+ 197 │         timeToEffect: "2-4 semaines",
+ 198 │         scientificBasis: "Principal carburant des entérocytes (cellules intestinales)",
+ 199 │         reason: "Votre profil digestif suggère un besoin de soutien pour la muqueuse intestinale"
+ 200 │       });
+ 201 │     }
+ 202 │ 
+ 203 │     // Appliquer l'apprentissage IA pour ajuster les recommandations
+ 204 │     const aiEnhancedRecommendations = adjustRecommendationsWithLearning(recommendations, quizResponses);
+ 205 │ 
+ 206 │     // Enregistrer les données pour apprentissage futur (sans feedback pour le moment)
+ 207 │     saveLearningData(quizResponses, aiEnhancedRecommendations);
+ 208 │ 
+ 209 │     return aiEnhancedRecommendations;
+ 210 │   } catch (error) {
+ 211 │     console.error("Erreur lors de la génération des recommandations:", error);
+ 212 │     return [];
+ 213 │   }
+ 214 │ };
+ 215 │ 
+ 216 │ /**
+ 217 │  * Génère une explication détaillée pour une recommandation spécifique
+ 218 │  */
+ 219 │ export const generateRecommendationExplanation = (
+ 220 │   recommendation: Recommendation,
+ 221 │   quizResponses: QuizResponse
+ 222 │ ): string => {
+ 223 │   try {
+ 224 │     const supplement = SUPPLEMENT_CATALOG[recommendation.id];
+ 225 │ 
+ 226 │     if (!supplement) {
+ 227 │       return "Information détaillée non disponible pour ce complément.";
+ 228 │     }
+ 229 │ 
+ 230 │     // Construire une explication scientifique personnalisée
+ 231 │     let explanation = `**${supplement.name} (${supplement.scientificName})** : ${supplement.description}\n\n`;
+ 232 │ 
+ 233 │     // Bénéfices spécifiques
+ 234 │     explanation += "**Bénéfices ciblés pour votre profil :**\n";
+ 235 │     explanation += supplement.benefits.map(b => `- ${b}`).join('\n');
+ 236 │ 
+ 237 │     // Base scientifique
+ 238 │     explanation += `\n\n**Base scientifique :** ${supplement.scientificBasis}`;
+ 239 │ 
+ 240 │     // Dosage personnalisé
+ 241 │     explanation += `\n\n**Dosage recommandé pour vous :** ${recommendation.recommendedDose}`;
+ 242 │ 
+ 243 │     // Délai d'efficacité
+ 244 │     explanation += `\n\n**Délai d'efficacité typique :** ${supplement.timeToEffect}`;
+ 245 │ 
+ 246 │     // Précautions
+ 247 │     if (supplement.contraindications.length > 0) {
+ 248 │       explanation += "\n\n**Précautions :** ";
+ 249 │       explanation += supplement.contraindications.map(c => c).join(', ');
+ 250 │     }
+ 251 │ 
+ 252 │     return explanation;
+ 253 │   } catch (error) {
+ 254 │     console.error("Erreur lors de la génération de l'explication:", error);
+ 255 │     return "Désolé, nous ne pouvons pas générer d'explication détaillée pour cette recommandation.";
+ 256 │   }
+ 257 │ };
+ 258 │ 
+ 259 │ /**
+ 260 │  * Enregistre les données pour l'apprentissage du système IA
+ 261 │  */
+ 262 │ export const recordLearningData = (data: LearningData): void => {
+ 263 │   try {
+ 264 │     // Récupérer les données existantes
+ 265 │     const existingData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+ 266 │ 
+ 267 │     // Ajouter les nouvelles données
+ 268 │     existingData.push(data);
+ 269 │ 
+ 270 │     // Limiter la taille des données stockées (garder les 1000 plus récentes)
+ 271 │     const trimmedData = existingData.slice(-1000);
+ 272 │ 
+ 273 │     // Sauvegarder les données
+ 274 │     secureStorageService.setItem('aiLearningData', trimmedData);
+ 275 │ 
+ 276 │   } catch (error) {
+ 277 │     console.error("Erreur lors de l'enregistrement des données d'apprentissage:", error);
+ 278 │   }
+ 279 │ };
+ 280 │ 
+ 281 │ /**
+ 282 │  * Calcule le score de similarité entre deux profils utilisateurs
+ 283 │  */
+ 284 │ export const calculateProfileSimilarity = (
+ 285 │   profile1: any,
+ 286 │   profile2: any
+ 287 │ ): number => {
+ 288 │   try {
+ 289 │     let similarityScore = 0;
+ 290 │     let totalFactors = 0;
+ 291 │ 
+ 292 │     // Comparer les symptômes actifs
+ 293 │     if (profile1.activeSymptoms && profile2.activeSymptoms) {
+ 294 │       const commonSymptoms = profile1.activeSymptoms.filter((s: string) => 
+ 295 │         profile2.activeSymptoms.includes(s)
+ 296 │       ).length;
+ 297 │ 
+ 298 │       const totalSymptoms = new Set([
+ 299 │         ...profile1.activeSymptoms,
+ 300 │         ...profile2.activeSymptoms
+ 301 │       ]).size;
+ 302 │ 
+ 303 │       if (totalSymptoms > 0) {
+ 304 │         similarityScore += (commonSymptoms / totalSymptoms) * 50; // Poids plus élevé pour les symptômes
+ 305 │         totalFactors += 1;
+ 306 │       }
+ 307 │     }
+ 308 │ 
+ 309 │     // Comparer les objectifs
+ 310 │     if (profile1.activeGoals && profile2.activeGoals) {
+ 311 │       const commonGoals = profile1.activeGoals.filter((g: string) => 
+ 312 │         profile2.activeGoals.includes(g)
+ 313 │       ).length;
+ 314 │ 
+ 315 │       const totalGoals = new Set([
+ 316 │         ...profile1.activeGoals,
+ 317 │         ...profile2.activeGoals
+ 318 │       ]).size;
+ 319 │ 
+ 320 │       if (totalGoals > 0) {
+ 321 │         similarityScore += (commonGoals / totalGoals) * 30;
+ 322 │         totalFactors += 1;
+ 323 │       }
+ 324 │     }
+ 325 │ 
+ 326 │     // Comparer les restrictions alimentaires
+ 327 │     if (profile1.dietaryRestrictions && profile2.dietaryRestrictions) {
+ 328 │       let matchingRestrictions = 0;
+ 329 │       let totalRestrictions = 0;
+ 330 │ 
+ 331 │       for (const key in profile1.dietaryRestrictions) {
+ 332 │         if (profile2.dietaryRestrictions[key] === profile1.dietaryRestrictions[key]) {
+ 333 │           matchingRestrictions++;
+ 334 │         }
+ 335 │         totalRestrictions++;
+ 336 │       }
+ 337 │ 
+ 338 │       if (totalRestrictions > 0) {
+ 339 │         similarityScore += (matchingRestrictions / totalRestrictions) * 20;
+ 340 │         totalFactors += 1;
+ 341 │       }
+ 342 │     }
+ 343 │ 
+ 344 │     // Normaliser le score
+ 345 │     return totalFactors > 0 ? similarityScore / totalFactors : 0;
+ 346 │ 
+ 347 │   } catch (error) {
+ 348 │     console.error("Erreur lors du calcul de la similarité:", error);
+ 349 │     return 0;
+ 350 │   }
+ 351 │ };
+ 352 │ 
+ 353 │ /**
+ 354 │  * Enrichit les recommandations en utilisant l'IA externe via API (ChatGPT)
+ 355 │  */
+ 356 │ export const enrichRecommendationsWithExternalAI = async (
+ 357 │   recommendations: Recommendation[],
+ 358 │   quizResponses: QuizResponse
+ 359 │ ): Promise<Recommendation[]> => {
+ 360 │   try {
+ 361 │     // Vérifier si la clé API est configurée
+ 362 │     const apiKey = secureStorageService.getItem('openai_api_key');
+ 363 │ 
+ 364 │     if (!apiKey) {
+ 365 │       console.log("Clé API OpenAI non configurée, impossible d'enrichir les recommandations");
+ 366 │       return recommendations;
+ 367 │     }
+ 368 │ 
+ 369 │     // Préparer les données à envoyer à l'API
+ 370 │     const requestData = {
+ 371 │       model: "gpt-4",
+ 372 │       messages: [
+ 373 │         {
+ 374 │           role: "system",
+ 375 │           content: `Vous êtes un expert en nutrition et suppléments nutritionnels. 
+ 376 │           Vous allez analyser les recommandations générées par notre système et les enrichir 
+ 377 │           avec des conseils plus personnalisés, des explications scientifiques, et des ajustements 
+ 378 │           de dosage si nécessaire. Restez factuel et basez vos recommandations sur la science.`
+ 379 │         },
+ 380 │         {
+ 381 │           role: "user",
+ 382 │           content: `Voici les recommandations générées par notre système et les réponses au quiz de l'utilisateur.
+ 383 │           Veuillez enrichir ces recommandations avec des détails supplémentaires sur l'efficacité, d'éventuelles 
+ 384 │           synergies entre les compléments, et affiner les dosages en fonction du profil spécifique.
+ 385 │ 
+ 386 │           RÉPONSES AU QUIZ:
+ 387 │           ${JSON.stringify(quizResponses, null, 2)}
+ 388 │ 
+ 389 │           RECOMMANDATIONS GÉNÉRÉES:
+ 390 │           ${JSON.stringify(recommendations, null, 2)}
+ 391 │ 
+ 392 │           Répondez au format JSON avec les recommandations enrichies.`
+ 393 │         }
+ 394 │       ],
+ 395 │       temperature: 0.7,
+ 396 │       max_tokens: 1500
+ 397 │     };
+ 398 │ 
+ 399 │     // Appeler l'API OpenAI
+ 400 │     const response = await fetch('https://api.openai.com/v1/chat/completions', {
+ 401 │       method: 'POST',
+ 402 │       headers: {
+ 403 │         'Content-Type': 'application/json',
+ 404 │         'Authorization': `Bearer ${apiKey}`
+ 405 │       },
+ 406 │       body: JSON.stringify(requestData)
+ 407 │     });
+ 408 │ 
+ 409 │     if (!response.ok) {
+ 410 │       throw new Error(`Erreur API: ${response.status}`);
+ 411 │     }
+ 412 │ 
+ 413 │     const data = await response.json();
+ 414 │ 
+ 415 │     // Extraire et parser la réponse
+ 416 │     try {
+ 417 │       const content = data.choices[0].message.content;
+ 418 │       const enrichedRecommendations = JSON.parse(content);
+ 419 │ 
+ 420 │       // Fusionner avec les recommandations originales
+ 421 │       return enrichedRecommendations.map((enriched: any, index: number) => ({
+ 422 │         ...recommendations[index],
+ 423 │         ...enriched,
+ 424 │         aiEnriched: true
+ 425 │       }));
+ 426 │ 
+ 427 │     } catch (parseError) {
+ 428 │       console.error("Erreur lors du parsing de la réponse AI:", parseError);
+ 429 │       return recommendations;
+ 430 │     }
+ 431 │ 
+ 432 │   } catch (error) {
+ 433 │     console.error("Erreur lors de l'enrichissement des recommandations par IA:", error);
+ 434 │     return recommendations;
+ 435 │   }
+ 436 │ };
+ 437 │ 
+ 438 │ /**
+ 439 │  * Met à jour le modèle d'apprentissage en fonction des retours utilisateurs
+ 440 │  */
+ 441 │ export const updateAiModel = (): void => {
+ 442 │   try {
+ 443 │     // Récupérer toutes les données d'apprentissage
+ 444 │     const learningData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+ 445 │ 
+ 446 │     // Récupérer les retours utilisateurs
+ 447 │     const userFeedback: UserFeedback[] = secureStorageService.getItem('userFeedback') || [];
+ 448 │ 
+ 449 │     if (learningData.length === 0 || userFeedback.length === 0) {
+ 450 │       console.log("Pas assez de données pour mettre à jour le modèle");
+ 451 │       return;
+ 452 │     }
+ 453 │ 
+ 454 │     // Traiter les données pour améliorer les recommandations
+ 455 │     processLearningDataAndFeedback(learningData, userFeedback);
+ 456 │ 
+ 457 │   } catch (error) {
+ 458 │     console.error("Erreur lors de la mise à jour du modèle IA:", error);
+ 459 │   }
+ 460 │ };
+ 461 │ 
+ 462 │ /**
+ 463 │  * Traite les données d'apprentissage et les retours utilisateurs pour améliorer le modèle
+ 464 │  */
+ 465 │ const processLearningDataAndFeedback = (
+ 466 │   learningData: LearningData[],
+ 467 │   userFeedback: UserFeedback[]
+ 468 │ ): void => {
+ 469 │   try {
+ 470 │     // Construire un index pour associer les recommandations à leur feedback
+ 471 │     const feedbackIndex = new Map<string, number[]>();
+ 472 │ 
+ 473 │     userFeedback.forEach(feedback => {
+ 474 │       if (!feedbackIndex.has(feedback.recommendationId)) {
+ 475 │         feedbackIndex.set(feedback.recommendationId, []);
+ 476 │       }
+ 477 │ 
+ 478 │       feedbackIndex.get(feedback.recommendationId)?.push(feedback.rating);
+ 479 │     });
+ 480 │ 
+ 481 │     // Ajuster les priorités des recommandations en fonction des retours
+ 482 │     const supplementAdjustments = new Map<string, { 
+ 483 │       totalPositive: number;
+ 484 │       totalNegative: number;
+ 485 │       count: number;
+ 486 │     }>();
+ 487 │ 
+ 488 │     // Parcourir les données d'apprentissage
+ 489 │     learningData.forEach(data => {
+ 490 │       data.generatedRecommendations.forEach(rec => {
+ 491 │         const feedback = feedbackIndex.get(rec.id);
+ 492 │ 
+ 493 │         if (feedback && feedback.length > 0) {
+ 494 │           // Calculer le score moyen
+ 495 │           const avgRating = feedback.reduce((sum, rating) => sum + rating, 0) / feedback.length;
+ 496 │ 
+ 497 │           if (!supplementAdjustments.has(rec.id)) {
+ 498 │             supplementAdjustments.set(rec.id, {
+ 499 │               totalPositive: 0,
+ 500 │               totalNegative: 0,
+ 501 │               count: 0
+ 502 │             });
+ 503 │           }
+ 504 │ 
+ 505 │           const adjustment = supplementAdjustments.get(rec.id)!;
+ 506 │ 
+ 507 │           if (avgRating >= 3.5) {
+ 508 │             adjustment.totalPositive++;
+ 509 │           } else {
+ 510 │             adjustment.totalNegative++;
+ 511 │           }
+ 512 │ 
+ 513 │           adjustment.count++;
+ 514 │         }
+ 515 │       });
+ 516 │     });
+ 517 │ 
+ 518 │     // Appliquer les ajustements au modèle
+ 519 │     supplementAdjustments.forEach((adjustmentData, supplementId) => {
+ 520 │       if (adjustmentData.count >= 5) { // Au moins 5 retours pour être significatif
+ 521 │         const positiveRatio = adjustmentData.totalPositive / adjustmentData.count;
+ 522 │ 
+ 523 │         // Ajuster les symptômes associés
+ 524 │         for (const symptomKey in SYMPTOM_RECOMMENDATIONS) {
+ 525 │           const recommendations = SYMPTOM_RECOMMENDATIONS[symptomKey];
+ 526 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 527 │ 
+ 528 │           if (recIndex >= 0) {
+ 529 │             const currentPriority = recommendations[recIndex].priority;
+ 530 │ 
+ 531 │             // Courbe d'ajustement plus fine basée sur les retours
+ 532 │             if (positiveRatio > 0.8) { // Plus de 80% de retours positifs
+ 533 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 2);
+ 534 │             } else if (positiveRatio > 0.6) { // Entre 60% et 80% de retours positifs
+ 535 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 536 │             } else if (positiveRatio < 0.3) { // Moins de 30% de retours positifs
+ 537 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 2);
+ 538 │             } else if (positiveRatio < 0.5) { // Entre 30% et 50% de retours positifs
+ 539 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 540 │             }
+ 541 │           }
+ 542 │         }
+ 543 │ 
+ 544 │         // Ajuster également les objectifs associés
+ 545 │         for (const goalKey in GOAL_RECOMMENDATIONS) {
+ 546 │           const recommendations = GOAL_RECOMMENDATIONS[goalKey];
+ 547 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 548 │ 
+ 549 │           if (recIndex >= 0) {
+ 550 │             const currentPriority = recommendations[recIndex].priority;
+ 551 │ 
+ 552 │             // Augmenter ou diminuer la priorité selon les retours
+ 553 │             if (positiveRatio > 0.7) {
+ 554 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 555 │             } else if (positiveRatio < 0.3) {
+ 556 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 557 │             }
+ 558 │           }
+ 559 │         }
+ 560 │       }
+ 561 │     });
+ 562 │ 
+ 563 │     // Sauvegarder les données modifiées
+ 564 │     // Note: Dans une implémentation réelle, nous sauvegarderions ces changements dans une base de données
+ 565 │     // Pour cette démonstration, nous utilisons le stockage sécurisé local
+ 566 │     secureStorageService.setItem('symptomRecommendationsUpdated', SYMPTOM_RECOMMENDATIONS);
+ 567 │     secureStorageService.setItem('goalRecommendationsUpdated', GOAL_RECOMMENDATIONS);
+ 568 │ 
+ 569 │     console.log("Modèle IA mis à jour avec succès");
+ 570 │ 
+ 571 │   } catch (error) {
+ 572 │     console.error("Erreur lors du traitement des données d'apprentissage:", error);
+ 573 │   }
+ 574 │ };
+ 575 │ 
+ 576 │ 
+ 577 │ /**
+ 578 │  * Génère des recommandations personnalisées avancées avec analyse comportementale et IA
+ 579 │  */
+ 580 │ export const generateAdvancedRecommendations = (
+ 581 │   quizResponses: QuizResponse,
+ 582 │   behavioralMetrics?: BehavioralMetrics,
+ 583 │   neuroProfile?: NeuroProfile
+ 584 │ ): Recommendation[] => {
+ 585 │   try {
+ 586 │     // Générer les recommandations de base
+ 587 │     const baseRecommendations = generateRecommendations(quizResponses, behavioralMetrics, neuroProfile);
+ 588 │ 
+ 589 │     // Appliquer l'ajustement d'apprentissage IA
+ 590 │     const aiEnhancedRecommendations = adjustRecommendationsWithLearning(baseRecommendations, quizResponses);
+ 591 │ 
+ 592 │     // Si des métriques comportementales sont disponibles, les utiliser pour affiner davantage
+ 593 │     if (behavioralMetrics) {
+ 594 │       const behavioralInsights = processBehavioralData(behavioralMetrics);
+ 595 │ 
+ 596 │       // Ajuster les priorités en fonction des domaines d'intérêt comportementaux
+ 597 │       aiEnhancedRecommendations.forEach(rec => {
+ 598 │         // Vérifier si cette recommandation correspond à un domaine d'intérêt
+ 599 │         behavioralInsights.interestAreas.forEach(area => {
+ 600 │           if (
+ 601 │             (area === 'Stress' && (rec.id.includes('magnes') || rec.id.includes('ashwagandha') || rec.id.includes('theanine'))) ||
+ 602 │             (area === 'Sommeil' && (rec.id.includes('melatonin') || rec.id.includes('magnes') || rec.id.includes('valerian'))) ||
+ 603 │             (area === 'Énergie' && (rec.id.includes('vitaminb') || rec.id.includes('iron') || rec.id.includes('coq10'))) ||
+ 604 │             (area === 'Digestion' && (rec.id.includes('probio') || rec.id.includes('enzymes') || rec.id.includes('fiber'))) ||
+ 605 │             (area === 'Immunité' && (rec.id.includes('vitaminc') || rec.id.includes('vitd') || rec.id.includes('zinc')))
+ 606 │           ) {
+ 607 │             // Augmenter le score pour les recommandations correspondant aux intérêts
+ 608 │             rec.matchScore = Math.min(100, rec.matchScore + 5);
+ 609 │ 
+ 610 │             // Ajouter une explication IA
+ 611 │             if (!rec.aiExplanations) {
+ 612 │               rec.aiExplanations = [];
+ 613 │             }
+ 614 │             rec.aiExplanations.push(`Cette recommandation est particulièrement adaptée à votre intérêt pour ${area.toLowerCase()}`);
+ 615 │           }
+ 616 │         });
+ 617 │ 
+ 618 │         // Ajuster en fonction du niveau d'incertitude
+ 619 │         if (behavioralInsights.uncertaintyLevel > 0.6 && rec.scientificBasis) {
+ 620 │           // Pour les utilisateurs incertains, ajouter plus d'explications scientifiques
+ 621 │           if (!rec.aiExplanations) {
+ 622 │             rec.aiExplanations = [];
+ 623 │           }
+ 624 │           rec.aiExplanations.push("Nous avons constaté que vous recherchiez des informations détaillées, c'est pourquoi nous avons priorisé cette recommandation bien documentée scientifiquement");
+ 625 │         }
+ 626 │ 
+ 627 │         // Ajuster en fonction du niveau d'attention
+ 628 │         if (behavioralInsights.attentionLevel < 0.4) {
+ 629 │           // Pour les utilisateurs à faible attention, donner une explication courte et directe
+ 630 │           rec.shortExplanation = `Recommandé pour: ${rec.benefits.slice(0, 2).join(', ')}`;
+ 631 │         }
+ 632 │       });
+ 633 │     }
+ 634 │ 
+ 635 │     // Enrichir avec des données de neuroProfile si disponibles
+ 636 │     if (neuroProfile) {
+ 637 │       aiEnhancedRecommendations.forEach(rec => {
+ 638 │         if (neuroProfile.decisionStyle === 'analytical' && rec.scientificBasis) {
+ 639 │           rec.matchScore = Math.min(100, rec.matchScore + 3);
+ 640 │ 
+ 641 │           if (!rec.aiExplanations) {
+ 642 │             rec.aiExplanations = [];
+ 643 │           }
+ 644 │           rec.aiExplanations.push("Cette recommandation correspond à votre approche analytique, avec une base scientifique solide");
+ 645 │         }
+ 646 │ 
+ 647 │         if (neuroProfile.decisionStyle === 'intuitive' && rec.timeToEffect === 'rapid') {
+ 648 │           rec.matchScore = Math.min(100, rec.matchScore + 3);
+ 649 │ 
+ 650 │           if (!rec.aiExplanations) {
+ 651 │             rec.aiExplanations = [];
+ 652 │           }
+ 653 │           rec.aiExplanations.push("Cette solution à action rapide correspond à votre préférence pour des résultats immédiats");
+ 654 │         }
+ 655 │ 
+ 656 │         if (neuroProfile.riskTolerance === 'low' && rec.safetyProfile === 'excellent') {
+ 657 │           rec.matchScore = Math.min(100, rec.matchScore + 5);
+ 658 │ 
+ 659 │           if (!rec.aiExplanations) {
+ 660 │             rec.aiExplanations = [];
+ 661 │           }
+ 662 │           rec.aiExplanations.push("Cette option présente un excellent profil de sécurité, idéal pour votre préférence pour les solutions éprouvées");
+ 663 │         }
+ 664 │       });
+ 665 │     }
+ 666 │ 
+ 667 │     // Réordonner les recommandations en fonction des scores ajustés
+ 668 │     aiEnhancedRecommendations.sort((a, b) => {
+ 669 │       if (a.priority !== b.priority) {
+ 670 │         return a.priority - b.priority;
+ 671 │       }
+ 672 │       return b.matchScore - a.matchScore;
+ 673 │     });
+ 674 │ 
+ 675 │     // Optimiser les recommandations avec l'algorithme avancé
+ 676 │     const optimizedRecommendations = optimizeRecommendations(
+ 677 │       aiEnhancedRecommendations,
+ 678 │       quizResponses,
+ 679 │       behavioralMetrics,
+ 680 │       neuroProfile
+ 681 │     );
+ 682 │ 
+ 683 │     // Enregistrer les données pour apprentissage futur
+ 684 │     saveLearningData(quizResponses, optimizedRecommendations, behavioralMetrics, neuroProfile);
+ 685 │ 
+ 686 │     return optimizedRecommendations;
+ 687 │   } catch (error) {
+ 688 │     console.error("Erreur lors de la génération des recommandations avancées:", error);
+ 689 │     return generateRecommendations(quizResponses, behavioralMetrics, neuroProfile);
+ 690 │   }
+ 691 │ };
+ 692 │ 
+ 693 │ // Importations nécessaires
+ 694 │ import { optimizeRecommendations } from './optimizedRecommendation';
+ 695 │ import { getAILearningStatus } from './aiLearningEngine';
+ 696 │ import { secureStorageService } from '../lib/secureStorage';
+     ·          ──────────┬─────────
+     ·                    ╰── `secureStorageService` redefined here
+ 697 │ 
+ 698 │ 
+ 699 │ // Définition d'interfaces pour les types utilisés
+     ╰────
+  × the name `saveLearningData` is defined multiple times
+     ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:25:1]
+  22 │ import { SUPPLEMENT_CATALOG } from '../data/supplementCatalog';
+  23 │ import { 
+  24 │   adjustRecommendationsWithLearning,
+  25 │   saveLearningData,
+     ·   ────────┬───────
+     ·           ╰── previous definition of `saveLearningData` here
+  26 │   getAILearningStatus,
+  27 │   evaluateDataQuality
+  28 │ } from './aiLearningEngine';
+  29 │ 
+  30 │ /**
+  31 │  * Génère des recommandations en utilisant l'algorithme principal et l'apprentissage IA
+  32 │  */
+  33 │ export const generateRecommendations = (
+  34 │   quizResponses: QuizResponse,
+  35 │   behavioralMetrics?: BehavioralMetrics,
+  36 │   neuroProfile?: NeuroProfile
+  37 │ ): Recommendation[] => {
+  38 │   try {
+  39 │     // Vérifier si les données du quiz sont valides
+  40 │     if (!quizResponses || !quizResponses.healthConcerns || !quizResponses.goals) {
+  41 │       console.error("Données du quiz insuffisantes pour générer des recommandations");
+  42 │       return [];
+  43 │     }
+  44 │ 
+  45 │     const recommendations: Recommendation[] = [];
+  46 │ 
+  47 │     // === SANTÉ MENTALE & STRESS ===
+  48 │     if (quizResponses.healthConcerns.stressLevel === 'high' || 
+  49 │         quizResponses.healthConcerns.stressLevel === 'very_high' || 
+  50 │         quizResponses.goals.reduceStress) {
+  51 │ 
+  52 │       recommendations.push({
+  53 │         id: "rec_magnesium",
+  54 │         name: "Magnésium bisglycinate",
+  55 │         description: "Forme hautement biodisponible du magnésium qui aide à réduire le stress et l'anxiété",
+  56 │         priority: 1,
+  57 │         matchScore: 90,
+  58 │         benefits: ["Réduction de l'anxiété", "Amélioration du sommeil", "Relaxation musculaire"],
+  59 │         recommendedDose: "300-400mg par jour, de préférence le soir",
+  60 │         timeToEffect: "2-4 semaines pour un effet optimal",
+  61 │         scientificBasis: "Études cliniques démontrant l'efficacité du magnésium sur les niveaux de stress et d'anxiété",
+  62 │         reason: "Votre niveau de stress élevé indique un besoin en magnésium"
+  63 │       });
+  64 │ 
+  65 │       recommendations.push({
+  66 │         id: "rec_ashwagandha",
+  67 │         name: "Ashwagandha KSM-66",
+  68 │         description: "Adaptogène puissant aidant à réduire le cortisol et à équilibrer la réponse au stress",
+  69 │         priority: 2,
+  70 │         matchScore: 85,
+  71 │         benefits: ["Réduction du cortisol", "Adaptation au stress", "Amélioration de la résistance"],
+  72 │         recommendedDose: "300-600mg par jour, extrait standardisé",
+  73 │         timeToEffect: "4-6 semaines pour un effet optimal",
+  74 │         scientificBasis: "Multiples études cliniques confirmant son effet adaptogène",
+  75 │         reason: "Votre profil indique un besoin d'adaptogènes pour la gestion du stress chronique"
+  76 │       });
+  77 │     }
+  78 │ 
+  79 │     // === ÉNERGIE & FATIGUE ===
+  80 │     if (quizResponses.healthConcerns.energyLevel === 'low' || 
+  81 │         quizResponses.goals.increaseEnergy) {
+  82 │ 
+  83 │       recommendations.push({
+  84 │         id: "rec_b_complex",
+  85 │         name: "Complexe Vitamines B actives",
+  86 │         description: "Vitamines B sous formes méthylées pour une absorption optimale et un soutien énergétique",
+  87 │         priority: 1,
+  88 │         matchScore: 88,
+  89 │         benefits: ["Production d'énergie cellulaire", "Soutien au métabolisme", "Fonction cognitive"],
+  90 │         recommendedDose: "1 gélule par jour avec le petit-déjeuner",
+  91 │         timeToEffect: "2-3 semaines",
+  92 │         scientificBasis: "Rôle essentiel des vitamines B dans le cycle de Krebs et la production d'ATP",
+  93 │         reason: "Votre niveau d'énergie bas suggère un besoin en vitamines B"
+  94 │       });
+  95 │ 
+  96 │       recommendations.push({
+  97 │         id: "rec_coq10",
+  98 │         name: "Coenzyme Q10",
+  99 │         description: "Cofacteur essentiel pour la production d'énergie dans les mitochondries",
+ 100 │         priority: 2,
+ 101 │         matchScore: 80,
+ 102 │         benefits: ["Production d'ATP", "Protection antioxydante", "Santé mitochondriale"],
+ 103 │         recommendedDose: "100-200mg par jour avec un repas contenant des graisses",
+ 104 │         timeToEffect: "2-4 semaines",
+ 105 │         scientificBasis: "Études démontrant l'amélioration des niveaux d'énergie chez les personnes fatiguées",
+ 106 │         reason: "La CoQ10 peut aider à restaurer la production d'énergie cellulaire"
+ 107 │       });
+ 108 │     }
+ 109 │ 
+ 110 │     // === SOMMEIL ===
+ 111 │     if (quizResponses.healthConcerns.sleepIssues === 'yes' || 
+ 112 │         quizResponses.healthConcerns.sleepIssues === 'sometimes') {
+ 113 │ 
+ 114 │       recommendations.push({
+ 115 │         id: "rec_magnesium_glycinate",
+ 116 │         name: "Magnésium Glycinate",
+ 117 │         description: "Forme de magnésium hautement absorbable ayant un effet relaxant",
+ 118 │         priority: 1,
+ 119 │         matchScore: 85,
+ 120 │         benefits: ["Relaxation musculaire", "Calme mental", "Régulation du GABA"],
+ 121 │         recommendedDose: "300-400mg avant le coucher",
+ 122 │         timeToEffect: "1-2 semaines",
+ 123 │         scientificBasis: "Le magnésium active les récepteurs GABA impliqués dans la relaxation",
+ 124 │         reason: "Vos problèmes de sommeil peuvent être améliorés par le magnésium"
+ 125 │       });
+ 126 │ 
+ 127 │       recommendations.push({
+ 128 │         id: "rec_theanine",
+ 129 │         name: "L-Théanine",
+ 130 │         description: "Acide aminé naturellement présent dans le thé vert qui favorise la détente sans somnolence",
+ 131 │         priority: 2,
+ 132 │         matchScore: 80,
+ 133 │         benefits: ["Relaxation sans somnolence", "Amélioration de la qualité du sommeil", "Réduction des ruminations mentales"],
+ 134 │         recommendedDose: "200-400mg avant le coucher",
+ 135 │         timeToEffect: "30 minutes à 1 heure",
+ 136 │         scientificBasis: "Augmente les ondes alpha dans le cerveau, associées à un état de relaxation",
+ 137 │         reason: "La L-Théanine peut aider à calmer votre esprit avant le sommeil"
+ 138 │       });
+ 139 │     }
+ 140 │ 
+ 141 │     // === CONCENTRATION & COGNITION ===
+ 142 │     if (quizResponses.healthConcerns.focusIssues === 'yes' || 
+ 143 │         quizResponses.goals.improveFocus) {
+ 144 │ 
+ 145 │       recommendations.push({
+ 146 │         id: "rec_bacopa",
+ 147 │         name: "Bacopa Monnieri",
+ 148 │         description: "Plante adaptogène qui améliore la mémoire et les fonctions cognitives",
+ 149 │         priority: 1,
+ 150 │         matchScore: 82,
+ 151 │         benefits: ["Mémoire", "Concentration", "Réduction du stress cognitif"],
+ 152 │         recommendedDose: "300-500mg par jour, extrait standardisé à 50% de bacosides",
+ 153 │         timeToEffect: "8-12 semaines pour des résultats optimaux",
+ 154 │         scientificBasis: "Multiples études cliniques montrant des améliorations cognitives",
+ 155 │         reason: "Vos problèmes de concentration peuvent bénéficier des effets neuroprotecteurs du Bacopa"
+ 156 │       });
+ 157 │ 
+ 158 │       recommendations.push({
+ 159 │         id: "rec_rhodiola",
+ 160 │         name: "Rhodiola Rosea",
+ 161 │         description: "Adaptogène qui réduit la fatigue mentale et améliore les performances cognitives",
+ 162 │         priority: 2,
+ 163 │         matchScore: 75,
+ 164 │         benefits: ["Réduction de la fatigue mentale", "Amélioration de la vigilance", "Résistance au stress"],
+ 165 │         recommendedDose: "200-400mg par jour, extrait standardisé à 3% de rosavines",
+ 166 │         timeToEffect: "1-3 semaines",
+ 167 │         scientificBasis: "Études montrant une amélioration des performances cognitives en situation de stress",
+ 168 │         reason: "La Rhodiola peut améliorer votre concentration en conditions de stress"
+ 169 │       });
+ 170 │     }
+ 171 │ 
+ 172 │     // === DIGESTION ===
+ 173 │     if (quizResponses.healthConcerns.digestiveIssues === 'yes' || 
+ 174 │         quizResponses.goals.improveDigestion) {
+ 175 │ 
+ 176 │       recommendations.push({
+ 177 │         id: "rec_probiotics",
+ 178 │         name: "Probiotiques multi-souches",
+ 179 │         description: "Combinaison de souches probiotiques scientifiquement validées pour la santé digestive",
+ 180 │         priority: 1,
+ 181 │         matchScore: 88,
+ 182 │         benefits: ["Équilibre du microbiome", "Réduction des ballonnements", "Soutien immunitaire intestinal"],
+ 183 │         recommendedDose: "10-30 milliards d'UFC par jour, avec 5+ souches différentes",
+ 184 │         timeToEffect: "2-4 semaines",
+ 185 │         scientificBasis: "Études cliniques sur diverses souches et leur impact sur la santé digestive",
+ 186 │         reason: "Vos problèmes digestifs suggèrent un déséquilibre du microbiome intestinal"
+ 187 │       });
+ 188 │ 
+ 189 │       recommendations.push({
+ 190 │         id: "rec_glutamine",
+ 191 │         name: "L-Glutamine",
+ 192 │         description: "Acide aminé essentiel pour la santé et la réparation de la muqueuse intestinale",
+ 193 │         priority: 2,
+ 194 │         matchScore: 75,
+ 195 │         benefits: ["Intégrité de la barrière intestinale", "Réduction de l'inflammation", "Soutien immunitaire"],
+ 196 │         recommendedDose: "5-10g par jour, à jeun",
+ 197 │         timeToEffect: "2-4 semaines",
+ 198 │         scientificBasis: "Principal carburant des entérocytes (cellules intestinales)",
+ 199 │         reason: "Votre profil digestif suggère un besoin de soutien pour la muqueuse intestinale"
+ 200 │       });
+ 201 │     }
+ 202 │ 
+ 203 │     // Appliquer l'apprentissage IA pour ajuster les recommandations
+ 204 │     const aiEnhancedRecommendations = adjustRecommendationsWithLearning(recommendations, quizResponses);
+ 205 │ 
+ 206 │     // Enregistrer les données pour apprentissage futur (sans feedback pour le moment)
+ 207 │     saveLearningData(quizResponses, aiEnhancedRecommendations);
+ 208 │ 
+ 209 │     return aiEnhancedRecommendations;
+ 210 │   } catch (error) {
+ 211 │     console.error("Erreur lors de la génération des recommandations:", error);
+ 212 │     return [];
+ 213 │   }
+ 214 │ };
+ 215 │ 
+ 216 │ /**
+ 217 │  * Génère une explication détaillée pour une recommandation spécifique
+ 218 │  */
+ 219 │ export const generateRecommendationExplanation = (
+ 220 │   recommendation: Recommendation,
+ 221 │   quizResponses: QuizResponse
+ 222 │ ): string => {
+ 223 │   try {
+ 224 │     const supplement = SUPPLEMENT_CATALOG[recommendation.id];
+ 225 │ 
+ 226 │     if (!supplement) {
+ 227 │       return "Information détaillée non disponible pour ce complément.";
+ 228 │     }
+ 229 │ 
+ 230 │     // Construire une explication scientifique personnalisée
+ 231 │     let explanation = `**${supplement.name} (${supplement.scientificName})** : ${supplement.description}\n\n`;
+ 232 │ 
+ 233 │     // Bénéfices spécifiques
+ 234 │     explanation += "**Bénéfices ciblés pour votre profil :**\n";
+ 235 │     explanation += supplement.benefits.map(b => `- ${b}`).join('\n');
+ 236 │ 
+ 237 │     // Base scientifique
+ 238 │     explanation += `\n\n**Base scientifique :** ${supplement.scientificBasis}`;
+ 239 │ 
+ 240 │     // Dosage personnalisé
+ 241 │     explanation += `\n\n**Dosage recommandé pour vous :** ${recommendation.recommendedDose}`;
+ 242 │ 
+ 243 │     // Délai d'efficacité
+ 244 │     explanation += `\n\n**Délai d'efficacité typique :** ${supplement.timeToEffect}`;
+ 245 │ 
+ 246 │     // Précautions
+ 247 │     if (supplement.contraindications.length > 0) {
+ 248 │       explanation += "\n\n**Précautions :** ";
+ 249 │       explanation += supplement.contraindications.map(c => c).join(', ');
+ 250 │     }
+ 251 │ 
+ 252 │     return explanation;
+ 253 │   } catch (error) {
+ 254 │     console.error("Erreur lors de la génération de l'explication:", error);
+ 255 │     return "Désolé, nous ne pouvons pas générer d'explication détaillée pour cette recommandation.";
+ 256 │   }
+ 257 │ };
+ 258 │ 
+ 259 │ /**
+ 260 │  * Enregistre les données pour l'apprentissage du système IA
+ 261 │  */
+ 262 │ export const recordLearningData = (data: LearningData): void => {
+ 263 │   try {
+ 264 │     // Récupérer les données existantes
+ 265 │     const existingData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+ 266 │ 
+ 267 │     // Ajouter les nouvelles données
+ 268 │     existingData.push(data);
+ 269 │ 
+ 270 │     // Limiter la taille des données stockées (garder les 1000 plus récentes)
+ 271 │     const trimmedData = existingData.slice(-1000);
+ 272 │ 
+ 273 │     // Sauvegarder les données
+ 274 │     secureStorageService.setItem('aiLearningData', trimmedData);
+ 275 │ 
+ 276 │   } catch (error) {
+ 277 │     console.error("Erreur lors de l'enregistrement des données d'apprentissage:", error);
+ 278 │   }
+ 279 │ };
+ 280 │ 
+ 281 │ /**
+ 282 │  * Calcule le score de similarité entre deux profils utilisateurs
+ 283 │  */
+ 284 │ export const calculateProfileSimilarity = (
+ 285 │   profile1: any,
+ 286 │   profile2: any
+ 287 │ ): number => {
+ 288 │   try {
+ 289 │     let similarityScore = 0;
+ 290 │     let totalFactors = 0;
+ 291 │ 
+ 292 │     // Comparer les symptômes actifs
+ 293 │     if (profile1.activeSymptoms && profile2.activeSymptoms) {
+ 294 │       const commonSymptoms = profile1.activeSymptoms.filter((s: string) => 
+ 295 │         profile2.activeSymptoms.includes(s)
+ 296 │       ).length;
+ 297 │ 
+ 298 │       const totalSymptoms = new Set([
+ 299 │         ...profile1.activeSymptoms,
+ 300 │         ...profile2.activeSymptoms
+ 301 │       ]).size;
+ 302 │ 
+ 303 │       if (totalSymptoms > 0) {
+ 304 │         similarityScore += (commonSymptoms / totalSymptoms) * 50; // Poids plus élevé pour les symptômes
+ 305 │         totalFactors += 1;
+ 306 │       }
+ 307 │     }
+ 308 │ 
+ 309 │     // Comparer les objectifs
+ 310 │     if (profile1.activeGoals && profile2.activeGoals) {
+ 311 │       const commonGoals = profile1.activeGoals.filter((g: string) => 
+ 312 │         profile2.activeGoals.includes(g)
+ 313 │       ).length;
+ 314 │ 
+ 315 │       const totalGoals = new Set([
+ 316 │         ...profile1.activeGoals,
+ 317 │         ...profile2.activeGoals
+ 318 │       ]).size;
+ 319 │ 
+ 320 │       if (totalGoals > 0) {
+ 321 │         similarityScore += (commonGoals / totalGoals) * 30;
+ 322 │         totalFactors += 1;
+ 323 │       }
+ 324 │     }
+ 325 │ 
+ 326 │     // Comparer les restrictions alimentaires
+ 327 │     if (profile1.dietaryRestrictions && profile2.dietaryRestrictions) {
+ 328 │       let matchingRestrictions = 0;
+ 329 │       let totalRestrictions = 0;
+ 330 │ 
+ 331 │       for (const key in profile1.dietaryRestrictions) {
+ 332 │         if (profile2.dietaryRestrictions[key] === profile1.dietaryRestrictions[key]) {
+ 333 │           matchingRestrictions++;
+ 334 │         }
+ 335 │         totalRestrictions++;
+ 336 │       }
+ 337 │ 
+ 338 │       if (totalRestrictions > 0) {
+ 339 │         similarityScore += (matchingRestrictions / totalRestrictions) * 20;
+ 340 │         totalFactors += 1;
+ 341 │       }
+ 342 │     }
+ 343 │ 
+ 344 │     // Normaliser le score
+ 345 │     return totalFactors > 0 ? similarityScore / totalFactors : 0;
+ 346 │ 
+ 347 │   } catch (error) {
+ 348 │     console.error("Erreur lors du calcul de la similarité:", error);
+ 349 │     return 0;
+ 350 │   }
+ 351 │ };
+ 352 │ 
+ 353 │ /**
+ 354 │  * Enrichit les recommandations en utilisant l'IA externe via API (ChatGPT)
+ 355 │  */
+ 356 │ export const enrichRecommendationsWithExternalAI = async (
+ 357 │   recommendations: Recommendation[],
+ 358 │   quizResponses: QuizResponse
+ 359 │ ): Promise<Recommendation[]> => {
+ 360 │   try {
+ 361 │     // Vérifier si la clé API est configurée
+ 362 │     const apiKey = secureStorageService.getItem('openai_api_key');
+ 363 │ 
+ 364 │     if (!apiKey) {
+ 365 │       console.log("Clé API OpenAI non configurée, impossible d'enrichir les recommandations");
+ 366 │       return recommendations;
+ 367 │     }
+ 368 │ 
+ 369 │     // Préparer les données à envoyer à l'API
+ 370 │     const requestData = {
+ 371 │       model: "gpt-4",
+ 372 │       messages: [
+ 373 │         {
+ 374 │           role: "system",
+ 375 │           content: `Vous êtes un expert en nutrition et suppléments nutritionnels. 
+ 376 │           Vous allez analyser les recommandations générées par notre système et les enrichir 
+ 377 │           avec des conseils plus personnalisés, des explications scientifiques, et des ajustements 
+ 378 │           de dosage si nécessaire. Restez factuel et basez vos recommandations sur la science.`
+ 379 │         },
+ 380 │         {
+ 381 │           role: "user",
+ 382 │           content: `Voici les recommandations générées par notre système et les réponses au quiz de l'utilisateur.
+ 383 │           Veuillez enrichir ces recommandations avec des détails supplémentaires sur l'efficacité, d'éventuelles 
+ 384 │           synergies entre les compléments, et affiner les dosages en fonction du profil spécifique.
+ 385 │ 
+ 386 │           RÉPONSES AU QUIZ:
+ 387 │           ${JSON.stringify(quizResponses, null, 2)}
+ 388 │ 
+ 389 │           RECOMMANDATIONS GÉNÉRÉES:
+ 390 │           ${JSON.stringify(recommendations, null, 2)}
+ 391 │ 
+ 392 │           Répondez au format JSON avec les recommandations enrichies.`
+ 393 │         }
+ 394 │       ],
+ 395 │       temperature: 0.7,
+ 396 │       max_tokens: 1500
+ 397 │     };
+ 398 │ 
+ 399 │     // Appeler l'API OpenAI
+ 400 │     const response = await fetch('https://api.openai.com/v1/chat/completions', {
+ 401 │       method: 'POST',
+ 402 │       headers: {
+ 403 │         'Content-Type': 'application/json',
+ 404 │         'Authorization': `Bearer ${apiKey}`
+ 405 │       },
+ 406 │       body: JSON.stringify(requestData)
+ 407 │     });
+ 408 │ 
+ 409 │     if (!response.ok) {
+ 410 │       throw new Error(`Erreur API: ${response.status}`);
+ 411 │     }
+ 412 │ 
+ 413 │     const data = await response.json();
+ 414 │ 
+ 415 │     // Extraire et parser la réponse
+ 416 │     try {
+ 417 │       const content = data.choices[0].message.content;
+ 418 │       const enrichedRecommendations = JSON.parse(content);
+ 419 │ 
+ 420 │       // Fusionner avec les recommandations originales
+ 421 │       return enrichedRecommendations.map((enriched: any, index: number) => ({
+ 422 │         ...recommendations[index],
+ 423 │         ...enriched,
+ 424 │         aiEnriched: true
+ 425 │       }));
+ 426 │ 
+ 427 │     } catch (parseError) {
+ 428 │       console.error("Erreur lors du parsing de la réponse AI:", parseError);
+ 429 │       return recommendations;
+ 430 │     }
+ 431 │ 
+ 432 │   } catch (error) {
+ 433 │     console.error("Erreur lors de l'enrichissement des recommandations par IA:", error);
+ 434 │     return recommendations;
+ 435 │   }
+ 436 │ };
+ 437 │ 
+ 438 │ /**
+ 439 │  * Met à jour le modèle d'apprentissage en fonction des retours utilisateurs
+ 440 │  */
+ 441 │ export const updateAiModel = (): void => {
+ 442 │   try {
+ 443 │     // Récupérer toutes les données d'apprentissage
+ 444 │     const learningData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+ 445 │ 
+ 446 │     // Récupérer les retours utilisateurs
+ 447 │     const userFeedback: UserFeedback[] = secureStorageService.getItem('userFeedback') || [];
+ 448 │ 
+ 449 │     if (learningData.length === 0 || userFeedback.length === 0) {
+ 450 │       console.log("Pas assez de données pour mettre à jour le modèle");
+ 451 │       return;
+ 452 │     }
+ 453 │ 
+ 454 │     // Traiter les données pour améliorer les recommandations
+ 455 │     processLearningDataAndFeedback(learningData, userFeedback);
+ 456 │ 
+ 457 │   } catch (error) {
+ 458 │     console.error("Erreur lors de la mise à jour du modèle IA:", error);
+ 459 │   }
+ 460 │ };
+ 461 │ 
+ 462 │ /**
+ 463 │  * Traite les données d'apprentissage et les retours utilisateurs pour améliorer le modèle
+ 464 │  */
+ 465 │ const processLearningDataAndFeedback = (
+ 466 │   learningData: LearningData[],
+ 467 │   userFeedback: UserFeedback[]
+ 468 │ ): void => {
+ 469 │   try {
+ 470 │     // Construire un index pour associer les recommandations à leur feedback
+ 471 │     const feedbackIndex = new Map<string, number[]>();
+ 472 │ 
+ 473 │     userFeedback.forEach(feedback => {
+ 474 │       if (!feedbackIndex.has(feedback.recommendationId)) {
+ 475 │         feedbackIndex.set(feedback.recommendationId, []);
+ 476 │       }
+ 477 │ 
+ 478 │       feedbackIndex.get(feedback.recommendationId)?.push(feedback.rating);
+ 479 │     });
+ 480 │ 
+ 481 │     // Ajuster les priorités des recommandations en fonction des retours
+ 482 │     const supplementAdjustments = new Map<string, { 
+ 483 │       totalPositive: number;
+ 484 │       totalNegative: number;
+ 485 │       count: number;
+ 486 │     }>();
+ 487 │ 
+ 488 │     // Parcourir les données d'apprentissage
+ 489 │     learningData.forEach(data => {
+ 490 │       data.generatedRecommendations.forEach(rec => {
+ 491 │         const feedback = feedbackIndex.get(rec.id);
+ 492 │ 
+ 493 │         if (feedback && feedback.length > 0) {
+ 494 │           // Calculer le score moyen
+ 495 │           const avgRating = feedback.reduce((sum, rating) => sum + rating, 0) / feedback.length;
+ 496 │ 
+ 497 │           if (!supplementAdjustments.has(rec.id)) {
+ 498 │             supplementAdjustments.set(rec.id, {
+ 499 │               totalPositive: 0,
+ 500 │               totalNegative: 0,
+ 501 │               count: 0
+ 502 │             });
+ 503 │           }
+ 504 │ 
+ 505 │           const adjustment = supplementAdjustments.get(rec.id)!;
+ 506 │ 
+ 507 │           if (avgRating >= 3.5) {
+ 508 │             adjustment.totalPositive++;
+ 509 │           } else {
+ 510 │             adjustment.totalNegative++;
+ 511 │           }
+ 512 │ 
+ 513 │           adjustment.count++;
+ 514 │         }
+ 515 │       });
+ 516 │     });
+ 517 │ 
+ 518 │     // Appliquer les ajustements au modèle
+ 519 │     supplementAdjustments.forEach((adjustmentData, supplementId) => {
+ 520 │       if (adjustmentData.count >= 5) { // Au moins 5 retours pour être significatif
+ 521 │         const positiveRatio = adjustmentData.totalPositive / adjustmentData.count;
+ 522 │ 
+ 523 │         // Ajuster les symptômes associés
+ 524 │         for (const symptomKey in SYMPTOM_RECOMMENDATIONS) {
+ 525 │           const recommendations = SYMPTOM_RECOMMENDATIONS[symptomKey];
+ 526 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 527 │ 
+ 528 │           if (recIndex >= 0) {
+ 529 │             const currentPriority = recommendations[recIndex].priority;
+ 530 │ 
+ 531 │             // Courbe d'ajustement plus fine basée sur les retours
+ 532 │             if (positiveRatio > 0.8) { // Plus de 80% de retours positifs
+ 533 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 2);
+ 534 │             } else if (positiveRatio > 0.6) { // Entre 60% et 80% de retours positifs
+ 535 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 536 │             } else if (positiveRatio < 0.3) { // Moins de 30% de retours positifs
+ 537 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 2);
+ 538 │             } else if (positiveRatio < 0.5) { // Entre 30% et 50% de retours positifs
+ 539 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 540 │             }
+ 541 │           }
+ 542 │         }
+ 543 │ 
+ 544 │         // Ajuster également les objectifs associés
+ 545 │         for (const goalKey in GOAL_RECOMMENDATIONS) {
+ 546 │           const recommendations = GOAL_RECOMMENDATIONS[goalKey];
+ 547 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 548 │ 
+ 549 │           if (recIndex >= 0) {
+ 550 │             const currentPriority = recommendations[recIndex].priority;
+ 551 │ 
+ 552 │             // Augmenter ou diminuer la priorité selon les retours
+ 553 │             if (positiveRatio > 0.7) {
+ 554 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 555 │             } else if (positiveRatio < 0.3) {
+ 556 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 557 │             }
+ 558 │           }
+ 559 │         }
+ 560 │       }
+ 561 │     });
+ 562 │ 
+ 563 │     // Sauvegarder les données modifiées
+ 564 │     // Note: Dans une implémentation réelle, nous sauvegarderions ces changements dans une base de données
+ 565 │     // Pour cette démonstration, nous utilisons le stockage sécurisé local
+ 566 │     secureStorageService.setItem('symptomRecommendationsUpdated', SYMPTOM_RECOMMENDATIONS);
+ 567 │     secureStorageService.setItem('goalRecommendationsUpdated', GOAL_RECOMMENDATIONS);
+ 568 │ 
+ 569 │     console.log("Modèle IA mis à jour avec succès");
+ 570 │ 
+ 571 │   } catch (error) {
+ 572 │     console.error("Erreur lors du traitement des données d'apprentissage:", error);
+ 573 │   }
+ 574 │ };
+ 575 │ 
+ 576 │ 
+ 577 │ /**
+ 578 │  * Génère des recommandations personnalisées avancées avec analyse comportementale et IA
+ 579 │  */
+ 580 │ export const generateAdvancedRecommendations = (
+ 581 │   quizResponses: QuizResponse,
+ 582 │   behavioralMetrics?: BehavioralMetrics,
+ 583 │   neuroProfile?: NeuroProfile
+ 584 │ ): Recommendation[] => {
+ 585 │   try {
+ 586 │     // Générer les recommandations de base
+ 587 │     const baseRecommendations = generateRecommendations(quizResponses, behavioralMetrics, neuroProfile);
+ 588 │ 
+ 589 │     // Appliquer l'ajustement d'apprentissage IA
+ 590 │     const aiEnhancedRecommendations = adjustRecommendationsWithLearning(baseRecommendations, quizResponses);
+ 591 │ 
+ 592 │     // Si des métriques comportementales sont disponibles, les utiliser pour affiner davantage
+ 593 │     if (behavioralMetrics) {
+ 594 │       const behavioralInsights = processBehavioralData(behavioralMetrics);
+ 595 │ 
+ 596 │       // Ajuster les priorités en fonction des domaines d'intérêt comportementaux
+ 597 │       aiEnhancedRecommendations.forEach(rec => {
+ 598 │         // Vérifier si cette recommandation correspond à un domaine d'intérêt
+ 599 │         behavioralInsights.interestAreas.forEach(area => {
+ 600 │           if (
+ 601 │             (area === 'Stress' && (rec.id.includes('magnes') || rec.id.includes('ashwagandha') || rec.id.includes('theanine'))) ||
+ 602 │             (area === 'Sommeil' && (rec.id.includes('melatonin') || rec.id.includes('magnes') || rec.id.includes('valerian'))) ||
+ 603 │             (area === 'Énergie' && (rec.id.includes('vitaminb') || rec.id.includes('iron') || rec.id.includes('coq10'))) ||
+ 604 │             (area === 'Digestion' && (rec.id.includes('probio') || rec.id.includes('enzymes') || rec.id.includes('fiber'))) ||
+ 605 │             (area === 'Immunité' && (rec.id.includes('vitaminc') || rec.id.includes('vitd') || rec.id.includes('zinc')))
+ 606 │           ) {
+ 607 │             // Augmenter le score pour les recommandations correspondant aux intérêts
+ 608 │             rec.matchScore = Math.min(100, rec.matchScore + 5);
+ 609 │ 
+ 610 │             // Ajouter une explication IA
+ 611 │             if (!rec.aiExplanations) {
+ 612 │               rec.aiExplanations = [];
+ 613 │             }
+ 614 │             rec.aiExplanations.push(`Cette recommandation est particulièrement adaptée à votre intérêt pour ${area.toLowerCase()}`);
+ 615 │           }
+ 616 │         });
+ 617 │ 
+ 618 │         // Ajuster en fonction du niveau d'incertitude
+ 619 │         if (behavioralInsights.uncertaintyLevel > 0.6 && rec.scientificBasis) {
+ 620 │           // Pour les utilisateurs incertains, ajouter plus d'explications scientifiques
+ 621 │           if (!rec.aiExplanations) {
+ 622 │             rec.aiExplanations = [];
+ 623 │           }
+ 624 │           rec.aiExplanations.push("Nous avons constaté que vous recherchiez des informations détaillées, c'est pourquoi nous avons priorisé cette recommandation bien documentée scientifiquement");
+ 625 │         }
+ 626 │ 
+ 627 │         // Ajuster en fonction du niveau d'attention
+ 628 │         if (behavioralInsights.attentionLevel < 0.4) {
+ 629 │           // Pour les utilisateurs à faible attention, donner une explication courte et directe
+ 630 │           rec.shortExplanation = `Recommandé pour: ${rec.benefits.slice(0, 2).join(', ')}`;
+ 631 │         }
+ 632 │       });
+ 633 │     }
+ 634 │ 
+ 635 │     // Enrichir avec des données de neuroProfile si disponibles
+ 636 │     if (neuroProfile) {
+ 637 │       aiEnhancedRecommendations.forEach(rec => {
+ 638 │         if (neuroProfile.decisionStyle === 'analytical' && rec.scientificBasis) {
+ 639 │           rec.matchScore = Math.min(100, rec.matchScore + 3);
+ 640 │ 
+ 641 │           if (!rec.aiExplanations) {
+ 642 │             rec.aiExplanations = [];
+ 643 │           }
+ 644 │           rec.aiExplanations.push("Cette recommandation correspond à votre approche analytique, avec une base scientifique solide");
+ 645 │         }
+ 646 │ 
+ 647 │         if (neuroProfile.decisionStyle === 'intuitive' && rec.timeToEffect === 'rapid') {
+ 648 │           rec.matchScore = Math.min(100, rec.matchScore + 3);
+ 649 │ 
+ 650 │           if (!rec.aiExplanations) {
+ 651 │             rec.aiExplanations = [];
+ 652 │           }
+ 653 │           rec.aiExplanations.push("Cette solution à action rapide correspond à votre préférence pour des résultats immédiats");
+ 654 │         }
+ 655 │ 
+ 656 │         if (neuroProfile.riskTolerance === 'low' && rec.safetyProfile === 'excellent') {
+ 657 │           rec.matchScore = Math.min(100, rec.matchScore + 5);
+ 658 │ 
+ 659 │           if (!rec.aiExplanations) {
+ 660 │             rec.aiExplanations = [];
+ 661 │           }
+ 662 │           rec.aiExplanations.push("Cette option présente un excellent profil de sécurité, idéal pour votre préférence pour les solutions éprouvées");
+ 663 │         }
+ 664 │       });
+ 665 │     }
+ 666 │ 
+ 667 │     // Réordonner les recommandations en fonction des scores ajustés
+ 668 │     aiEnhancedRecommendations.sort((a, b) => {
+ 669 │       if (a.priority !== b.priority) {
+ 670 │         return a.priority - b.priority;
+ 671 │       }
+ 672 │       return b.matchScore - a.matchScore;
+ 673 │     });
+ 674 │ 
+ 675 │     // Optimiser les recommandations avec l'algorithme avancé
+ 676 │     const optimizedRecommendations = optimizeRecommendations(
+ 677 │       aiEnhancedRecommendations,
+ 678 │       quizResponses,
+ 679 │       behavioralMetrics,
+ 680 │       neuroProfile
+ 681 │     );
+ 682 │ 
+ 683 │     // Enregistrer les données pour apprentissage futur
+ 684 │     saveLearningData(quizResponses, optimizedRecommendations, behavioralMetrics, neuroProfile);
+ 685 │ 
+ 686 │     return optimizedRecommendations;
+ 687 │   } catch (error) {
+ 688 │     console.error("Erreur lors de la génération des recommandations avancées:", error);
+ 689 │     return generateRecommendations(quizResponses, behavioralMetrics, neuroProfile);
+ 690 │   }
+ 691 │ };
+ 692 │ 
+ 693 │ // Importations nécessaires
+ 694 │ import { optimizeRecommendations } from './optimizedRecommendation';
+ 695 │ import { getAILearningStatus } from './aiLearningEngine';
+ 696 │ import { secureStorageService } from '../lib/secureStorage';
+ 697 │ 
+ 698 │ 
+ 699 │ // Définition d'interfaces pour les types utilisés
+ 700 │ interface QuizResponses {
+ 701 │   // Interface pour les réponses du quiz
+ 702 │   healthConcerns?: {
+ 703 │     stressLevel?: string;
+ 704 │     energyLevel?: string;
+ 705 │     sleepIssues?: string;
+ 706 │     focusIssues?: string;
+ 707 │     digestiveIssues?: string;
+ 708 │   };
+ 709 │   goals?: {
+ 710 │     reduceStress?: boolean;
+ 711 │     increaseEnergy?: boolean;
+ 712 │     improveSleep?: boolean;
+ 713 │     improveFocus?: boolean;
+ 714 │     improveDigestion?: boolean;
+ 715 │   };
+ 716 │ }
+ 717 │ 
+ 718 │ interface BehavioralMetrics {
+ 719 │   // Interface pour les métriques comportementales
+ 720 │   cognitiveLoad: number;
+ 721 │   stressLevel: number;
+ 722 │   sleepQuality: number;
+ 723 │ }
+ 724 │ 
+ 725 │ 
+ 726 │ 
+ 727 │ /**
+ 728 │  * Retourne le statut du modèle d'IA actuel
+ 729 │  * @returns Information sur le statut du modèle d'IA
+ 730 │  */
+ 731 │ export function getAIModelStatus() {
+ 732 │   try {
+ 733 │     // Récupérer les informations depuis le moteur d'apprentissage
+ 734 │     const aiLearningStatus = getAILearningStatus();
+ 735 │ 
+ 736 │     // Récupérer la qualité des données
+ 737 │     const dataQuality = evaluateDataQuality();
+ 738 │ 
+ 739 │     // Obtenir les corrélations de motifs
+ 740 │     const patternCorrelations = identifyPatternCorrelations();
+ 741 │ 
+ 742 │     // Préparer des informations sur les recommandations les plus performantes
+ 743 │     const recommendationPerformance = analyzeRecommendationPerformance();
+ 744 │ 
+ 745 │     // Identifier les recommandations les plus efficaces
+ 746 │     const topRecommendations = Object.entries(recommendationPerformance)
+ 747 │       .filter(([_, data]) => data.totalRatings > 10)
+ 748 │       .sort((a, b) => b[1].averageRating - a[1].averageRating)
+ 749 │       .slice(0, 5)
+ 750 │       .map(([id, data]) => ({
+ 751 │         id,
+ 752 │         averageRating: data.averageRating,
+ 753 │         totalRatings: data.totalRatings
+ 754 │       }));
+ 755 │ 
+ 756 │     // Générer des insights sur l'amélioration du modèle
+ 757 │     const improvements = [];
+ 758 │ 
+ 759 │     if (aiLearningStatus.trainingHistory && aiLearningStatus.trainingHistory.length > 1) {
+ 760 │       const lastTraining = aiLearningStatus.trainingHistory[aiLearningStatus.trainingHistory.length - 1];
+ 761 │       const previousTraining = aiLearningStatus.trainingHistory[aiLearningStatus.trainingHistory.length - 2];
+ 762 │ 
+ 763 │       if (lastTraining.accuracy > previousTraining.accuracy) {
+ 764 │         const improvementPercent = ((lastTraining.accuracy - previousTraining.accuracy) / previousTraining.accuracy * 100).toFixed(1);
+ 765 │         improvements.push(`Précision améliorée de ${improvementPercent}% depuis la dernière version`);
+ 766 │       }
+ 767 │     }
+ 768 │ 
+ 769 │     if (aiLearningStatus.uniqueProfilesCount > 1000) {
+ 770 │       improvements.push(`Base de données enrichie de ${aiLearningStatus.uniqueProfilesCount} profils uniques`);
+ 771 │     }
+ 772 │ 
+ 773 │     if (Object.keys(patternCorrelations.symptomCorrelations).length > 0) {
+ 774 │       improvements.push(`Affinement des corrélations symptômes-suppléments (${Object.keys(patternCorrelations.symptomCorrelations).length} motifs)`);
+ 775 │     }
+ 776 │ 
+ 777 │     // Ajouter des indicateurs de performance du système
+ 778 │     const avgUserSatisfaction = Object.values(recommendationPerformance)
+ 779 │       .filter(data => data.totalRatings > 0)
+ 780 │       .reduce((sum, data) => sum + data.averageRating, 0) / 
+ 781 │       Object.values(recommendationPerformance).filter(data => data.totalRatings > 0).length;
+ 782 │ 
+ 783 │     if (!isNaN(avgUserSatisfaction)) {
+ 784 │       const satisfactionPercentage = Math.round((avgUserSatisfaction / 5) * 100);
+ 785 │       improvements.push(`Taux de satisfaction utilisateur global de ${satisfactionPercentage}%`);
+ 786 │     }
+ 787 │ 
+ 788 │     if (Object.keys(patternCorrelations.ageCorrelations).length > 0) {
+ 789 │       improvements.push(`Corrélations d'âge identifiées (${Object.keys(patternCorrelations.ageCorrelations).length} segments)`);
+ 790 │     }
+ 791 │ 
+ 792 │     if (Object.keys(patternCorrelations.symptomCorrelations).length > 0) {
+ 793 │       improvements.push(`Corrélations avancées entre symptômes et efficacité nutritionnelle (${Object.keys(patternCorrelations.symptomCorrelations).length} symptômes)`);
+ 794 │     }
+ 795 │ 
+ 796 │     // Construire et retourner l'état complet du modèle
+ 797 │     return {
+ 798 │       isActive: aiLearningStatus.isActive,
+ 799 │       modelVersion: aiLearningStatus.modelVersion,
+ 800 │       lastTrainingDate: aiLearningStatus.lastTrainingDate,
+ 801 │       accuracy: aiLearningStatus.accuracy,
+ 802 │       dataPointsAnalyzed: aiLearningStatus.dataPointsCount,
+ 803 │       improvements: improvements,
+ 804 │ 
+ 805 │       // Informations supplémentaires
+ 806 │       dataQuality: dataQuality.overallQuality,
+ 807 │       uniqueProfiles: aiLearningStatus.uniqueProfilesCount,
+ 808 │       trainingHistory: aiLearningStatus.trainingHistory,
+ 809 │       topPerformingRecommendations: topRecommendations,
+ 810 │ 
+ 811 │       // Métriques d'interface utilisateur
+ 812 │       knowledgeBase: 2500 + Math.round(aiLearningStatus.dataPointsCount / 10),
+ 813 │       accuracyImprovement: 2.3,
+ 814 │       processingTime: 234,
+ 815 │       userSatisfaction: 94,
+ 816 │       useCaseCoverage: 87,
+ 817 │       recommendationEfficiency: 92,
+ 818 │       lastUpdate: new Date().toLocaleDateString(),
+ 819 │     };
+ 820 │   } catch (error) {
+ 821 │     console.error("Erreur lors de la récupération du statut du modèle d'IA:", error);
+ 822 │ 
+ 823 │     // Fournir des valeurs par défaut en cas d'erreur
+ 824 │     return {
+ 825 │       isActive: true,
+ 826 │       modelVersion: '1.0.0',
+ 827 │       lastTrainingDate: new Date().toISOString(),
+ 828 │       accuracy: 0.87,
+ 829 │       dataPointsAnalyzed: 1250,
+ 830 │       improvements: [
+ 831 │         "Amélioration de la détection des profils à risque",
+ 832 │         "Meilleure personnalisation par âge et sexe",
+ 833 │         "Intégration des dernières recherches scientifiques"
+ 834 │       ],
+ 835 │       knowledgeBase: 2500,
+ 836 │       accuracyImprovement: 2.3,
+ 837 │       processingTime: 234, userSatisfaction: 94,
+ 838 │       useCaseCoverage: 87,
+ 839 │       recommendationEfficiency: 92,
+ 840 │       lastUpdate: new Date().toLocaleDateString(),
+ 841 │       topPerformingRecommendations: []
+ 842 │     };
+ 843 │   }
+ 844 │ }
+ 845 │ 
+ 846 │ // Placeholder functions -  replace with actual implementations
+ 847 │ const processBehavioralData = (behavioralMetrics: BehavioralMetrics) => ({
+ 848 │   cognitiveLoad: 0.7,
+ 849 │   stressLevel: 0.6,
+ 850 │   sleepQuality: 0.8
+ 851 │ });
+ 852 │ 
+ 853 │ const saveLearningData = (quizResponses: any, recommendations: any, behavioralMetrics: any, neuroProfile: any) => {
+     ·       ────────┬───────
+     ·               ╰── `saveLearningData` redefined here
+ 854 │   // Placeholder function
+ 855 │ };
+     ╰────
+  × the name `evaluateDataQuality` is defined multiple times
+     ╭─[/home/runner/workspace/src/utils/recommenderSystem.ts:27:1]
+  24 │   adjustRecommendationsWithLearning,
+  25 │   saveLearningData,
+  26 │   getAILearningStatus,
+  27 │   evaluateDataQuality
+     ·   ─────────┬─────────
+     ·            ╰── previous definition of `evaluateDataQuality` here
+  28 │ } from './aiLearningEngine';
+  29 │ 
+  30 │ /**
+  31 │  * Génère des recommandations en utilisant l'algorithme principal et l'apprentissage IA
+  32 │  */
+  33 │ export const generateRecommendations = (
+  34 │   quizResponses: QuizResponse,
+  35 │   behavioralMetrics?: BehavioralMetrics,
+  36 │   neuroProfile?: NeuroProfile
+  37 │ ): Recommendation[] => {
+  38 │   try {
+  39 │     // Vérifier si les données du quiz sont valides
+  40 │     if (!quizResponses || !quizResponses.healthConcerns || !quizResponses.goals) {
+  41 │       console.error("Données du quiz insuffisantes pour générer des recommandations");
+  42 │       return [];
+  43 │     }
+  44 │ 
+  45 │     const recommendations: Recommendation[] = [];
+  46 │ 
+  47 │     // === SANTÉ MENTALE & STRESS ===
+  48 │     if (quizResponses.healthConcerns.stressLevel === 'high' || 
+  49 │         quizResponses.healthConcerns.stressLevel === 'very_high' || 
+  50 │         quizResponses.goals.reduceStress) {
+  51 │ 
+  52 │       recommendations.push({
+  53 │         id: "rec_magnesium",
+  54 │         name: "Magnésium bisglycinate",
+  55 │         description: "Forme hautement biodisponible du magnésium qui aide à réduire le stress et l'anxiété",
+  56 │         priority: 1,
+  57 │         matchScore: 90,
+  58 │         benefits: ["Réduction de l'anxiété", "Amélioration du sommeil", "Relaxation musculaire"],
+  59 │         recommendedDose: "300-400mg par jour, de préférence le soir",
+  60 │         timeToEffect: "2-4 semaines pour un effet optimal",
+  61 │         scientificBasis: "Études cliniques démontrant l'efficacité du magnésium sur les niveaux de stress et d'anxiété",
+  62 │         reason: "Votre niveau de stress élevé indique un besoin en magnésium"
+  63 │       });
+  64 │ 
+  65 │       recommendations.push({
+  66 │         id: "rec_ashwagandha",
+  67 │         name: "Ashwagandha KSM-66",
+  68 │         description: "Adaptogène puissant aidant à réduire le cortisol et à équilibrer la réponse au stress",
+  69 │         priority: 2,
+  70 │         matchScore: 85,
+  71 │         benefits: ["Réduction du cortisol", "Adaptation au stress", "Amélioration de la résistance"],
+  72 │         recommendedDose: "300-600mg par jour, extrait standardisé",
+  73 │         timeToEffect: "4-6 semaines pour un effet optimal",
+  74 │         scientificBasis: "Multiples études cliniques confirmant son effet adaptogène",
+  75 │         reason: "Votre profil indique un besoin d'adaptogènes pour la gestion du stress chronique"
+  76 │       });
+  77 │     }
+  78 │ 
+  79 │     // === ÉNERGIE & FATIGUE ===
+  80 │     if (quizResponses.healthConcerns.energyLevel === 'low' || 
+  81 │         quizResponses.goals.increaseEnergy) {
+  82 │ 
+  83 │       recommendations.push({
+  84 │         id: "rec_b_complex",
+  85 │         name: "Complexe Vitamines B actives",
+  86 │         description: "Vitamines B sous formes méthylées pour une absorption optimale et un soutien énergétique",
+  87 │         priority: 1,
+  88 │         matchScore: 88,
+  89 │         benefits: ["Production d'énergie cellulaire", "Soutien au métabolisme", "Fonction cognitive"],
+  90 │         recommendedDose: "1 gélule par jour avec le petit-déjeuner",
+  91 │         timeToEffect: "2-3 semaines",
+  92 │         scientificBasis: "Rôle essentiel des vitamines B dans le cycle de Krebs et la production d'ATP",
+  93 │         reason: "Votre niveau d'énergie bas suggère un besoin en vitamines B"
+  94 │       });
+  95 │ 
+  96 │       recommendations.push({
+  97 │         id: "rec_coq10",
+  98 │         name: "Coenzyme Q10",
+  99 │         description: "Cofacteur essentiel pour la production d'énergie dans les mitochondries",
+ 100 │         priority: 2,
+ 101 │         matchScore: 80,
+ 102 │         benefits: ["Production d'ATP", "Protection antioxydante", "Santé mitochondriale"],
+ 103 │         recommendedDose: "100-200mg par jour avec un repas contenant des graisses",
+ 104 │         timeToEffect: "2-4 semaines",
+ 105 │         scientificBasis: "Études démontrant l'amélioration des niveaux d'énergie chez les personnes fatiguées",
+ 106 │         reason: "La CoQ10 peut aider à restaurer la production d'énergie cellulaire"
+ 107 │       });
+ 108 │     }
+ 109 │ 
+ 110 │     // === SOMMEIL ===
+ 111 │     if (quizResponses.healthConcerns.sleepIssues === 'yes' || 
+ 112 │         quizResponses.healthConcerns.sleepIssues === 'sometimes') {
+ 113 │ 
+ 114 │       recommendations.push({
+ 115 │         id: "rec_magnesium_glycinate",
+ 116 │         name: "Magnésium Glycinate",
+ 117 │         description: "Forme de magnésium hautement absorbable ayant un effet relaxant",
+ 118 │         priority: 1,
+ 119 │         matchScore: 85,
+ 120 │         benefits: ["Relaxation musculaire", "Calme mental", "Régulation du GABA"],
+ 121 │         recommendedDose: "300-400mg avant le coucher",
+ 122 │         timeToEffect: "1-2 semaines",
+ 123 │         scientificBasis: "Le magnésium active les récepteurs GABA impliqués dans la relaxation",
+ 124 │         reason: "Vos problèmes de sommeil peuvent être améliorés par le magnésium"
+ 125 │       });
+ 126 │ 
+ 127 │       recommendations.push({
+ 128 │         id: "rec_theanine",
+ 129 │         name: "L-Théanine",
+ 130 │         description: "Acide aminé naturellement présent dans le thé vert qui favorise la détente sans somnolence",
+ 131 │         priority: 2,
+ 132 │         matchScore: 80,
+ 133 │         benefits: ["Relaxation sans somnolence", "Amélioration de la qualité du sommeil", "Réduction des ruminations mentales"],
+ 134 │         recommendedDose: "200-400mg avant le coucher",
+ 135 │         timeToEffect: "30 minutes à 1 heure",
+ 136 │         scientificBasis: "Augmente les ondes alpha dans le cerveau, associées à un état de relaxation",
+ 137 │         reason: "La L-Théanine peut aider à calmer votre esprit avant le sommeil"
+ 138 │       });
+ 139 │     }
+ 140 │ 
+ 141 │     // === CONCENTRATION & COGNITION ===
+ 142 │     if (quizResponses.healthConcerns.focusIssues === 'yes' || 
+ 143 │         quizResponses.goals.improveFocus) {
+ 144 │ 
+ 145 │       recommendations.push({
+ 146 │         id: "rec_bacopa",
+ 147 │         name: "Bacopa Monnieri",
+ 148 │         description: "Plante adaptogène qui améliore la mémoire et les fonctions cognitives",
+ 149 │         priority: 1,
+ 150 │         matchScore: 82,
+ 151 │         benefits: ["Mémoire", "Concentration", "Réduction du stress cognitif"],
+ 152 │         recommendedDose: "300-500mg par jour, extrait standardisé à 50% de bacosides",
+ 153 │         timeToEffect: "8-12 semaines pour des résultats optimaux",
+ 154 │         scientificBasis: "Multiples études cliniques montrant des améliorations cognitives",
+ 155 │         reason: "Vos problèmes de concentration peuvent bénéficier des effets neuroprotecteurs du Bacopa"
+ 156 │       });
+ 157 │ 
+ 158 │       recommendations.push({
+ 159 │         id: "rec_rhodiola",
+ 160 │         name: "Rhodiola Rosea",
+ 161 │         description: "Adaptogène qui réduit la fatigue mentale et améliore les performances cognitives",
+ 162 │         priority: 2,
+ 163 │         matchScore: 75,
+ 164 │         benefits: ["Réduction de la fatigue mentale", "Amélioration de la vigilance", "Résistance au stress"],
+ 165 │         recommendedDose: "200-400mg par jour, extrait standardisé à 3% de rosavines",
+ 166 │         timeToEffect: "1-3 semaines",
+ 167 │         scientificBasis: "Études montrant une amélioration des performances cognitives en situation de stress",
+ 168 │         reason: "La Rhodiola peut améliorer votre concentration en conditions de stress"
+ 169 │       });
+ 170 │     }
+ 171 │ 
+ 172 │     // === DIGESTION ===
+ 173 │     if (quizResponses.healthConcerns.digestiveIssues === 'yes' || 
+ 174 │         quizResponses.goals.improveDigestion) {
+ 175 │ 
+ 176 │       recommendations.push({
+ 177 │         id: "rec_probiotics",
+ 178 │         name: "Probiotiques multi-souches",
+ 179 │         description: "Combinaison de souches probiotiques scientifiquement validées pour la santé digestive",
+ 180 │         priority: 1,
+ 181 │         matchScore: 88,
+ 182 │         benefits: ["Équilibre du microbiome", "Réduction des ballonnements", "Soutien immunitaire intestinal"],
+ 183 │         recommendedDose: "10-30 milliards d'UFC par jour, avec 5+ souches différentes",
+ 184 │         timeToEffect: "2-4 semaines",
+ 185 │         scientificBasis: "Études cliniques sur diverses souches et leur impact sur la santé digestive",
+ 186 │         reason: "Vos problèmes digestifs suggèrent un déséquilibre du microbiome intestinal"
+ 187 │       });
+ 188 │ 
+ 189 │       recommendations.push({
+ 190 │         id: "rec_glutamine",
+ 191 │         name: "L-Glutamine",
+ 192 │         description: "Acide aminé essentiel pour la santé et la réparation de la muqueuse intestinale",
+ 193 │         priority: 2,
+ 194 │         matchScore: 75,
+ 195 │         benefits: ["Intégrité de la barrière intestinale", "Réduction de l'inflammation", "Soutien immunitaire"],
+ 196 │         recommendedDose: "5-10g par jour, à jeun",
+ 197 │         timeToEffect: "2-4 semaines",
+ 198 │         scientificBasis: "Principal carburant des entérocytes (cellules intestinales)",
+ 199 │         reason: "Votre profil digestif suggère un besoin de soutien pour la muqueuse intestinale"
+ 200 │       });
+ 201 │     }
+ 202 │ 
+ 203 │     // Appliquer l'apprentissage IA pour ajuster les recommandations
+ 204 │     const aiEnhancedRecommendations = adjustRecommendationsWithLearning(recommendations, quizResponses);
+ 205 │ 
+ 206 │     // Enregistrer les données pour apprentissage futur (sans feedback pour le moment)
+ 207 │     saveLearningData(quizResponses, aiEnhancedRecommendations);
+ 208 │ 
+ 209 │     return aiEnhancedRecommendations;
+ 210 │   } catch (error) {
+ 211 │     console.error("Erreur lors de la génération des recommandations:", error);
+ 212 │     return [];
+ 213 │   }
+ 214 │ };
+ 215 │ 
+ 216 │ /**
+ 217 │  * Génère une explication détaillée pour une recommandation spécifique
+ 218 │  */
+ 219 │ export const generateRecommendationExplanation = (
+ 220 │   recommendation: Recommendation,
+ 221 │   quizResponses: QuizResponse
+ 222 │ ): string => {
+ 223 │   try {
+ 224 │     const supplement = SUPPLEMENT_CATALOG[recommendation.id];
+ 225 │ 
+ 226 │     if (!supplement) {
+ 227 │       return "Information détaillée non disponible pour ce complément.";
+ 228 │     }
+ 229 │ 
+ 230 │     // Construire une explication scientifique personnalisée
+ 231 │     let explanation = `**${supplement.name} (${supplement.scientificName})** : ${supplement.description}\n\n`;
+ 232 │ 
+ 233 │     // Bénéfices spécifiques
+ 234 │     explanation += "**Bénéfices ciblés pour votre profil :**\n";
+ 235 │     explanation += supplement.benefits.map(b => `- ${b}`).join('\n');
+ 236 │ 
+ 237 │     // Base scientifique
+ 238 │     explanation += `\n\n**Base scientifique :** ${supplement.scientificBasis}`;
+ 239 │ 
+ 240 │     // Dosage personnalisé
+ 241 │     explanation += `\n\n**Dosage recommandé pour vous :** ${recommendation.recommendedDose}`;
+ 242 │ 
+ 243 │     // Délai d'efficacité
+ 244 │     explanation += `\n\n**Délai d'efficacité typique :** ${supplement.timeToEffect}`;
+ 245 │ 
+ 246 │     // Précautions
+ 247 │     if (supplement.contraindications.length > 0) {
+ 248 │       explanation += "\n\n**Précautions :** ";
+ 249 │       explanation += supplement.contraindications.map(c => c).join(', ');
+ 250 │     }
+ 251 │ 
+ 252 │     return explanation;
+ 253 │   } catch (error) {
+ 254 │     console.error("Erreur lors de la génération de l'explication:", error);
+ 255 │     return "Désolé, nous ne pouvons pas générer d'explication détaillée pour cette recommandation.";
+ 256 │   }
+ 257 │ };
+ 258 │ 
+ 259 │ /**
+ 260 │  * Enregistre les données pour l'apprentissage du système IA
+ 261 │  */
+ 262 │ export const recordLearningData = (data: LearningData): void => {
+ 263 │   try {
+ 264 │     // Récupérer les données existantes
+ 265 │     const existingData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+ 266 │ 
+ 267 │     // Ajouter les nouvelles données
+ 268 │     existingData.push(data);
+ 269 │ 
+ 270 │     // Limiter la taille des données stockées (garder les 1000 plus récentes)
+ 271 │     const trimmedData = existingData.slice(-1000);
+ 272 │ 
+ 273 │     // Sauvegarder les données
+ 274 │     secureStorageService.setItem('aiLearningData', trimmedData);
+ 275 │ 
+ 276 │   } catch (error) {
+ 277 │     console.error("Erreur lors de l'enregistrement des données d'apprentissage:", error);
+ 278 │   }
+ 279 │ };
+ 280 │ 
+ 281 │ /**
+ 282 │  * Calcule le score de similarité entre deux profils utilisateurs
+ 283 │  */
+ 284 │ export const calculateProfileSimilarity = (
+ 285 │   profile1: any,
+ 286 │   profile2: any
+ 287 │ ): number => {
+ 288 │   try {
+ 289 │     let similarityScore = 0;
+ 290 │     let totalFactors = 0;
+ 291 │ 
+ 292 │     // Comparer les symptômes actifs
+ 293 │     if (profile1.activeSymptoms && profile2.activeSymptoms) {
+ 294 │       const commonSymptoms = profile1.activeSymptoms.filter((s: string) => 
+ 295 │         profile2.activeSymptoms.includes(s)
+ 296 │       ).length;
+ 297 │ 
+ 298 │       const totalSymptoms = new Set([
+ 299 │         ...profile1.activeSymptoms,
+ 300 │         ...profile2.activeSymptoms
+ 301 │       ]).size;
+ 302 │ 
+ 303 │       if (totalSymptoms > 0) {
+ 304 │         similarityScore += (commonSymptoms / totalSymptoms) * 50; // Poids plus élevé pour les symptômes
+ 305 │         totalFactors += 1;
+ 306 │       }
+ 307 │     }
+ 308 │ 
+ 309 │     // Comparer les objectifs
+ 310 │     if (profile1.activeGoals && profile2.activeGoals) {
+ 311 │       const commonGoals = profile1.activeGoals.filter((g: string) => 
+ 312 │         profile2.activeGoals.includes(g)
+ 313 │       ).length;
+ 314 │ 
+ 315 │       const totalGoals = new Set([
+ 316 │         ...profile1.activeGoals,
+ 317 │         ...profile2.activeGoals
+ 318 │       ]).size;
+ 319 │ 
+ 320 │       if (totalGoals > 0) {
+ 321 │         similarityScore += (commonGoals / totalGoals) * 30;
+ 322 │         totalFactors += 1;
+ 323 │       }
+ 324 │     }
+ 325 │ 
+ 326 │     // Comparer les restrictions alimentaires
+ 327 │     if (profile1.dietaryRestrictions && profile2.dietaryRestrictions) {
+ 328 │       let matchingRestrictions = 0;
+ 329 │       let totalRestrictions = 0;
+ 330 │ 
+ 331 │       for (const key in profile1.dietaryRestrictions) {
+ 332 │         if (profile2.dietaryRestrictions[key] === profile1.dietaryRestrictions[key]) {
+ 333 │           matchingRestrictions++;
+ 334 │         }
+ 335 │         totalRestrictions++;
+ 336 │       }
+ 337 │ 
+ 338 │       if (totalRestrictions > 0) {
+ 339 │         similarityScore += (matchingRestrictions / totalRestrictions) * 20;
+ 340 │         totalFactors += 1;
+ 341 │       }
+ 342 │     }
+ 343 │ 
+ 344 │     // Normaliser le score
+ 345 │     return totalFactors > 0 ? similarityScore / totalFactors : 0;
+ 346 │ 
+ 347 │   } catch (error) {
+ 348 │     console.error("Erreur lors du calcul de la similarité:", error);
+ 349 │     return 0;
+ 350 │   }
+ 351 │ };
+ 352 │ 
+ 353 │ /**
+ 354 │  * Enrichit les recommandations en utilisant l'IA externe via API (ChatGPT)
+ 355 │  */
+ 356 │ export const enrichRecommendationsWithExternalAI = async (
+ 357 │   recommendations: Recommendation[],
+ 358 │   quizResponses: QuizResponse
+ 359 │ ): Promise<Recommendation[]> => {
+ 360 │   try {
+ 361 │     // Vérifier si la clé API est configurée
+ 362 │     const apiKey = secureStorageService.getItem('openai_api_key');
+ 363 │ 
+ 364 │     if (!apiKey) {
+ 365 │       console.log("Clé API OpenAI non configurée, impossible d'enrichir les recommandations");
+ 366 │       return recommendations;
+ 367 │     }
+ 368 │ 
+ 369 │     // Préparer les données à envoyer à l'API
+ 370 │     const requestData = {
+ 371 │       model: "gpt-4",
+ 372 │       messages: [
+ 373 │         {
+ 374 │           role: "system",
+ 375 │           content: `Vous êtes un expert en nutrition et suppléments nutritionnels. 
+ 376 │           Vous allez analyser les recommandations générées par notre système et les enrichir 
+ 377 │           avec des conseils plus personnalisés, des explications scientifiques, et des ajustements 
+ 378 │           de dosage si nécessaire. Restez factuel et basez vos recommandations sur la science.`
+ 379 │         },
+ 380 │         {
+ 381 │           role: "user",
+ 382 │           content: `Voici les recommandations générées par notre système et les réponses au quiz de l'utilisateur.
+ 383 │           Veuillez enrichir ces recommandations avec des détails supplémentaires sur l'efficacité, d'éventuelles 
+ 384 │           synergies entre les compléments, et affiner les dosages en fonction du profil spécifique.
+ 385 │ 
+ 386 │           RÉPONSES AU QUIZ:
+ 387 │           ${JSON.stringify(quizResponses, null, 2)}
+ 388 │ 
+ 389 │           RECOMMANDATIONS GÉNÉRÉES:
+ 390 │           ${JSON.stringify(recommendations, null, 2)}
+ 391 │ 
+ 392 │           Répondez au format JSON avec les recommandations enrichies.`
+ 393 │         }
+ 394 │       ],
+ 395 │       temperature: 0.7,
+ 396 │       max_tokens: 1500
+ 397 │     };
+ 398 │ 
+ 399 │     // Appeler l'API OpenAI
+ 400 │     const response = await fetch('https://api.openai.com/v1/chat/completions', {
+ 401 │       method: 'POST',
+ 402 │       headers: {
+ 403 │         'Content-Type': 'application/json',
+ 404 │         'Authorization': `Bearer ${apiKey}`
+ 405 │       },
+ 406 │       body: JSON.stringify(requestData)
+ 407 │     });
+ 408 │ 
+ 409 │     if (!response.ok) {
+ 410 │       throw new Error(`Erreur API: ${response.status}`);
+ 411 │     }
+ 412 │ 
+ 413 │     const data = await response.json();
+ 414 │ 
+ 415 │     // Extraire et parser la réponse
+ 416 │     try {
+ 417 │       const content = data.choices[0].message.content;
+ 418 │       const enrichedRecommendations = JSON.parse(content);
+ 419 │ 
+ 420 │       // Fusionner avec les recommandations originales
+ 421 │       return enrichedRecommendations.map((enriched: any, index: number) => ({
+ 422 │         ...recommendations[index],
+ 423 │         ...enriched,
+ 424 │         aiEnriched: true
+ 425 │       }));
+ 426 │ 
+ 427 │     } catch (parseError) {
+ 428 │       console.error("Erreur lors du parsing de la réponse AI:", parseError);
+ 429 │       return recommendations;
+ 430 │     }
+ 431 │ 
+ 432 │   } catch (error) {
+ 433 │     console.error("Erreur lors de l'enrichissement des recommandations par IA:", error);
+ 434 │     return recommendations;
+ 435 │   }
+ 436 │ };
+ 437 │ 
+ 438 │ /**
+ 439 │  * Met à jour le modèle d'apprentissage en fonction des retours utilisateurs
+ 440 │  */
+ 441 │ export const updateAiModel = (): void => {
+ 442 │   try {
+ 443 │     // Récupérer toutes les données d'apprentissage
+ 444 │     const learningData: LearningData[] = secureStorageService.getItem('aiLearningData') || [];
+ 445 │ 
+ 446 │     // Récupérer les retours utilisateurs
+ 447 │     const userFeedback: UserFeedback[] = secureStorageService.getItem('userFeedback') || [];
+ 448 │ 
+ 449 │     if (learningData.length === 0 || userFeedback.length === 0) {
+ 450 │       console.log("Pas assez de données pour mettre à jour le modèle");
+ 451 │       return;
+ 452 │     }
+ 453 │ 
+ 454 │     // Traiter les données pour améliorer les recommandations
+ 455 │     processLearningDataAndFeedback(learningData, userFeedback);
+ 456 │ 
+ 457 │   } catch (error) {
+ 458 │     console.error("Erreur lors de la mise à jour du modèle IA:", error);
+ 459 │   }
+ 460 │ };
+ 461 │ 
+ 462 │ /**
+ 463 │  * Traite les données d'apprentissage et les retours utilisateurs pour améliorer le modèle
+ 464 │  */
+ 465 │ const processLearningDataAndFeedback = (
+ 466 │   learningData: LearningData[],
+ 467 │   userFeedback: UserFeedback[]
+ 468 │ ): void => {
+ 469 │   try {
+ 470 │     // Construire un index pour associer les recommandations à leur feedback
+ 471 │     const feedbackIndex = new Map<string, number[]>();
+ 472 │ 
+ 473 │     userFeedback.forEach(feedback => {
+ 474 │       if (!feedbackIndex.has(feedback.recommendationId)) {
+ 475 │         feedbackIndex.set(feedback.recommendationId, []);
+ 476 │       }
+ 477 │ 
+ 478 │       feedbackIndex.get(feedback.recommendationId)?.push(feedback.rating);
+ 479 │     });
+ 480 │ 
+ 481 │     // Ajuster les priorités des recommandations en fonction des retours
+ 482 │     const supplementAdjustments = new Map<string, { 
+ 483 │       totalPositive: number;
+ 484 │       totalNegative: number;
+ 485 │       count: number;
+ 486 │     }>();
+ 487 │ 
+ 488 │     // Parcourir les données d'apprentissage
+ 489 │     learningData.forEach(data => {
+ 490 │       data.generatedRecommendations.forEach(rec => {
+ 491 │         const feedback = feedbackIndex.get(rec.id);
+ 492 │ 
+ 493 │         if (feedback && feedback.length > 0) {
+ 494 │           // Calculer le score moyen
+ 495 │           const avgRating = feedback.reduce((sum, rating) => sum + rating, 0) / feedback.length;
+ 496 │ 
+ 497 │           if (!supplementAdjustments.has(rec.id)) {
+ 498 │             supplementAdjustments.set(rec.id, {
+ 499 │               totalPositive: 0,
+ 500 │               totalNegative: 0,
+ 501 │               count: 0
+ 502 │             });
+ 503 │           }
+ 504 │ 
+ 505 │           const adjustment = supplementAdjustments.get(rec.id)!;
+ 506 │ 
+ 507 │           if (avgRating >= 3.5) {
+ 508 │             adjustment.totalPositive++;
+ 509 │           } else {
+ 510 │             adjustment.totalNegative++;
+ 511 │           }
+ 512 │ 
+ 513 │           adjustment.count++;
+ 514 │         }
+ 515 │       });
+ 516 │     });
+ 517 │ 
+ 518 │     // Appliquer les ajustements au modèle
+ 519 │     supplementAdjustments.forEach((adjustmentData, supplementId) => {
+ 520 │       if (adjustmentData.count >= 5) { // Au moins 5 retours pour être significatif
+ 521 │         const positiveRatio = adjustmentData.totalPositive / adjustmentData.count;
+ 522 │ 
+ 523 │         // Ajuster les symptômes associés
+ 524 │         for (const symptomKey in SYMPTOM_RECOMMENDATIONS) {
+ 525 │           const recommendations = SYMPTOM_RECOMMENDATIONS[symptomKey];
+ 526 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 527 │ 
+ 528 │           if (recIndex >= 0) {
+ 529 │             const currentPriority = recommendations[recIndex].priority;
+ 530 │ 
+ 531 │             // Courbe d'ajustement plus fine basée sur les retours
+ 532 │             if (positiveRatio > 0.8) { // Plus de 80% de retours positifs
+ 533 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 2);
+ 534 │             } else if (positiveRatio > 0.6) { // Entre 60% et 80% de retours positifs
+ 535 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 536 │             } else if (positiveRatio < 0.3) { // Moins de 30% de retours positifs
+ 537 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 2);
+ 538 │             } else if (positiveRatio < 0.5) { // Entre 30% et 50% de retours positifs
+ 539 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 540 │             }
+ 541 │           }
+ 542 │         }
+ 543 │ 
+ 544 │         // Ajuster également les objectifs associés
+ 545 │         for (const goalKey in GOAL_RECOMMENDATIONS) {
+ 546 │           const recommendations = GOAL_RECOMMENDATIONS[goalKey];
+ 547 │           const recIndex = recommendations.findIndex(rec => rec.id === supplementId);
+ 548 │ 
+ 549 │           if (recIndex >= 0) {
+ 550 │             const currentPriority = recommendations[recIndex].priority;
+ 551 │ 
+ 552 │             // Augmenter ou diminuer la priorité selon les retours
+ 553 │             if (positiveRatio > 0.7) {
+ 554 │               recommendations[recIndex].priority = Math.min(10, currentPriority + 1);
+ 555 │             } else if (positiveRatio < 0.3) {
+ 556 │               recommendations[recIndex].priority = Math.max(1, currentPriority - 1);
+ 557 │             }
+ 558 │           }
+ 559 │         }
+ 560 │       }
+ 561 │     });
+ 562 │ 
+ 563 │     // Sauvegarder les données modifiées
+ 564 │     // Note: Dans une implémentation réelle, nous sauvegarderions ces changements dans une base de données
+ 565 │     // Pour cette démonstration, nous utilisons le stockage sécurisé local
+ 566 │     secureStorageService.setItem('symptomRecommendationsUpdated', SYMPTOM_RECOMMENDATIONS);
+ 567 │     secureStorageService.setItem('goalRecommendationsUpdated', GOAL_RECOMMENDATIONS);
+ 568 │ 
+ 569 │     console.log("Modèle IA mis à jour avec succès");
+ 570 │ 
+ 571 │   } catch (error) {
+ 572 │     console.error("Erreur lors du traitement des données d'apprentissage:", error);
+ 573 │   }
+ 574 │ };
+ 575 │ 
+ 576 │ 
+ 577 │ /**
+ 578 │  * Génère des recommandations personnalisées avancées avec analyse comportementale et IA
+ 579 │  */
+ 580 │ export const generateAdvancedRecommendations = (
+ 581 │   quizResponses: QuizResponse,
+ 582 │   behavioralMetrics?: BehavioralMetrics,
+ 583 │   neuroProfile?: NeuroProfile
+ 584 │ ): Recommendation[] => {
+ 585 │   try {
+ 586 │     // Générer les recommandations de base
+ 587 │     const baseRecommendations = generateRecommendations(quizResponses, behavioralMetrics, neuroProfile);
+ 588 │ 
+ 589 │     // Appliquer l'ajustement d'apprentissage IA
+ 590 │     const aiEnhancedRecommendations = adjustRecommendationsWithLearning(baseRecommendations, quizResponses);
+ 591 │ 
+ 592 │     // Si des métriques comportementales sont disponibles, les utiliser pour affiner davantage
+ 593 │     if (behavioralMetrics) {
+ 594 │       const behavioralInsights = processBehavioralData(behavioralMetrics);
+ 595 │ 
+ 596 │       // Ajuster les priorités en fonction des domaines d'intérêt comportementaux
+ 597 │       aiEnhancedRecommendations.forEach(rec => {
+ 598 │         // Vérifier si cette recommandation correspond à un domaine d'intérêt
+ 599 │         behavioralInsights.interestAreas.forEach(area => {
+ 600 │           if (
+ 601 │             (area === 'Stress' && (rec.id.includes('magnes') || rec.id.includes('ashwagandha') || rec.id.includes('theanine'))) ||
+ 602 │             (area === 'Sommeil' && (rec.id.includes('melatonin') || rec.id.includes('magnes') || rec.id.includes('valerian'))) ||
+ 603 │             (area === 'Énergie' && (rec.id.includes('vitaminb') || rec.id.includes('iron') || rec.id.includes('coq10'))) ||
+ 604 │             (area === 'Digestion' && (rec.id.includes('probio') || rec.id.includes('enzymes') || rec.id.includes('fiber'))) ||
+ 605 │             (area === 'Immunité' && (rec.id.includes('vitaminc') || rec.id.includes('vitd') || rec.id.includes('zinc')))
+ 606 │           ) {
+ 607 │             // Augmenter le score pour les recommandations correspondant aux intérêts
+ 608 │             rec.matchScore = Math.min(100, rec.matchScore + 5);
+ 609 │ 
+ 610 │             // Ajouter une explication IA
+ 611 │             if (!rec.aiExplanations) {
+ 612 │               rec.aiExplanations = [];
+ 613 │             }
+ 614 │             rec.aiExplanations.push(`Cette recommandation est particulièrement adaptée à votre intérêt pour ${area.toLowerCase()}`);
+ 615 │           }
+ 616 │         });
+ 617 │ 
+ 618 │         // Ajuster en fonction du niveau d'incertitude
+ 619 │         if (behavioralInsights.uncertaintyLevel > 0.6 && rec.scientificBasis) {
+ 620 │           // Pour les utilisateurs incertains, ajouter plus d'explications scientifiques
+ 621 │           if (!rec.aiExplanations) {
+ 622 │             rec.aiExplanations = [];
+ 623 │           }
+ 624 │           rec.aiExplanations.push("Nous avons constaté que vous recherchiez des informations détaillées, c'est pourquoi nous avons priorisé cette recommandation bien documentée scientifiquement");
+ 625 │         }
+ 626 │ 
+ 627 │         // Ajuster en fonction du niveau d'attention
+ 628 │         if (behavioralInsights.attentionLevel < 0.4) {
+ 629 │           // Pour les utilisateurs à faible attention, donner une explication courte et directe
+ 630 │           rec.shortExplanation = `Recommandé pour: ${rec.benefits.slice(0, 2).join(', ')}`;
+ 631 │         }
+ 632 │       });
+ 633 │     }
+ 634 │ 
+ 635 │     // Enrichir avec des données de neuroProfile si disponibles
+ 636 │     if (neuroProfile) {
+ 637 │       aiEnhancedRecommendations.forEach(rec => {
+ 638 │         if (neuroProfile.decisionStyle === 'analytical' && rec.scientificBasis) {
+ 639 │           rec.matchScore = Math.min(100, rec.matchScore + 3);
+ 640 │ 
+ 641 │           if (!rec.aiExplanations) {
+ 642 │             rec.aiExplanations = [];
+ 643 │           }
+ 644 │           rec.aiExplanations.push("Cette recommandation correspond à votre approche analytique, avec une base scientifique solide");
+ 645 │         }
+ 646 │ 
+ 647 │         if (neuroProfile.decisionStyle === 'intuitive' && rec.timeToEffect === 'rapid') {
+ 648 │           rec.matchScore = Math.min(100, rec.matchScore + 3);
+ 649 │ 
+ 650 │           if (!rec.aiExplanations) {
+ 651 │             rec.aiExplanations = [];
+ 652 │           }
+ 653 │           rec.aiExplanations.push("Cette solution à action rapide correspond à votre préférence pour des résultats immédiats");
+ 654 │         }
+ 655 │ 
+ 656 │         if (neuroProfile.riskTolerance === 'low' && rec.safetyProfile === 'excellent') {
+ 657 │           rec.matchScore = Math.min(100, rec.matchScore + 5);
+ 658 │ 
+ 659 │           if (!rec.aiExplanations) {
+ 660 │             rec.aiExplanations = [];
+ 661 │           }
+ 662 │           rec.aiExplanations.push("Cette option présente un excellent profil de sécurité, idéal pour votre préférence pour les solutions éprouvées");
+ 663 │         }
+ 664 │       });
+ 665 │     }
+ 666 │ 
+ 667 │     // Réordonner les recommandations en fonction des scores ajustés
+ 668 │     aiEnhancedRecommendations.sort((a, b) => {
+ 669 │       if (a.priority !== b.priority) {
+ 670 │         return a.priority - b.priority;
+ 671 │       }
+ 672 │       return b.matchScore - a.matchScore;
+ 673 │     });
+ 674 │ 
+ 675 │     // Optimiser les recommandations avec l'algorithme avancé
+ 676 │     const optimizedRecommendations = optimizeRecommendations(
+ 677 │       aiEnhancedRecommendations,
+ 678 │       quizResponses,
+ 679 │       behavioralMetrics,
+ 680 │       neuroProfile
+ 681 │     );
+ 682 │ 
+ 683 │     // Enregistrer les données pour apprentissage futur
+ 684 │     saveLearningData(quizResponses, optimizedRecommendations, behavioralMetrics, neuroProfile);
+ 685 │ 
+ 686 │     return optimizedRecommendations;
+ 687 │   } catch (error) {
+ 688 │     console.error("Erreur lors de la génération des recommandations avancées:", error);
+ 689 │     return generateRecommendations(quizResponses, behavioralMetrics, neuroProfile);
+ 690 │   }
+ 691 │ };
+ 692 │ 
+ 693 │ // Importations nécessaires
+ 694 │ import { optimizeRecommendations } from './optimizedRecommendation';
+ 695 │ import { getAILearningStatus } from './aiLearningEngine';
+ 696 │ import { secureStorageService } from '../lib/secureStorage';
+ 697 │ 
+ 698 │ 
+ 699 │ // Définition d'interfaces pour les types utilisés
+ 700 │ interface QuizResponses {
+ 701 │   // Interface pour les réponses du quiz
+ 702 │   healthConcerns?: {
+ 703 │     stressLevel?: string;
+ 704 │     energyLevel?: string;
+ 705 │     sleepIssues?: string;
+ 706 │     focusIssues?: string;
+ 707 │     digestiveIssues?: string;
+ 708 │   };
+ 709 │   goals?: {
+ 710 │     reduceStress?: boolean;
+ 711 │     increaseEnergy?: boolean;
+ 712 │     improveSleep?: boolean;
+ 713 │     improveFocus?: boolean;
+ 714 │     improveDigestion?: boolean;
+ 715 │   };
+ 716 │ }
+ 717 │ 
+ 718 │ interface BehavioralMetrics {
+ 719 │   // Interface pour les métriques comportementales
+ 720 │   cognitiveLoad: number;
+ 721 │   stressLevel: number;
+ 722 │   sleepQuality: number;
+ 723 │ }
+ 724 │ 
+ 725 │ 
+ 726 │ 
+ 727 │ /**
+ 728 │  * Retourne le statut du modèle d'IA actuel
+ 729 │  * @returns Information sur le statut du modèle d'IA
+ 730 │  */
+ 731 │ export function getAIModelStatus() {
+ 732 │   try {
+ 733 │     // Récupérer les informations depuis le moteur d'apprentissage
+ 734 │     const aiLearningStatus = getAILearningStatus();
+ 735 │ 
+ 736 │     // Récupérer la qualité des données
+ 737 │     const dataQuality = evaluateDataQuality();
+ 738 │ 
+ 739 │     // Obtenir les corrélations de motifs
+ 740 │     const patternCorrelations = identifyPatternCorrelations();
+ 741 │ 
+ 742 │     // Préparer des informations sur les recommandations les plus performantes
+ 743 │     const recommendationPerformance = analyzeRecommendationPerformance();
+ 744 │ 
+ 745 │     // Identifier les recommandations les plus efficaces
+ 746 │     const topRecommendations = Object.entries(recommendationPerformance)
+ 747 │       .filter(([_, data]) => data.totalRatings > 10)
+ 748 │       .sort((a, b) => b[1].averageRating - a[1].averageRating)
+ 749 │       .slice(0, 5)
+ 750 │       .map(([id, data]) => ({
+ 751 │         id,
+ 752 │         averageRating: data.averageRating,
+ 753 │         totalRatings: data.totalRatings
+ 754 │       }));
+ 755 │ 
+ 756 │     // Générer des insights sur l'amélioration du modèle
+ 757 │     const improvements = [];
+ 758 │ 
+ 759 │     if (aiLearningStatus.trainingHistory && aiLearningStatus.trainingHistory.length > 1) {
+ 760 │       const lastTraining = aiLearningStatus.trainingHistory[aiLearningStatus.trainingHistory.length - 1];
+ 761 │       const previousTraining = aiLearningStatus.trainingHistory[aiLearningStatus.trainingHistory.length - 2];
+ 762 │ 
+ 763 │       if (lastTraining.accuracy > previousTraining.accuracy) {
+ 764 │         const improvementPercent = ((lastTraining.accuracy - previousTraining.accuracy) / previousTraining.accuracy * 100).toFixed(1);
+ 765 │         improvements.push(`Précision améliorée de ${improvementPercent}% depuis la dernière version`);
+ 766 │       }
+ 767 │     }
+ 768 │ 
+ 769 │     if (aiLearningStatus.uniqueProfilesCount > 1000) {
+ 770 │       improvements.push(`Base de données enrichie de ${aiLearningStatus.uniqueProfilesCount} profils uniques`);
+ 771 │     }
+ 772 │ 
+ 773 │     if (Object.keys(patternCorrelations.symptomCorrelations).length > 0) {
+ 774 │       improvements.push(`Affinement des corrélations symptômes-suppléments (${Object.keys(patternCorrelations.symptomCorrelations).length} motifs)`);
+ 775 │     }
+ 776 │ 
+ 777 │     // Ajouter des indicateurs de performance du système
+ 778 │     const avgUserSatisfaction = Object.values(recommendationPerformance)
+ 779 │       .filter(data => data.totalRatings > 0)
+ 780 │       .reduce((sum, data) => sum + data.averageRating, 0) / 
+ 781 │       Object.values(recommendationPerformance).filter(data => data.totalRatings > 0).length;
+ 782 │ 
+ 783 │     if (!isNaN(avgUserSatisfaction)) {
+ 784 │       const satisfactionPercentage = Math.round((avgUserSatisfaction / 5) * 100);
+ 785 │       improvements.push(`Taux de satisfaction utilisateur global de ${satisfactionPercentage}%`);
+ 786 │     }
+ 787 │ 
+ 788 │     if (Object.keys(patternCorrelations.ageCorrelations).length > 0) {
+ 789 │       improvements.push(`Corrélations d'âge identifiées (${Object.keys(patternCorrelations.ageCorrelations).length} segments)`);
+ 790 │     }
+ 791 │ 
+ 792 │     if (Object.keys(patternCorrelations.symptomCorrelations).length > 0) {
+ 793 │       improvements.push(`Corrélations avancées entre symptômes et efficacité nutritionnelle (${Object.keys(patternCorrelations.symptomCorrelations).length} symptômes)`);
+ 794 │     }
+ 795 │ 
+ 796 │     // Construire et retourner l'état complet du modèle
+ 797 │     return {
+ 798 │       isActive: aiLearningStatus.isActive,
+ 799 │       modelVersion: aiLearningStatus.modelVersion,
+ 800 │       lastTrainingDate: aiLearningStatus.lastTrainingDate,
+ 801 │       accuracy: aiLearningStatus.accuracy,
+ 802 │       dataPointsAnalyzed: aiLearningStatus.dataPointsCount,
+ 803 │       improvements: improvements,
+ 804 │ 
+ 805 │       // Informations supplémentaires
+ 806 │       dataQuality: dataQuality.overallQuality,
+ 807 │       uniqueProfiles: aiLearningStatus.uniqueProfilesCount,
+ 808 │       trainingHistory: aiLearningStatus.trainingHistory,
+ 809 │       topPerformingRecommendations: topRecommendations,
+ 810 │ 
+ 811 │       // Métriques d'interface utilisateur
+ 812 │       knowledgeBase: 2500 + Math.round(aiLearningStatus.dataPointsCount / 10),
+ 813 │       accuracyImprovement: 2.3,
+ 814 │       processingTime: 234,
+ 815 │       userSatisfaction: 94,
+ 816 │       useCaseCoverage: 87,
+ 817 │       recommendationEfficiency: 92,
+ 818 │       lastUpdate: new Date().toLocaleDateString(),
+ 819 │     };
+ 820 │   } catch (error) {
+ 821 │     console.error("Erreur lors de la récupération du statut du modèle d'IA:", error);
+ 822 │ 
+ 823 │     // Fournir des valeurs par défaut en cas d'erreur
+ 824 │     return {
+ 825 │       isActive: true,
+ 826 │       modelVersion: '1.0.0',
+ 827 │       lastTrainingDate: new Date().toISOString(),
+ 828 │       accuracy: 0.87,
+ 829 │       dataPointsAnalyzed: 1250,
+ 830 │       improvements: [
+ 831 │         "Amélioration de la détection des profils à risque",
+ 832 │         "Meilleure personnalisation par âge et sexe",
+ 833 │         "Intégration des dernières recherches scientifiques"
+ 834 │       ],
+ 835 │       knowledgeBase: 2500,
+ 836 │       accuracyImprovement: 2.3,
+ 837 │       processingTime: 234, userSatisfaction: 94,
+ 838 │       useCaseCoverage: 87,
+ 839 │       recommendationEfficiency: 92,
+ 840 │       lastUpdate: new Date().toLocaleDateString(),
+ 841 │       topPerformingRecommendations: []
+ 842 │     };
+ 843 │   }
+ 844 │ }
+ 845 │ 
+ 846 │ // Placeholder functions -  replace with actual implementations
+ 847 │ const processBehavioralData = (behavioralMetrics: BehavioralMetrics) => ({
+ 848 │   cognitiveLoad: 0.7,
+ 849 │   stressLevel: 0.6,
+ 850 │   sleepQuality: 0.8
+ 851 │ });
+ 852 │ 
+ 853 │ const saveLearningData = (quizResponses: any, recommendations: any, behavioralMetrics: any, neuroProfile: any) => {
+ 854 │   // Placeholder function
+ 855 │ };
+ 856 │ 
+ 857 │ function evaluateDataQuality() {
+     ·          ─────────┬─────────
+     ·                   ╰── `evaluateDataQuality` redefined here
+ 858 │   return {
+ 859 │     overallQuality: 0.85,
+ 860 │     completeness: 0.9,
+     ╰────
+/home/runner/workspace/src/utils/recommenderSystem.ts:26:1
+143|          quizResponses.goals.improveFocus) {
+144|  
+145|        recommendations.push({
+   |                      ^
+146|          id: "rec_bacopa",
+147|          name: "Bacopa Monnieri",
+Click outside, press Esc key, or fix the code to dismiss.
+You can also disable this overlay by setting server.hmr.overlay to false in vite.config.ts.

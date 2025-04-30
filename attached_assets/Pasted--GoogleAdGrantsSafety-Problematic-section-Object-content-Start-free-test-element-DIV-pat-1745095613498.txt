@@ -1,0 +1,47 @@
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Start free test", element: "DIV", path: "div#root > div.antialiased > div.min-h-screen.bg-background > main.overflow-hidden >…"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Start free test", element: "A", path: "div#root > div.antialiased > div.min-h-screen.bg-background > main.overflow-hidden >…"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Free test3 minutesImmediate results", element: "DIV", path: "div#root > div.antialiased > div.min-h-screen.bg-background > main.overflow-hidden >…"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Free test", element: "DIV", path: "div#root > div.antialiased > div.min-h-screen.bg-background > main.overflow-hidden >…"}
+[GoogleAdGrantsSafety] Problematic section: 
+Object {content: "Free test", element: "P", path: "div#root > div.antialiased > div.min-h-screen.bg-background > main.overflow-hidden >…"}
+[GoogleAdGrantsSafety] Storage check: Using secured session storage instead of localStorage
+[GoogleAdGrantsSafety] First scan completed in 144.30ms
+[GoogleAdGrantsSafety] Running automatic compliance check...
+[GoogleAdGrantsSafety] Compliance check complete. Found 0 issues.
+motion is not defined
+motion is not defined
+The above error occurred in the <ScientificTeam> component:
+
+    at ScientificTeam (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/components/ScientificTeam.tsx:876:35)
+    at About
+    at RenderedRoute (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=492688cf:4069:5)
+    at Outlet (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=492688cf:4444:26)
+    at div
+    at Provider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/chunk-LSQNWB54.js?v=492688cf:38:15)
+    at TooltipProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=492688cf:61:5)
+    at div
+    at LanguageProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/components/LanguageProvider.tsx:24:36)
+    at QueryClientProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/@tanstack_react-query.js?v=492688cf:2794:3)
+    at App (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/src/App.tsx:90:47)
+    at RenderedRoute (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=492688cf:4069:5)
+    at RenderErrorBoundary (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=492688cf:4029:5)
+    at DataRoutes (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=492688cf:5188:5)
+    at Router (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=492688cf:4451:15)
+    at RouterProvider (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-router-dom.js?v=492688cf:5003:5)
+    at _a (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/node_modules/.vite/deps/react-helmet-async.js?v=492688cf:624:5)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, RenderErrorBoundary.
+React Router caught the following error during render 
+ReferenceError {}
+ 
+Object {componentStack: "↵    at ScientificTeam…"}
+
+at t.value (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://33750521-6bee-4a1b-a45a-eb26b73f0dcd-00-1sx29dy69d94g.kirk.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+404 Error: User attempted to access non-existent route: /about
